@@ -160,96 +160,16 @@
       
         <h1 id="SSL-VPN流量抓取"><a href="#SSL-VPN流量抓取" class="headerlink" title="SSL-VPN流量抓取"></a>SSL-VPN流量抓取</h1><h2 id="一、实验目的"><a href="#一、实验目的" class="headerlink" title="一、实验目的"></a>一、实验目的</h2><p>飞塔防火墙提供了一个SSL-VPN的功能，该VPN适用场景较多，相比于L2TP or IPSec更为灵活</p>
 <p>本实验目的为验证SSL-VPN隧道的流量加密功能</p>
-<h2 id="二、背景介绍"><a href="#二、背景介绍" class="headerlink" title="二、背景介绍"></a>二、背景介绍</h2><ol>
-<li><p>VPN：虚拟专用网络，属于远程访问技术，应用场景通常是企业网络，通过对数据包的加密和数据包目标地址转换实现远程访问。比如员工在外地出差，需要访问企业办公网或者生产网，通过VPN服务器接入这种访问就属于远程访问。</p>
-</li>
-<li><p>SSL：安全套接层，工作在传输层和应用层之间，是TLS的前身安全协议，为了解决TCP/IP与各种应用层协议明文传输带来的风险而诞生，SSL协议包含以下几部分，</p>
-</li>
-</ol>
-<ul>
-<li><p>SSL记录协议</p>
-<p> 建立在可靠的传输协议如TCP）之上，为高层协议提供数据封装、压缩、加密等基本功能的支持 。机密性、完整性。</p>
-<p> 定义传输数据的格式，加密/解密、压缩/解压缩、MAC计算等操作等。 </p>
-<p> 参考链接：<a href="http://www.cnitpm.com/pm1/67775.html" target="_blank" rel="noopener">http://www.cnitpm.com/pm1/67775.html</a></p>
-</li>
-<li><p>SSL握手协议</p>
-<p> 建立在SSL记录协议之上，用于在实际的数据传输开始前，通讯双方进行身份认证、协商加密算法、交换加密密钥等。 </p>
-<p> <img src="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/1.png" alt="avatar"></p>
-<p> (1) 客户端开始新的握手，并将自身支持的功能提交给服务器。</p>
-<p> (2) 服务器选择连接参数。</p>
-<p> (3) 服务器发送其证书链（仅当需要服务器身份验证时）。</p>
-<p> (4) 根据选择的密钥交换方式，服务器发送生成主密钥的额外信息。</p>
-<p> (5) 服务器通知自己完成了协商过程。</p>
-<p> (6) 客户端发送生成主密钥所需的额外信息。</p>
-<p> (7) 客户端切换加密方式并通知服务器。</p>
-<p> (8) 客户端计算发送和接收到的握手消息的MAC并发送。</p>
-<p> (9) 服务器切换加密方式并通知客户端。</p>
-<p> (10) 服务器计算发送和接收到的握手消息的MAC并发送。</p>
-<p> 到这一步，正常情况下连接就已经建立起来了</p>
-<p> 参考链接：<a href="https://www.jianshu.com/p/81efc02b2f29" target="_blank" rel="noopener">https://www.jianshu.com/p/81efc02b2f29</a></p>
-<p>  根据 version 信息能够知道客户端支持的最高的协议版本号，</p>
-<p> client hello</p>
-<p> 如果是 SSL 3.0 或 TLS 1.0 等低版本协议，非常注意可能因为版本低引起一些握手失败的情况;</p>
-<p> server hello</p>
-<p> 根据 TLS version 字段能够推测出服务器支持的协议的最高版本，版本不同可能造成握手失败;</p>
-</li>
-<li><p>告警协议、更改密码说明协议、应用协议</p>
-</li>
-</ul>
-<ol start="3">
-<li><p>TLS</p>
-<p>TLS和SSL本质上没有区别，细节上有区别，最新版本的TLS建立在SSL 3.0协议上，他们的差别主要是支持的加密算法不同</p>
-</li>
-</ol>
-<h2 id="三、ssl-vpn工作方式"><a href="#三、ssl-vpn工作方式" class="headerlink" title="三、ssl-vpn工作方式"></a>三、ssl-vpn工作方式</h2><p>   飞塔防火墙支持两种vpn使用方式，第一种是通过10443的WEB界面去访问，第二种是通过安装client完成拨号</p>
-<h4 id="WEB代理"><a href="#WEB代理" class="headerlink" title="WEB代理"></a>WEB代理</h4><p>假设飞塔防火墙的管理地址为<a href="https://sslurl，那么该VPN服务器的WEB界面一般为https://sslurl:10443" target="_blank" rel="noopener">https://sslurl，那么该VPN服务器的WEB界面一般为https://sslurl:10443</a></p>
-<ol>
-<li>登录SSL VPN的WEB界面以后，WEB代理访问可以选择两种方式，一种是很多应用的链接，如SSH TELNET等，也可以把内网某个WEB服务绑在链接里，点击链接后会弹出一个新的窗口，跳转到<a href="https://sslurl/page1,page2等" target="_blank" rel="noopener">https://sslurl/page1,page2等</a></li>
-<li>另一种是一个输入框，用户输入一个网址，如url1,则会弹出一个新的窗口，跳转到<a href="https://sslurl/url1" target="_blank" rel="noopener">https://sslurl/url1</a></li>
-</ol>
-<h4 id="其他方式"><a href="#其他方式" class="headerlink" title="其他方式"></a>其他方式</h4><p>除了WEB代理，还有端口映射、IP连接等一些技术点，我在仔细学习后受益匪浅，附一张链接而不详述。</p>
-<p> <a href="https://wenku.baidu.com/view/b798edd333687e21ae45a96e.html" target="_blank" rel="noopener">https://wenku.baidu.com/view/b798edd333687e21ae45a96e.html</a> </p>
-<h4 id="SSL-vpn-client"><a href="#SSL-vpn-client" class="headerlink" title="SSL-vpn-client"></a>SSL-vpn-client</h4><p>以FortClient为例，重点说一下这个client</p>
-<ul>
-<li>vpn-client网卡</li>
-</ul>
-<p>安装client成功后，网卡内会多一个Fortinet的VPN虚拟网卡，这个网卡用作vpn隧道的数据加解密<br>   <img src="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/3.png" alt="avatar"></p>
-<ul>
-<li>配置vpn</li>
-</ul>
-<p>下图为配置一个vpn的界面：<br><img src="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/2.png" alt="avatar"></p>
-<p>其逻辑流程如下：</p>
-<p>连接名+远程网关(VPN服务器地址)+远程端口(10443)+vpn用户名+VPN密码-&gt;登录</p>
-<ul>
-<li>数据流走向<br><img src="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/4.jpg" alt="avatar"></li>
-</ul>
-<p>图左边部分是一个正常PC通过网卡上网的过程,右边部分是一个使用ssl-vpn访问互联网的过程,下面分析一下:</p>
-<ul>
-<li><p>首先,PC访问互联网的流量发送给VPN-Client网卡</p>
-</li>
-<li><p>VPN-Client网卡对数据流量进行SSL加密</p>
-</li>
-<li><p>VPN-Client网卡将加密流量发送给互联网卡</p>
-</li>
-<li><p>互联网卡将加密流量通过互联网传递到SSL-VPN-Server(即SSL-VPN服务器,即防火墙)</p>
-</li>
-<li><p>SSL-VPN-Server对加密流量进行解密</p>
-</li>
-<li><p>SSL-VPN-Server对解密后的流量进行处理,并将响应流量按原链路返回给PC.</p>
-<ul>
-<li><p>比如访问内网服务的流量,Server会直接通过数据包地址转换,将响应流量返回给PC,在这里Server的作用相当于跳板机</p>
-</li>
-<li><p>比如访问互联网的流量,Server也是通过数据包地址转换,返回响应流量,在这里Server的作用相当于WEB代理</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>图中红色的线画的是VPN隧道的流量,即用一条线表达隧道流量传递的过程,那么在这个隧道流量传输过程中,任意节点上捕获到的流量肯定都是加密的.</p>
-<p>因此如果抓包看流量的操作就有了</p>
-<p>打开一个wireshark,监听互联网卡的流量,预期看到隧道流量都是加密过的</p>
-<p>再打开一个wireshark,监听VPN-Clinet网卡的流量,预期看到隧道流量都是明文的</p>
-<h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><p>有个小问题,PC的HTTPS流量通过VPN-Client是否还会再被加密一次,这里我还没有想到验证方法</p>
-
+<h2 id="二、背景介绍"><a href="#二、背景介绍" class="headerlink" title="二、背景介绍"></a>二、背景介绍</h2><p>VPN：虚拟专用网络，属于远程访问技术，应用场景通常是企业网络，通过对数据包的加密和数据包目标地址转换实现远程访问。比如员工在外地出差，需要访问企业办公网或者生产网，通过VPN服务器接入这种访问就属于远程访问。</p>
+<p>SSL：安全套接层，工作在传输层和应用层之间，是TLS的前身安全协议，为了解决TCP/IP与各种应用层协议明文传输带来的风险而诞生，SSL协议包含以下几部分，</p>
+<h5 id="SSL记录协议"><a href="#SSL记录协议" class="headerlink" title="SSL记录协议"></a>SSL记录协议</h5><p>建立在可靠的传输协议如TCP）之上，为高层协议提供数据封装、压缩、加密等基本功能的支持 。机密性、完整性。</p>
+<p>定义传输数据的格式，加密/解密、压缩/解压缩、MAC计算等操作等。 </p>
+<p>参考链接：<a href="http://www.cnitpm.com/pm1/67775.html" target="_blank" rel="noopener">http://www.cnitpm.com/pm1/67775.html</a></p>
+<h5 id="SSL握手协议"><a href="#SSL握手协议" class="headerlink" title="SSL握手协议"></a>SSL握手协议</h5><p>建立在SSL记录协议之上，用于在实际的数据传输开始前，通讯双方进行身份认证、协商加密算法、交换加密密钥等。 </p>
+<p><img src="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/1.png" alt="avatar"></p>
+        
+          <a class="article-more-a" href="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/#more">more >></a>
+        
       
 
       
@@ -344,19 +264,9 @@
 <p><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/3.png" alt="avatar"></p>
 <p>接下来执行命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure>
-
-<p>对无线网络进行感知,效果如下:</p>
-<p><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/4.png" alt="avatar"></p>
-<p>再次执行命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng stop wlan0mon</span><br></pre></td></tr></table></figure>
-
-<p>关闭监听模式,进入正常模式,然后执行如下命令对无线网络进行扫描感知</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iwlist wlan0 scanning</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/5.png" alt="avatar"></p>
-<p>如果想对输出结果进行一下简单的处理,进行静态展示,只输出关键信息如ESSID|Address|Channel|level|WPA等,可以作如下处理:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> commands</span><br><span class="line"><span class="keyword">print</span> unicode(commands.getoutput(<span class="string">'iwlist wlan0 scanning | egrep \"ESSID|Address|Channel:|level|WPA\"'</span>),<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-无线WiFi网络流量嗅探与分析-1"><a href="#2-无线WiFi网络流量嗅探与分析-1" class="headerlink" title="2 无线WiFi网络流量嗅探与分析"></a>2 无线WiFi网络流量嗅探与分析</h2>
+        
+          <a class="article-more-a" href="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/#more">more >></a>
+        
       
 
       
@@ -434,7 +344,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">菠菜</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">菠菜，流量</a>
         		</li>
       		
 		</ul>
@@ -506,12 +416,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="Pi-hexo-freemyip-vpn"><a href="#Pi-hexo-freemyip-vpn" class="headerlink" title="Pi+hexo+freemyip+vpn = ?"></a>Pi+hexo+freemyip+vpn = ?</h1><h2 id="1-背景介绍"><a href="#1-背景介绍" class="headerlink" title="1. 背景介绍"></a>1. 背景介绍</h2><h4 id="1-1-目标：想搭一个内网blog"><a href="#1-1-目标：想搭一个内网blog" class="headerlink" title="1.1 目标：想搭一个内网blog"></a>1.1 目标：想搭一个内网blog</h4><p>已有资源：瞅了瞅手上的东西只有一台树莓派，一个pptp-vpn， 一个宿舍里面用来提供无线的TP-LINK</p>
-<h4 id="1-2-可以白嫖的资源："><a href="#1-2-可以白嫖的资源：" class="headerlink" title="1.2 可以白嫖的资源："></a>1.2 可以白嫖的资源：</h4><ol>
-<li>向freemyip申请一个免费的域名</li>
-<li>隔壁宿舍的wifi<br>隔壁的wifi不能搞，只能在自己的TPlink上想办法<h2 id="2-网络结构"><a href="#2-网络结构" class="headerlink" title="2. 网络结构"></a>2. 网络结构</h2><h4 id="2-1-网络分区"><a href="#2-1-网络分区" class="headerlink" title="2.1 网络分区"></a>2.1 网络分区</h4></li>
-</ol>
-<ul>
-<li>WEB应用区(宿舍肥宅区)：树莓派+wordpress 出口网关：唯一的TP-LINK</li></ul>
+<h4 id="1-2-可以白嫖的资源："><a href="#1-2-可以白嫖的资源：" class="headerlink" title="1.2 可以白嫖的资源："></a>1.2 可以白嫖的资源：</h4><p>向freemyip申请一个免费的域名<br>隔壁宿舍的wifi<br>隔壁的wifi不能搞，只能在自己的TPlink上想办法</p>
+<h2 id="2-网络结构"><a href="#2-网络结构" class="headerlink" title="2. 网络结构"></a>2. 网络结构</h2><h4 id="2-1-网络分区"><a href="#2-1-网络分区" class="headerlink" title="2.1 网络分区"></a>2.1 网络分区</h4><p>WEB应用区(宿舍肥宅区)：树莓派+wordpress 出口网关：唯一的TP-LINK</p>
         
           <a class="article-more-a" href="/2019/11/17/Pi+hexo+freemyip+vpn/#more">more >></a>
         
@@ -664,6 +570,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">菠菜，流量</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">SSL</a>
               </li>
              
@@ -685,10 +595,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">PI</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
               </li>
             
             <div class="clearfix"></div>

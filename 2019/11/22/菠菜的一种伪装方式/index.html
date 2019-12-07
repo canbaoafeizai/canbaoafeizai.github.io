@@ -9,7 +9,7 @@
   <title>菠菜的一种伪装方式 | T1ger</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="菠菜的一种伪装方式1. 背景在百度搜索我的目标关键词的时候，本来找的是目标公司的内容，但是意外地发现了一些菠菜网站的链接，百度快照里的内容和我的目标公司首页内容一致，本着感性趣的态度点进去，看看是什么">
-<meta name="keywords" content="菠菜">
+<meta name="keywords" content="菠菜，流量">
 <meta property="og:type" content="article">
 <meta property="og:title" content="菠菜的一种伪装方式">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;22&#x2F;%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F&#x2F;index.html">
@@ -21,7 +21,7 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;22&#x2F;%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F&#x2F;bocai3.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;22&#x2F;%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F&#x2F;bocai4.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;22&#x2F;%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F&#x2F;bocai5.png">
-<meta property="og:updated_time" content="2019-11-22T14:32:14.995Z">
+<meta property="og:updated_time" content="2019-12-07T15:56:04.068Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;22&#x2F;%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F&#x2F;bocai2.png">
   
@@ -170,39 +170,20 @@
 <a id="more"></a>
 <p><img src="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/bocai1.png" alt="avatar"><br>大都是一些菠菜网站，这里列出几个网址，大家警惕：<br> <a href="http://www.zgsyhm.com/" target="_blank" rel="noopener">http://www.zgsyhm.com/</a><br> <a href="https://www.fd3344.com/home/" target="_blank" rel="noopener">https://www.fd3344.com/home/</a><br>那么问题来了，这些菠菜网站挂着这些毫不相干的pages干啥呢？</p>
 <h2 id="2-分析过程"><a href="#2-分析过程" class="headerlink" title="2.分析过程"></a>2.分析过程</h2><h3 id="2-1-判断是否为服务器被黑"><a href="#2-1-判断是否为服务器被黑" class="headerlink" title="2.1 判断是否为服务器被黑"></a>2.1 判断是否为服务器被黑</h3><p>根据以往遇到的情况，拍脑袋会认为服务器被黑了，然后直接跳到黑页这里，随即看了下他们的IP，发现都是阿里云香港，对比着目标公司的IP，发现并不一样，这条排除</p>
-<h3 id="2-2-判断是否是首页的JS跳转"><a href="#2-2-判断是否是首页的JS跳转" class="headerlink" title="2.2 判断是否是首页的JS跳转"></a>2.2 判断是否是首页的JS跳转</h3><p>那就很有意思了，那想着会不会是JS渲染+跳转，以前也遇到过这种，相当于披着一层衣服的菠菜</p>
-<ul>
-<li><p>正常地进行了单步调试抓包模式，发现基本的访问流程都是这个样子</p>
-<h4 id="首页-gt-js跳转-gt-菠菜网站"><a href="#首页-gt-js跳转-gt-菠菜网站" class="headerlink" title="首页 -&gt; js跳转-&gt; 菠菜网站"></a>首页 -&gt; js跳转-&gt; 菠菜网站</h4></li>
-<li><p>直接F12，一个首页的源代码如下：</p>
-<img src="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/bocai3.png" alt="avatar" style="zoom:80%;">
+<h3 id="2-2-判断是否是首页的JS跳转"><a href="#2-2-判断是否是首页的JS跳转" class="headerlink" title="2.2 判断是否是首页的JS跳转"></a>2.2 判断是否是首页的JS跳转</h3><p>那就很有意思了，那想着会不会是JS渲染+跳转，以前也遇到过这种，相当于披着一层衣服的菠菜<br>正常地进行了单步调试抓包模式，发现基本的访问流程都是这个样子</p>
+<h4 id="首页-gt-js跳转-gt-菠菜网站"><a href="#首页-gt-js跳转-gt-菠菜网站" class="headerlink" title="首页 -&gt; js跳转-&gt; 菠菜网站"></a>首页 -&gt; js跳转-&gt; 菠菜网站</h4><p>直接F12，一个首页的源代码如下：<br><img src="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/bocai3.png" alt="avatar" style="zoom:80%;"></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">URL解码之后是： https://www.gztaifu.com/js/jquery.min1.1.js</span><br></pre></td></tr></table></figure>
-​    这就说明确实是JS跳转，但是首页上并没有我查的目标关键词，那么问题来了，到底是什么原因导致菠菜快照上的内容和实际内容不一致呢？
-### 2.3 推测菠菜的思路
-​    这里我一开始是没有想出来的，请教了一个对灰产有研究的朋友，他说这种情况一般是正常公司首页被爬去给菠菜做伪装，这句话点醒了我，于是我整理了一下当前的信息：</li>
-<li><p>菠菜主要目的：披一层衣服，避免被发现</p>
-</li>
-<li><p>菠菜最容易被发现的入口：百度、谷歌等很容易被监管部门找到的搜索引擎</p>
-</li>
-<li><p>菠菜最需要防御的对象：robots爬虫，百度快照的内容生成也是通过spider爬出来的，因此例如百度Spider、搜狗spider等是菠菜最怕的东西<br>这就很清楚了，接下来我去验证一下自己的猜想</p>
+<p>这就说明确实是JS跳转，但是首页上并没有我查的目标关键词，那么问题来了，到底是什么原因导致菠菜快照上的内容和实际内容不一致呢？</p>
+<h3 id="2-3-推测菠菜的思路"><a href="#2-3-推测菠菜的思路" class="headerlink" title="2.3 推测菠菜的思路"></a>2.3 推测菠菜的思路</h3><p>这里我一开始是没有想出来的，请教了一个对灰产有研究的朋友，他说这种情况一般是正常公司首页被爬去给菠菜做伪装，这句话点醒了我，于是我整理了一下当前的信息：<br>菠菜主要目的：披一层衣服，避免被发现<br>菠菜最容易被发现的入口：百度、谷歌等很容易被监管部门找到的搜索引擎<br>菠菜最需要防御的对象：robots爬虫，百度快照的内容生成也是通过spider爬出来的，因此例如百度Spider、搜狗spider等是菠菜最怕的东西<br>这就很清楚了，接下来我去验证一下自己的猜想</p>
 <h3 id="2-4-模拟百度spider"><a href="#2-4-模拟百度spider" class="headerlink" title="2.4 模拟百度spider"></a>2.4 模拟百度spider</h3><p>模拟百度爬虫至少有三种方式：</p>
-<ol>
-<li>python模拟</li>
-<li>使用第三方模拟spider网站</li>
-<li>Chrome的UA插件<br>自然最省事的是用UA插件，我用的是 User-Agent Switcher - Options(小蓝色图标真好看)<br>查到了百度的spider的UA如下:<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (compatible; Baiduspider/2.0;+http://www.baidu.com/search/spider.html）</span><br></pre></td></tr></table></figure>
-很方便地加进去，然后选择该UA:<img src="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/bocai4.png">
-然后再次访问该页面，果然访问到了我想要看到的东西：
-<img src="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/bocai5.png" alt="avatar" style="zoom:67%;">
-## 3. 总结
-​    根据经验，这种手法是菠菜服务器设置根据不同的UA提供不同的内容，加一条判断+转发即可。
-​    但这个事其实可以带来一些思考，比如说：</li>
-</ol>
-</li>
-<li><p>菠菜网站这种伪装方式虽然起到了欺骗robots的效果，但是从人的角度来讲，相当于你穿了一层机器人认不出来的衣服，但这种衣服会被熟悉的人一眼认出来，也就是有暴露特征，从技术上讲这样可能更容易被发现</p>
-</li>
-<li><p>这对于企业安全人员来说又是一个新的挑战，被别人穿衣服可不好受，可以针对性地检查检查有没有人在穿衣服，这些人为什么这样做，有没有办法防御？</p>
-</li>
-</ul>
+<p>python模拟</p>
+<p>使用第三方模拟spider网站</p>
+<p>Chrome的UA插件<br>自然最省事的是用UA插件，我用的是 User-Agent Switcher - Options(小蓝色图标真好看)<br>查到了百度的spider的UA如下:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (compatible; Baiduspider/2.0;+http://www.baidu.com/search/spider.html）</span><br></pre></td></tr></table></figure>
+<p>很方便地加进去，然后选择该UA:<br><img src="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/bocai4.png"><br>然后再次访问该页面，果然访问到了我想要看到的东西：<br><img src="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/bocai5.png" alt="avatar" style="zoom:67%;"></p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>根据经验，这种手法是菠菜服务器设置根据不同的UA提供不同的内容，加一条判断+转发即可。<br>​但这个事其实可以带来一些思考，比如说：</p>
+<p>菠菜网站这种伪装方式虽然起到了欺骗robots的效果，但是从人的角度来讲，相当于你穿了一层机器人认不出来的衣服，但这种衣服会被熟悉的人一眼认出来，也就是有暴露特征，从技术上讲这样可能更容易被发现</p>
+<p>这对于企业安全人员来说又是一个新的挑战，被别人穿衣服可不好受，可以针对性地检查检查有没有人在穿衣服，这些人为什么这样做，有没有办法防御？</p>
 
       
 
@@ -237,7 +218,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">菠菜</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">菠菜，流量</a>
         		</li>
       		
 		</ul>
@@ -456,6 +437,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">菠菜，流量</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">SSL</a>
               </li>
              
@@ -477,10 +462,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">PI</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
               </li>
             
             <div class="clearfix"></div>
