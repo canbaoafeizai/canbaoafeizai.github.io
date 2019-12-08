@@ -6,21 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>无线网络中的小工具 | T1ger</title>
+  <title>无线WiFi流量的抓取与分析(一) | T1ger</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 无线WiFi网络状态检测与感知分析2 无线WiFi网络流量嗅探与分析3 无线WiFIi管理帧干扰与接入口令暴力破解 实验环境 KALI系统(自带aircrack-ng套件) 网卡型号(支持aircrack-ng套件的型号,否则无法使用工具)  1.1 实验原理  使用无线网卡在2.4GHz或5GHz某一固定频道可以对数据包进行嗅探，提取数据包中的数据得到wifi相关的信息. 1.2 实验流程i">
+  <meta name="description" content="一、无线WiFi网络状态检测与感知分析二、无线WiFi网络流量嗅探与分析实验环境KALI系统(自带aircrack-ng套件)网卡型号(支持aircrack-ng套件的型号,否则无法使用工具)">
+<meta name="keywords" content="流量分析,无线,嗅探">
 <meta property="og:type" content="article">
-<meta property="og:title" content="无线网络中的小工具">
+<meta property="og:title" content="无线WiFi流量的抓取与分析(一)">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;index.html">
 <meta property="og:site_name" content="T1ger">
-<meta property="og:description" content="1 无线WiFi网络状态检测与感知分析2 无线WiFi网络流量嗅探与分析3 无线WiFIi管理帧干扰与接入口令暴力破解 实验环境 KALI系统(自带aircrack-ng套件) 网卡型号(支持aircrack-ng套件的型号,否则无法使用工具)  1.1 实验原理  使用无线网卡在2.4GHz或5GHz某一固定频道可以对数据包进行嗅探，提取数据包中的数据得到wifi相关的信息. 1.2 实验流程i">
+<meta property="og:description" content="一、无线WiFi网络状态检测与感知分析二、无线WiFi网络流量嗅探与分析实验环境KALI系统(自带aircrack-ng套件)网卡型号(支持aircrack-ng套件的型号,否则无法使用工具)">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;1.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;2.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;3.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;4.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;5.png">
-<meta property="og:updated_time" content="2019-12-07T15:58:29.506Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;6.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;7.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;8.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;9.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;11.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;12.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;13.png">
+<meta property="og:updated_time" content="2019-12-08T03:21:34.331Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7&#x2F;1.jpg">
   
@@ -152,7 +160,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      无线网络中的小工具
+      无线WiFi流量的抓取与分析(一)
     </h1>
   
 
@@ -165,35 +173,33 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1-无线WiFi网络状态检测与感知分析"><a href="#1-无线WiFi网络状态检测与感知分析" class="headerlink" title="1 无线WiFi网络状态检测与感知分析"></a>1 无线WiFi网络状态检测与感知分析</h2><h2 id="2-无线WiFi网络流量嗅探与分析"><a href="#2-无线WiFi网络流量嗅探与分析" class="headerlink" title="2 无线WiFi网络流量嗅探与分析"></a>2 无线WiFi网络流量嗅探与分析</h2><h2 id="3-无线WiFIi管理帧干扰与接入口令暴力破解"><a href="#3-无线WiFIi管理帧干扰与接入口令暴力破解" class="headerlink" title="3 无线WiFIi管理帧干扰与接入口令暴力破解"></a>3 无线WiFIi管理帧干扰与接入口令暴力破解</h2><ul>
-<li>实验环境</li>
-<li>KALI系统(自带aircrack-ng套件)</li>
-<li>网卡型号(支持aircrack-ng套件的型号,否则无法使用工具)</li>
-</ul>
-<h4 id="1-1-实验原理"><a href="#1-1-实验原理" class="headerlink" title="1.1 实验原理"></a>1.1 实验原理</h4><p>  使用无线网卡在2.4GHz或5GHz某一固定频道可以对数据包进行嗅探，提取数据包中的数据得到wifi相关的信息.</p>
-<h4 id="1-2-实验流程"><a href="#1-2-实验流程" class="headerlink" title="1.2 实验流程"></a>1.2 实验流程</h4><h5 id="iwconfig命令"><a href="#iwconfig命令" class="headerlink" title="iwconfig命令"></a>iwconfig命令</h5><p><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/1.jpg" alt="avatar"></p>
-<p>可以查看到当前网卡的状态,如图,当前网卡名为wlan0,工作在Managed模式.执行如下命令将网卡变成监听模式</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/2.png" alt="avatar"></p>
-<p>再次执行iwconfig查看网卡模式,可以看到网卡名称变为wlanmon,模式变为Monitor</p>
-<p><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/3.png" alt="avatar"></p>
-<p>接下来执行命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure>
-
+        <h2 id="一、无线WiFi网络状态检测与感知分析"><a href="#一、无线WiFi网络状态检测与感知分析" class="headerlink" title="一、无线WiFi网络状态检测与感知分析"></a>一、无线WiFi网络状态检测与感知分析</h2><h2 id="二、无线WiFi网络流量嗅探与分析"><a href="#二、无线WiFi网络流量嗅探与分析" class="headerlink" title="二、无线WiFi网络流量嗅探与分析"></a>二、无线WiFi网络流量嗅探与分析</h2><h3 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h3><p>KALI系统(自带aircrack-ng套件)<br>网卡型号(支持aircrack-ng套件的型号,否则无法使用工具)</p>
 <a id="more"></a>
-
-<p>对无线网络进行感知,效果如下:</p>
-<p><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/4.png" alt="avatar"></p>
-<p>再次执行命令</p>
+<h4 id="1-1-实验原理"><a href="#1-1-实验原理" class="headerlink" title="1.1 实验原理"></a>1.1 实验原理</h4><p>  使用无线网卡在2.4GHz或5GHz某一固定频道可以对数据包进行嗅探，提取数据包中的数据得到wifi相关的信息.</p>
+<h4 id="1-2-实验流程"><a href="#1-2-实验流程" class="headerlink" title="1.2 实验流程"></a>1.2 实验流程</h4><h5 id="iwconfig命令"><a href="#iwconfig命令" class="headerlink" title="iwconfig命令"></a>iwconfig命令</h5><p><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/1.jpg" alt="avatar"><br>可以查看到当前网卡的状态,如图,当前网卡名为wlan0,工作在Managed模式.执行如下命令将网卡变成监听模式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/2.png" alt="avatar"><br>再次执行iwconfig查看网卡模式,可以看到网卡名称变为wlanmon,模式变为Monitor<br><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/3.png" alt="avatar"><br>接下来执行命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure>
+<p>对无线网络进行感知,效果如下:<br><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/4.png" alt="avatar"><br>再次执行命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng stop wlan0mon</span><br></pre></td></tr></table></figure>
-
 <p>关闭监听模式,进入正常模式,然后执行如下命令对无线网络进行扫描感知</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iwlist wlan0 scanning</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/5.png" alt="avatar"></p>
-<p>如果想对输出结果进行一下简单的处理,进行静态展示,只输出关键信息如ESSID|Address|Channel|level|WPA等,可以作如下处理:</p>
+<p><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/5.png" alt="avatar"><br>如果想对输出结果进行一下简单的处理,进行静态展示,只输出关键信息如ESSID|Address|Channel|level|WPA等,可以作如下处理:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> commands</span><br><span class="line"><span class="keyword">print</span> unicode(commands.getoutput(<span class="string">'iwlist wlan0 scanning | egrep \"ESSID|Address|Channel:|level|WPA\"'</span>),<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="2-无线WiFi网络流量嗅探与分析"><a href="#2-无线WiFi网络流量嗅探与分析" class="headerlink" title="2 无线WiFi网络流量嗅探与分析"></a>2 无线WiFi网络流量嗅探与分析</h2><h4 id="2-0-实验原理"><a href="#2-0-实验原理" class="headerlink" title="2.0 实验原理"></a>2.0 实验原理</h4><p>使用无线网卡在2.4GHz或5GHz某一固定频道可以对数据包进行嗅探，当接入的WIFI热点处于Open模式时，通过嗅探可以得到接入此热点的设备流量，提取流量并对其进行分析。</p>
+<h4 id="2-1实验过程"><a href="#2-1实验过程" class="headerlink" title="2.1实验过程"></a>2.1实验过程</h4><h6 id="首先把网卡变成Monitor模式"><a href="#首先把网卡变成Monitor模式" class="headerlink" title="首先把网卡变成Monitor模式"></a>首先把网卡变成Monitor模式</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo airmon-ng start wlan0</span><br></pre></td></tr></table></figure>
+<p>对周边的热点进行扫描，找到Open模式的热点，在airodump中ENC列的标记为OPN<br><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/6.png" alt="avatar"><br>发现channel 11上有热点使用的时Open模式，且对于观测点信号强度最高的AP工作在11信道，使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iwconfig wlan0mon channel 11</span><br></pre></td></tr></table></figure>
+<p>把网卡切换到11信道</p>
+<h6 id="使用wireshark嗅探数据包"><a href="#使用wireshark嗅探数据包" class="headerlink" title="使用wireshark嗅探数据包"></a>使用wireshark嗅探数据包</h6><p>打开wireshark</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo wireshark</span><br></pre></td></tr></table></figure>
+<p>打开工具栏第四个齿轮图标,选中wlan0mon,在界面下方的Capture filter中可以使用Berkeley Packet Filter(BPF)规则进行有选择的抓包,点击Start开始嗅探.<br>使用另一台电脑连接Open模式的Wifi,并打开浏览器访问一个http站点,然后使用wireshark对嗅探到的数据包进行分析.<br>在未指定任何抓包过滤规则的前提下,wireshark获取到数据的界面应如下所示.<br><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/7.png" alt="avatar"><br>在上方的工具栏中的过滤器输入想要分析的协议名称(dns,arp,http等).</p>
+<h6 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h6><p>例如输入dns后,过滤器将筛选出抓到的dns协议的数据包.如下图.<br><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/8.png" alt="avatar"><br>进一步,可以输入过滤规则 dns.qry.name == “url”,可以看到dns流量,得到访问url时进行的DNS查询和响应,可以进一步查询请求的数据包<br>关注用户数据包协议和域名系统,如下图所示.<br><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/9.png" alt="avatar"><br>可以看到UDP中源端口为45936,目的端口为DNS的well-know端口53.在DNS中可以看到标记为0x0100表示标准查询,查询数1表示question’为查A记录,表示询问与域名相对应的IP地址.<br>打开与这一条DNS请求对应的响应数据包,可以看到DNS服务器返回的源端口为53,查询数为1,回答数为1,表示回答内容为查询的域名所对应的IP地址.</p>
+<h6 id="ARP"><a href="#ARP" class="headerlink" title="ARP"></a>ARP</h6><p>与dns类似,在过滤器中输入arp,显示嗅探道德ARP协议的数据包,随便打开一个,如下图所示.<br><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/11.png" alt="avatar"><br>可以看到该设备的MAC地址为”2c:d0:5a:da:b1:56”,IP地址为10.177.162.196.<br>这台设备向广播地址”00:00:00:00:00:00”发送ARP请求,询问拥有IP地址10.177.171.1的设备MAC地址.下图为10.177.171.1设备的应答包.<br><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/12.png" alt="avatar"><br>返回设备的MAC地址为”f0:d5:bf:1c:d0:31”</p>
+<h6 id="http"><a href="#http" class="headerlink" title="http"></a>http</h6><p>http分析与上述类似,可以通过如下过滤方式进行过滤:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http</span><br><span class="line">http.host == ""</span><br><span class="line">ip.src == ""</span><br><span class="line">ip.dst == ""</span><br><span class="line">ip.addr == "" and http</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/13.png" alt="avatar"><br>http包里可以看到HTTP协议版本号,响应状态码,响应所使用编码,修改时间,http服务器类型等等,http协议内容均由纯文本表示</p>
 
-<h2 id="2-无线WiFi网络流量嗅探与分析-1"><a href="#2-无线WiFi网络流量嗅探与分析-1" class="headerlink" title="2 无线WiFi网络流量嗅探与分析"></a>2 无线WiFi网络流量嗅探与分析</h2>
       
 
       
@@ -222,6 +228,25 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">无线</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">嗅探</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -336,7 +361,7 @@
 <script src="https://billts.site/js/gitment.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "无线网络中的小工具",
+  id: "无线WiFi流量的抓取与分析(一)",
   owner: 'canbaoafeizai',
   repo: 'canbaoafeizai.github.io',
   oauth: {
@@ -424,19 +449,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">菠菜，流量</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">SSL</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">VPN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">流量</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -449,6 +466,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">PI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量分析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">无线</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">嗅探</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
               </li>
             
             <div class="clearfix"></div>

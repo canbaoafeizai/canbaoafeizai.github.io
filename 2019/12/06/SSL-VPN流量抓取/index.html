@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>SSL-VPN流量抓取 | T1ger</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="SSL-VPN流量抓取一、实验目的飞塔防火墙提供了一个SSL-VPN的功能，该VPN适用场景较多，相比于L2TP or IPSec更为灵活 本实验目的为验证SSL-VPN隧道的流量加密功能 二、背景介绍VPN：虚拟专用网络，属于远程访问技术，应用场景通常是企业网络，通过对数据包的加密和数据包目标地址转换实现远程访问。比如员工在外地出差，需要访问企业办公网或者生产网，通过VPN服务器接入这种访问就属">
-<meta name="keywords" content="SSL,VPN,流量">
+  <meta name="description" content="一、实验目的飞塔防火墙提供了一个SSL-VPN的功能，该VPN适用场景较多，相比于L2TP or IPSec更为灵活 本实验目的为验证SSL-VPN隧道的流量加密功能">
+<meta name="keywords" content="SSL,VPN,流量分析">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SSL-VPN流量抓取">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;06&#x2F;SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96&#x2F;index.html">
 <meta property="og:site_name" content="T1ger">
-<meta property="og:description" content="SSL-VPN流量抓取一、实验目的飞塔防火墙提供了一个SSL-VPN的功能，该VPN适用场景较多，相比于L2TP or IPSec更为灵活 本实验目的为验证SSL-VPN隧道的流量加密功能 二、背景介绍VPN：虚拟专用网络，属于远程访问技术，应用场景通常是企业网络，通过对数据包的加密和数据包目标地址转换实现远程访问。比如员工在外地出差，需要访问企业办公网或者生产网，通过VPN服务器接入这种访问就属">
+<meta property="og:description" content="一、实验目的飞塔防火墙提供了一个SSL-VPN的功能，该VPN适用场景较多，相比于L2TP or IPSec更为灵活 本实验目的为验证SSL-VPN隧道的流量加密功能">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;06&#x2F;SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96&#x2F;1.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;06&#x2F;SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96&#x2F;3.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;06&#x2F;SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96&#x2F;2.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;06&#x2F;SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96&#x2F;4.jpg">
-<meta property="og:updated_time" content="2019-12-07T15:41:08.536Z">
+<meta property="og:updated_time" content="2019-12-08T03:20:09.087Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;06&#x2F;SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96&#x2F;1.png">
   
@@ -165,18 +165,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="SSL-VPN流量抓取"><a href="#SSL-VPN流量抓取" class="headerlink" title="SSL-VPN流量抓取"></a>SSL-VPN流量抓取</h1><h2 id="一、实验目的"><a href="#一、实验目的" class="headerlink" title="一、实验目的"></a>一、实验目的</h2><p>飞塔防火墙提供了一个SSL-VPN的功能，该VPN适用场景较多，相比于L2TP or IPSec更为灵活</p>
+        <h2 id="一、实验目的"><a href="#一、实验目的" class="headerlink" title="一、实验目的"></a>一、实验目的</h2><p>飞塔防火墙提供了一个SSL-VPN的功能，该VPN适用场景较多，相比于L2TP or IPSec更为灵活</p>
 <p>本实验目的为验证SSL-VPN隧道的流量加密功能</p>
+   <a id="more"></a>
+
 <h2 id="二、背景介绍"><a href="#二、背景介绍" class="headerlink" title="二、背景介绍"></a>二、背景介绍</h2><p>VPN：虚拟专用网络，属于远程访问技术，应用场景通常是企业网络，通过对数据包的加密和数据包目标地址转换实现远程访问。比如员工在外地出差，需要访问企业办公网或者生产网，通过VPN服务器接入这种访问就属于远程访问。</p>
 <p>SSL：安全套接层，工作在传输层和应用层之间，是TLS的前身安全协议，为了解决TCP/IP与各种应用层协议明文传输带来的风险而诞生，SSL协议包含以下几部分，</p>
 <h5 id="SSL记录协议"><a href="#SSL记录协议" class="headerlink" title="SSL记录协议"></a>SSL记录协议</h5><p>建立在可靠的传输协议如TCP）之上，为高层协议提供数据封装、压缩、加密等基本功能的支持 。机密性、完整性。</p>
 <p>定义传输数据的格式，加密/解密、压缩/解压缩、MAC计算等操作等。 </p>
 <p>参考链接：<a href="http://www.cnitpm.com/pm1/67775.html" target="_blank" rel="noopener">http://www.cnitpm.com/pm1/67775.html</a></p>
-<h5 id="SSL握手协议"><a href="#SSL握手协议" class="headerlink" title="SSL握手协议"></a>SSL握手协议</h5><p>建立在SSL记录协议之上，用于在实际的数据传输开始前，通讯双方进行身份认证、协商加密算法、交换加密密钥等。 </p>
-<p><img src="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/1.png" alt="avatar"></p>
-   <a id="more"></a>
-
-<p>(1) 客户端开始新的握手，并将自身支持的功能提交给服务器。</p>
+<h5 id="SSL握手协议"><a href="#SSL握手协议" class="headerlink" title="SSL握手协议"></a>SSL握手协议</h5><p>建立在SSL记录协议之上，用于在实际的数据传输开始前，通讯双方进行身份认证、协商加密算法、交换加密密钥等。<br><img src="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/1.png" alt="avatar"><br>(1) 客户端开始新的握手，并将自身支持的功能提交给服务器。</p>
 <p>(2) 服务器选择连接参数。</p>
 <p>(3) 服务器发送其证书链（仅当需要服务器身份验证时）。</p>
 <p>(4) 根据选择的密钥交换方式，服务器发送生成主密钥的额外信息。</p>
@@ -265,7 +263,7 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">流量</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
         		</li>
       		
 		</ul>
@@ -337,7 +335,7 @@
   
   
     <a href="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">无线网络中的小工具</div>
+      <div class="article-nav-title">无线WiFi流量的抓取与分析(一)</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -464,19 +462,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">菠菜，流量</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">SSL</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">VPN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">流量</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -489,6 +479,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">PI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量分析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">无线</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">嗅探</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
               </li>
             
             <div class="clearfix"></div>
