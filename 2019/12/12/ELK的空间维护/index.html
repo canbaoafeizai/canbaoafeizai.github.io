@@ -6,14 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | T1ger</title>
+  <title>ELK的空间维护 | T1ger</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="T1ger">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;index.html">
+  <meta name="description" content="背景问题场景如下：一台40G硬盘大小的阿里云日志服务器，每天日志成长量大约为2~3G，经常因为硬盘满了导致ELK服务异常或者挂掉，因此要解决问题，其实就是维护管理磁盘的问题。 日志流向该拓扑较为简单，本地log和远端log做同步，然后通过Logstash进行日志分类，Elasticsearch做索引，kibana做展示">
+<meta name="keywords" content="ELK,LINUX,空间">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ELK的空间维护">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;12&#x2F;ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4&#x2F;index.html">
 <meta property="og:site_name" content="T1ger">
+<meta property="og:description" content="背景问题场景如下：一台40G硬盘大小的阿里云日志服务器，每天日志成长量大约为2~3G，经常因为硬盘满了导致ELK服务异常或者挂掉，因此要解决问题，其实就是维护管理磁盘的问题。 日志流向该拓扑较为简单，本地log和远端log做同步，然后通过Logstash进行日志分类，Elasticsearch做索引，kibana做展示">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;12&#x2F;ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4&#x2F;3.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;12&#x2F;ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4&#x2F;1.png">
+<meta property="og:updated_time" content="2019-12-12T05:45:20.468Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;12&#x2F;ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4&#x2F;3.png">
   
     <link rel="alternative" href="/atom.xml" title="T1ger" type="application/atom+xml">
   
@@ -136,36 +143,78 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-ELK的空间维护" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/" class="archive-article-date">
-  	<time datetime="2019-12-12T05:37:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-12</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/">ELK的空间维护</a>
+    <h1 class="article-title" itemprop="name">
+      ELK的空间维护
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/" class="archive-article-date">
+  	<time datetime="2019-12-12T05:37:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="背景问题"><a href="#背景问题" class="headerlink" title="背景问题"></a>背景问题</h2><p>场景如下：一台40G硬盘大小的阿里云日志服务器，每天日志成长量大约为2~3G，经常因为硬盘满了导致ELK服务异常或者挂掉，因此要解决问题，其实就是维护管理磁盘的问题。</p>
+<h4 id="日志流向"><a href="#日志流向" class="headerlink" title="日志流向"></a>日志流向</h4><p><img src="/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/3.png" alt="avatar"><br>该拓扑较为简单，本地log和远端log做同步，然后通过Logstash进行日志分类，Elasticsearch做索引，kibana做展示</p>
+<a id="more"></a>
+
+<h4 id="寻求原因"><a href="#寻求原因" class="headerlink" title="寻求原因"></a>寻求原因</h4><p>磁盘经常被占满有两个原因，一是日志存储，二是索引生成，三是message文件过大。因此清理手段也应从这两方面入手，比如说我只要保存两个星期的内容，那么日志存储的粒度应该定为天，索引也要以14天为期限清理一次。在/var/log里，message文件会记录系统开机后的报错信息等，当ELK崩掉之后，大量保存会存储在message文件里，导致该文件数量级过大。</p>
+<h4 id="日志分片存储"><a href="#日志分片存储" class="headerlink" title="日志分片存储"></a>日志分片存储</h4><p>日志存储分为两个阶段，第一个阶段是日志同步存储，这里可以用logrotate做日志切片，如下配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/var/<span class="built_in">log</span>/a &#123;</span><br><span class="line">    create 0644 elk elk</span><br><span class="line">    daily</span><br><span class="line">    rotate 10</span><br><span class="line">    missingok</span><br><span class="line">    notifempty</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>daily是更换的时间间隔<br>rotate指一共进行多少次更换，就是保存多少次删除最旧的那个，这里的设置是指删除10天前的<br>missingok是忽略错误存储<br>notifempty如果日志文件为空，轮循不会进行。<br>通过工具配置将同步存储限制在10天以内，这样最多也就20G左右。<br>这样切片之后，存储的文件命名就改了，因此logstash的input也得改，但改了之后发现切片后的log创建者不对，本来是elk用户，但现在创建者变成了root，因此logstash就读不了，因此需要创建指定权限的log，本来在conf里面已经写了:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create 0644 elk elk</span><br></pre></td></tr></table></figure>
+<p>但不清楚为什么创建出来的文件还是root权限，因此暂时就用root用户启动logstash<br>第二阶段，在logstash里还需要做一下分时间片存储，不然原日志删除了，处理后的日志不断累积也会导致磁盘被占满。<br>在logstash的config里面配置如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">output &#123;</span><br><span class="line">    elasticsearch &#123;</span><br><span class="line">        hosts =&gt; [<span class="string">"127.0.0.1:9200"</span>]</span><br><span class="line">        index =&gt; <span class="string">"%&#123;type&#125;-%&#123;+YYYY.MM.dd&#125;"</span></span><br><span class="line">    &#125;</span><br><span class="line">    file &#123;</span><br><span class="line">        path =&gt; <span class="string">"/var/log/a-%&#123;+YYYY.MM.dd&#125;.log.gz"</span></span><br><span class="line">        gzip =&gt; <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就可以把处理后的日志也分片了，压缩之后日志存储比较小，每天就十几兆，因此短期内也不用定期清理。</p>
+<h4 id="倒排索引"><a href="#倒排索引" class="headerlink" title="倒排索引"></a>倒排索引</h4><p>很好奇为什么ELK的索引占用空间这么大，原来是使用了倒排索引的存储技术，即和谷歌百度这类搜索引擎类似，颠覆了key-&gt;value的传统存储，反而是从不同的value-&gt;key的索引，比如说如下的一行日志(没有截全)：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">geoip.city_name:Beijing geoip.country_name:China dip:10.130.1.205 sip:210.13.40.225 parameter:proc=4&amp;isAjax=true&amp;isAir=undefined </span><br><span class="line">wl:IP is in Whitelist action:alerted country:CN event:Detection Evasion,Abuse of Functionality,HTTP Parser Attack,Injection Attempt code:200 @timestamp:Dec 9, 2019 @ 16:21:06.469 violation:Evasion technique detected,Failed to convert character,</span><br></pre></td></tr></table></figure>
+<p>在elasticsearch中会被拆成如下JSON数组：<br><img src="/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/1.png" alt="avatar">d<br>正因为存储了这么多的索引，才能通过查任意字段找到原日志条目，所以占地方。<br>ELK提供了一个删除索引的接口如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -XDELETE 'http://127.0.0.1:9200/*2019.10.1*'</span><br></pre></td></tr></table></figure>
+<p>因此把这条命令扩展到shell脚本里，实现一个定期删除的功能就可以了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">DATE=`date -d <span class="string">"14 days ago"</span> +%Y.%m.%d`</span><br><span class="line">curl -XDELETE <span class="string">'http://127.0.0.1:9200/*$DATE*'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"del:<span class="variable">$DATE</span>"</span> &gt;&gt; /tmp/xdel.log</span><br></pre></td></tr></table></figure>
+<p>crontab加一下就可以</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 6 * * * /bin/bash /opt/xdel.sh</span><br></pre></td></tr></table></figure>
+<h4 id="message文件"><a href="#message文件" class="headerlink" title="message文件"></a>message文件</h4><p>message文件用来保存系统错误，elk出现问题后，报错会叠加，这样就会导致日志报错很大。他的配置文件在/etc/rsyslog.conf里有这么一行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*.info;mail.none;authpriv.none;cron.none              /var/<span class="built_in">log</span>/messages</span><br></pre></td></tr></table></figure>
+<p>日志定期删除对系统维护不好，出了问题也没法回溯，所以我选择定期上来看一下Message，再删除无用的日志。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" target="_blank" rel="noopener" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -185,221 +234,122 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" target="_blank" rel="noopener" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/" class="archive-article-date">
-  	<time datetime="2019-12-06T15:16:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-06</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SSL-VPN流量抓取</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/">SSL-VPN流量抓取</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">SSL</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">VPN</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/" class="archive-article-date">
-  	<time datetime="2019-12-02T12:23:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/">无线WiFi流量的抓取与分析(一)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">无线</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">嗅探</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2019-11-22T04:03:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/">菠菜的一种伪装方式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">菠菜</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/安全事件分析//" class="article-tag-list-link color2">安全事件分析</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/11/17/Pi+hexo+freemyip+vpn/" class="archive-article-date">
-  	<time datetime="2019-11-17T10:05:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/11/17/Pi+hexo+freemyip+vpn/">Pi+hexo+freemyip+vpn = ?</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">跨网段</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">vpn</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">PI</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/环境搭建//" class="article-tag-list-link color5">环境搭建</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "ELK的空间维护",
+  owner: 'canbaoafeizai',
+  repo: 'canbaoafeizai.github.io',
+  oauth: {
+    client_id: 'ea88e39f301f623db965',
+    client_secret: '0786bebc88d9924a00eede769540f72603ce3c4a',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -422,8 +372,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
