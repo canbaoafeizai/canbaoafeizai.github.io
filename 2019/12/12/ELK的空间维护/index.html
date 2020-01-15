@@ -18,7 +18,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;12&#x2F;ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4&#x2F;3.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;12&#x2F;ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4&#x2F;1.png">
-<meta property="og:updated_time" content="2019-12-12T05:45:20.468Z">
+<meta property="og:updated_time" content="2019-12-15T12:59:46.097Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;12&#x2F;ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4&#x2F;3.png">
   
@@ -72,6 +72,10 @@
     		
     			
     			<a q-on="click: openSlider(e, 'innerArchive')"  target="_parent" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')"  target="_parent" href="javascript:void(0)">友链</a>
     			
             
             <span id="busuanzi_container_site_uv">
@@ -170,9 +174,16 @@
 <h4 id="寻求原因"><a href="#寻求原因" class="headerlink" title="寻求原因"></a>寻求原因</h4><p>磁盘经常被占满有两个原因，一是日志存储，二是索引生成，三是message文件过大。因此清理手段也应从这两方面入手，比如说我只要保存两个星期的内容，那么日志存储的粒度应该定为天，索引也要以14天为期限清理一次。在/var/log里，message文件会记录系统开机后的报错信息等，当ELK崩掉之后，大量保存会存储在message文件里，导致该文件数量级过大。</p>
 <h4 id="日志分片存储"><a href="#日志分片存储" class="headerlink" title="日志分片存储"></a>日志分片存储</h4><p>日志存储分为两个阶段，第一个阶段是日志同步存储，这里可以用logrotate做日志切片，如下配置：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/var/<span class="built_in">log</span>/a &#123;</span><br><span class="line">    create 0644 elk elk</span><br><span class="line">    daily</span><br><span class="line">    rotate 10</span><br><span class="line">    missingok</span><br><span class="line">    notifempty</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>logrorate配置说明</p>
 <p>daily是更换的时间间隔<br>rotate指一共进行多少次更换，就是保存多少次删除最旧的那个，这里的设置是指删除10天前的<br>missingok是忽略错误存储<br>notifempty如果日志文件为空，轮循不会进行。<br>通过工具配置将同步存储限制在10天以内，这样最多也就20G左右。<br>这样切片之后，存储的文件命名就改了，因此logstash的input也得改，但改了之后发现切片后的log创建者不对，本来是elk用户，但现在创建者变成了root，因此logstash就读不了，因此需要创建指定权限的log，本来在conf里面已经写了:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create 0644 elk elk</span><br></pre></td></tr></table></figure>
-<p>但不清楚为什么创建出来的文件还是root权限，因此暂时就用root用户启动logstash<br>第二阶段，在logstash里还需要做一下分时间片存储，不然原日志删除了，处理后的日志不断累积也会导致磁盘被占满。<br>在logstash的config里面配置如下：</p>
+<p>但不清楚为什么创建出来的文件还是root用户，因此暂时就用root用户启动logstash<br>logrorate手动运行，任意时间都可以手动运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logrotate /etc/logrotate.conf</span><br></pre></td></tr></table></figure>
+<p>logrorate日志记录，记录它本身的运行情况</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /var/lib/logrotate/status</span><br></pre></td></tr></table></figure>
+<p>logrorate的定时任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/cron.daily/logrotate</span><br></pre></td></tr></table></figure>
+<p>第二阶段，在logstash里还需要做一下分时间片存储，不然原日志删除了，处理后的日志不断累积也会导致磁盘被占满。<br>在logstash的config里面配置如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">output &#123;</span><br><span class="line">    elasticsearch &#123;</span><br><span class="line">        hosts =&gt; [<span class="string">"127.0.0.1:9200"</span>]</span><br><span class="line">        index =&gt; <span class="string">"%&#123;type&#125;-%&#123;+YYYY.MM.dd&#125;"</span></span><br><span class="line">    &#125;</span><br><span class="line">    file &#123;</span><br><span class="line">        path =&gt; <span class="string">"/var/log/a-%&#123;+YYYY.MM.dd&#125;.log.gz"</span></span><br><span class="line">        gzip =&gt; <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样就可以把处理后的日志也分片了，压缩之后日志存储比较小，每天就十几兆，因此短期内也不用定期清理。</p>
 <h4 id="倒排索引"><a href="#倒排索引" class="headerlink" title="倒排索引"></a>倒排索引</h4><p>很好奇为什么ELK的索引占用空间这么大，原来是使用了倒排索引的存储技术，即和谷歌百度这类搜索引擎类似，颠覆了key-&gt;value的传统存储，反而是从不同的value-&gt;key的索引，比如说如下的一行日志(没有截全)：</p>
@@ -186,6 +197,7 @@
 <h4 id="message文件"><a href="#message文件" class="headerlink" title="message文件"></a>message文件</h4><p>message文件用来保存系统错误，elk出现问题后，报错会叠加，这样就会导致日志报错很大。他的配置文件在/etc/rsyslog.conf里有这么一行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*.info;mail.none;authpriv.none;cron.none              /var/<span class="built_in">log</span>/messages</span><br></pre></td></tr></table></figure>
 <p>日志定期删除对系统维护不好，出了问题也没法回溯，所以我选择定期上来看一下Message，再删除无用的日志。</p>
+<h4 id="微信监控"><a href="#微信监控" class="headerlink" title="微信监控"></a>微信监控</h4><p>即使做了以上处理，还是需要了解一下磁盘占用情况，但又不可能天天上去看log，这里采取企业微信api调用的方法与服务器进行联动，从而实现推送和拉取两条路线的信息获取功能，具体内容见下一篇。</p>
 
       
 
@@ -298,6 +310,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2020/01/15/Openvas-Install-Guide/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Openvas Install Guide
+        
+      </div>
+    </a>
+  
   
     <a href="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">SSL-VPN流量抓取</div>
@@ -359,7 +380,7 @@ gitment.render('gitment-ctn')
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 T1ger
+    		&copy; 2020 T1ger
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -400,13 +421,21 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
       
       
     
+      
+      
+      
+    
     
 
     <ul style="width: 70%">
     
     
       
-      <li style="width: 100%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" target="_blank" rel="noopener" q-class="active:innerArchive">所有文章</a></li>
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" target="_blank" rel="noopener" q-class="active:innerArchive">所有文章</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" target="_blank" rel="noopener" q-class="active:friends">友链</a></li>
       
         
     </ul>
@@ -425,6 +454,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Fedora</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">openvas</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">跨网段</a>
@@ -463,15 +504,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">SSL</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">VPN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
               </li>
             
             <div class="clearfix"></div>
@@ -517,6 +558,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     	</section>
     
 
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="https://ai-sewell.me/link/4" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>老锥</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
     
 
     

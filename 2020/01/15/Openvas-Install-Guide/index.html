@@ -6,23 +6,36 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>SSL-VPN流量抓取 | T1ger</title>
+  <title>Openvas Install Guide | T1ger</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、实验目的飞塔防火墙提供了一个SSL-VPN的功能，该VPN适用场景较多，相比于L2TP or IPSec更为灵活 本实验目的为验证SSL-VPN隧道的流量加密功能">
-<meta name="keywords" content="流量分析,SSL,VPN">
+  <meta name="description" content="环境：Fedora29&#x2F;centos7openvas的三个组件gvmd: Greenbone Vulnerability Manager(gvmd) 是一个把普通的漏洞扫描整合进一个全漏洞管理方案的中心服务gasd:  Greenbone Security Assistant(GSA) 是GVM的web interface.OpenVas Scanner:扫描器 一、Fedora-YUM安装安装o">
+<meta name="keywords" content="Fedora,Centos,openvas">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SSL-VPN流量抓取">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;06&#x2F;SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96&#x2F;index.html">
+<meta property="og:title" content="Openvas Install Guide">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;index.html">
 <meta property="og:site_name" content="T1ger">
-<meta property="og:description" content="一、实验目的飞塔防火墙提供了一个SSL-VPN的功能，该VPN适用场景较多，相比于L2TP or IPSec更为灵活 本实验目的为验证SSL-VPN隧道的流量加密功能">
+<meta property="og:description" content="环境：Fedora29&#x2F;centos7openvas的三个组件gvmd: Greenbone Vulnerability Manager(gvmd) 是一个把普通的漏洞扫描整合进一个全漏洞管理方案的中心服务gasd:  Greenbone Security Assistant(GSA) 是GVM的web interface.OpenVas Scanner:扫描器 一、Fedora-YUM安装安装o">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;06&#x2F;SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96&#x2F;1.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;06&#x2F;SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96&#x2F;3.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;06&#x2F;SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96&#x2F;2.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;06&#x2F;SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96&#x2F;4.jpg">
-<meta property="og:updated_time" content="2019-12-08T03:20:09.087Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;3.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;4.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;5.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;6.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;7.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;8.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;9.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;10.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;11.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;12.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;13.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;14.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;15.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;16.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;17.png">
+<meta property="og:updated_time" content="2020-01-15T10:38:10.455Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;06&#x2F;SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96&#x2F;1.png">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;1.png">
   
     <link rel="alternative" href="/atom.xml" title="T1ger" type="application/atom+xml">
   
@@ -149,82 +162,126 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-SSL-VPN流量抓取" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Openvas-Install-Guide" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      SSL-VPN流量抓取
+      Openvas Install Guide
     </h1>
   
 
         
-        <a href="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/" class="archive-article-date">
-  	<time datetime="2019-12-06T15:16:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-06</time>
+        <a href="/2020/01/15/Openvas-Install-Guide/" class="archive-article-date">
+  	<time datetime="2020-01-15T10:30:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="一、实验目的"><a href="#一、实验目的" class="headerlink" title="一、实验目的"></a>一、实验目的</h2><p>飞塔防火墙提供了一个SSL-VPN的功能，该VPN适用场景较多，相比于L2TP or IPSec更为灵活</p>
-<p>本实验目的为验证SSL-VPN隧道的流量加密功能</p>
-   <a id="more"></a>
+        <p>环境：Fedora29/centos7<br>openvas的三个组件<br>gvmd: Greenbone Vulnerability Manager(gvmd) 是一个把普通的漏洞扫描整合进一个全漏洞管理方案的中心服务<br>gasd:  Greenbone Security Assistant(GSA) 是GVM的web interface.<br>OpenVas Scanner:扫描器</p>
+<h4 id="一、Fedora-YUM安装"><a href="#一、Fedora-YUM安装" class="headerlink" title="一、Fedora-YUM安装"></a>一、Fedora-YUM安装</h4><p>安装openvas软件包及依赖。<br>安装redis使用定制sock进行发布订阅，从openvas8以后开始使用redis推送消息，之前用的是lua。<br>sqlite3是openvas的内置数据库，存储例如每一次用户扫描的id，扫描结果等等，openvas还可以支持postgresql，本文只测试sqlite3的数据库。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum update -y</span><br><span class="line">$ yum install openvas* -y</span><br><span class="line">$ yum install redis* -y</span><br><span class="line">$ yum install sqlite3* -y</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>yum安装openvas的软件包如下：<br><img src="/2020/01/15/Openvas-Install-Guide/1.png"><br>check一次</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openvas-check-setup --v9</span><br></pre></td></tr></table></figure>
+<img src="/2020/01/15/Openvas-Install-Guide/2.png">
+提示需要启动redis，且监听/tmp/redis.sock，编辑/etc/redis.conf配置文件，取消下列两行的注释
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vim</span> /etc/redis.<span class="keyword">conf</span></span><br><span class="line">unixsocket /tmp/redis.sock</span><br><span class="line">unixsocketperm <span class="number">700</span></span><br></pre></td></tr></table></figure>
+运行以下命令：
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server /etc/redis.conf &amp;</span><br></pre></td></tr></table></figure>
+check第二次
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openvas-check-setup --v9</span><br></pre></td></tr></table></figure>
+<img src="/2020/01/15/Openvas-Install-Guide/3.png">
+按提示运行命令
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">greenbone-nvt-sync</span><br></pre></td></tr></table></figure>
+等待一会，生成了一堆.nasl文件
+check第三次
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openvas-check-setup --v9</span><br></pre></td></tr></table></figure>
+<img src="/2020/01/15/Openvas-Install-Guide/4.png">
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openvassd</span><br><span class="line">openvasmd --rebuild</span><br></pre></td></tr></table></figure>
+check第四次
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openvas-check-setup --v9</span><br></pre></td></tr></table></figure>
+<img src="/2020/01/15/Openvas-Install-Guide/5.png">
+这里按照提示进行以下操作
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -f /var/lib/openvas/mgr/tasks.db</span><br><span class="line">openvasmd --rebuild</span><br></pre></td></tr></table></figure>
+再次check发现还是原来的错误
+cat openvasmd.log查到有三个报错，建立scap、cert数据库、以及创建gnupg的目录
+<img src="/2020/01/15/Openvas-Install-Guide/6.png">
+建立数据库这里有两种方法：
+方法一：使用命令建立相应的数据库，缺点是速度太慢， 丰富的漏洞库然后又是离线的就代表安装的时候要下载大量数据，下载十几K的速度更新同步需要很久
 
-<h2 id="二、背景介绍"><a href="#二、背景介绍" class="headerlink" title="二、背景介绍"></a>二、背景介绍</h2><p>VPN：虚拟专用网络，属于远程访问技术，应用场景通常是企业网络，通过对数据包的加密和数据包目标地址转换实现远程访问。比如员工在外地出差，需要访问企业办公网或者生产网，通过VPN服务器接入这种访问就属于远程访问。</p>
-<p>SSL：安全套接层，工作在传输层和应用层之间，是TLS的前身安全协议，为了解决TCP/IP与各种应用层协议明文传输带来的风险而诞生，SSL协议包含以下几部分，</p>
-<h5 id="SSL记录协议"><a href="#SSL记录协议" class="headerlink" title="SSL记录协议"></a>SSL记录协议</h5><p>建立在可靠的传输协议如TCP）之上，为高层协议提供数据封装、压缩、加密等基本功能的支持 。机密性、完整性。</p>
-<p>定义传输数据的格式，加密/解密、压缩/解压缩、MAC计算等操作等。 </p>
-<p>参考链接：<a href="http://www.cnitpm.com/pm1/67775.html" target="_blank" rel="noopener">http://www.cnitpm.com/pm1/67775.html</a></p>
-<h5 id="SSL握手协议"><a href="#SSL握手协议" class="headerlink" title="SSL握手协议"></a>SSL握手协议</h5><p>建立在SSL记录协议之上，用于在实际的数据传输开始前，通讯双方进行身份认证、协商加密算法、交换加密密钥等。<br><img src="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/1.png" alt="avatar"><br>(1) 客户端开始新的握手，并将自身支持的功能提交给服务器。</p>
-<p>(2) 服务器选择连接参数。</p>
-<p>(3) 服务器发送其证书链（仅当需要服务器身份验证时）。</p>
-<p>(4) 根据选择的密钥交换方式，服务器发送生成主密钥的额外信息。</p>
-<p>(5) 服务器通知自己完成了协商过程。</p>
-<p>(6) 客户端发送生成主密钥所需的额外信息。</p>
-<p>(7) 客户端切换加密方式并通知服务器。</p>
-<p>(8) 客户端计算发送和接收到的握手消息的MAC并发送。</p>
-<p>(9) 服务器切换加密方式并通知客户端。</p>
-<p>(10) 服务器计算发送和接收到的握手消息的MAC并发送。</p>
-<p>   到这一步，正常情况下连接就已经建立起来了</p>
-<p>   参考链接：<a href="https://www.jianshu.com/p/81efc02b2f29" target="_blank" rel="noopener">https://www.jianshu.com/p/81efc02b2f29</a></p>
-<pre><code>根据 version 信息能够知道客户端支持的最高的协议版本号，</code></pre><p> client hello</p>
-<p> 如果是 SSL 3.0 或 TLS 1.0 等低版本协议，非常注意可能因为版本低引起一些握手失败的情况;</p>
-<p> server hello</p>
-<p> 根据 TLS version 字段能够推测出服务器支持的协议的最高版本，版本不同可能造成握手失败;</p>
-<h5 id="告警协议、更改密码说明协议、应用协议"><a href="#告警协议、更改密码说明协议、应用协议" class="headerlink" title="告警协议、更改密码说明协议、应用协议"></a>告警协议、更改密码说明协议、应用协议</h5><ol start="3">
-<li><p>TLS</p>
-<p>TLS和SSL本质上没有区别，细节上有区别，最新版本的TLS建立在SSL 3.0协议上，他们的差别主要是支持的加密算法不同</p>
-</li>
-</ol>
-<h2 id="三、ssl-vpn工作方式"><a href="#三、ssl-vpn工作方式" class="headerlink" title="三、ssl-vpn工作方式"></a>三、ssl-vpn工作方式</h2><p>   飞塔防火墙支持两种vpn使用方式，第一种是通过10443的WEB界面去访问，第二种是通过安装client完成拨号</p>
-<h4 id="WEB代理"><a href="#WEB代理" class="headerlink" title="WEB代理"></a>WEB代理</h4><p>假设飞塔防火墙的管理地址为<a href="https://sslurl，那么该VPN服务器的WEB界面一般为https://sslurl:10443" target="_blank" rel="noopener">https://sslurl，那么该VPN服务器的WEB界面一般为https://sslurl:10443</a></p>
-<p>登录SSL VPN的WEB界面以后，WEB代理访问可以选择两种方式，一种是很多应用的链接，如SSH TELNET等，也可以把内网某个WEB服务绑在链接里，点击链接后会弹出一个新的窗口，跳转到<a href="https://sslurl/page1,page2等" target="_blank" rel="noopener">https://sslurl/page1,page2等</a></p>
-<p>另一种是一个输入框，用户输入一个网址，如url1,则会弹出一个新的窗口，跳转到<a href="https://sslurl/url1" target="_blank" rel="noopener">https://sslurl/url1</a></p>
-<h4 id="其他方式"><a href="#其他方式" class="headerlink" title="其他方式"></a>其他方式</h4><p>除了WEB代理，还有端口映射、IP连接等一些技术点，我在仔细学习后受益匪浅，附一张链接而不详述。</p>
-<p> <a href="https://wenku.baidu.com/view/b798edd333687e21ae45a96e.html" target="_blank" rel="noopener">https://wenku.baidu.com/view/b798edd333687e21ae45a96e.html</a> </p>
-<h4 id="SSL-vpn-client"><a href="#SSL-vpn-client" class="headerlink" title="SSL-vpn-client"></a>SSL-vpn-client</h4><p>以FortClient为例，重点说一下这个client</p>
-<h5 id="vpn-client网卡"><a href="#vpn-client网卡" class="headerlink" title="vpn-client网卡"></a>vpn-client网卡</h5><p>安装client成功后，网卡内会多一个Fortinet的VPN虚拟网卡，这个网卡用作vpn隧道的数据加解密<br>   <img src="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/3.png" alt="avatar"></p>
-<h5 id="配置vpn"><a href="#配置vpn" class="headerlink" title="配置vpn"></a>配置vpn</h5><p>下图为配置一个vpn的界面：<br><img src="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/2.png" alt="avatar"></p>
-<p>其逻辑流程如下：</p>
-<p>连接名+远程网关(VPN服务器地址)+远程端口(10443)+vpn用户名+VPN密码-&gt;登录</p>
-<h5 id="数据流走向"><a href="#数据流走向" class="headerlink" title="数据流走向"></a>数据流走向</h5><p><img src="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/4.jpg" alt="avatar"></p>
-<p>图左边部分是一个正常PC通过网卡上网的过程,右边部分是一个使用ssl-vpn访问互联网的过程,下面分析一下:</p>
-<p>首先,PC访问互联网的流量发送给VPN-Client网卡</p>
-<p>VPN-Client网卡对数据流量进行SSL加密</p>
-<p>VPN-Client网卡将加密流量发送给互联网卡</p>
-<p>互联网卡将加密流量通过互联网传递到SSL-VPN-Server(即SSL-VPN服务器,即防火墙)</p>
-<p>SSL-VPN-Server对加密流量进行解密</p>
-<p>SSL-VPN-Server对解密后的流量进行处理,并将响应流量按原链路返回给PC.</p>
-<p>①比如访问内网服务的流量,Server会直接通过数据包地址转换,将响应流量返回给PC,在这里Server的作用相当于跳板机</p>
-<p>②比如访问互联网的流量,Server也是通过数据包地址转换,返回响应流量,在这里Server的作用相当于WEB代理</p>
-<p>图中红色的线画的是VPN隧道的流量,即用一条线表达隧道流量传递的过程,那么在这个隧道流量传输过程中,任意节点上捕获到的流量肯定都是加密的.</p>
-<p>因此如果抓包看流量的操作就有了</p>
-<p>打开一个wireshark,监听互联网卡的流量,预期看到隧道流量都是加密过的</p>
-<p>再打开一个wireshark,监听VPN-Clinet网卡的流量,预期看到隧道流量都是明文的</p>
-<h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><p>有个小问题,PC的HTTPS流量通过VPN-Client是否还会再被加密一次,这里我还没有想到验证方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">greenbone-scapdata-sync</span><br><span class="line">greenbone-certdata-sync</span><br></pre></td></tr></table></figure>
+<p>方法二：在/var/lib/openvas/下建立两个文件夹，分别是cert-data、scap-data，然后把已经搭好的服务器上的数据copy过来，可以节省大量时间</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp user@ip:/path/to/cert-data/* ./cert-data/</span><br><span class="line">scp user@ip:/path/to/scap-data/* ./scap-data/</span><br></pre></td></tr></table></figure>
+<p>然后重建数据库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">greenbone-scapdata-sync --refresh</span><br><span class="line">greenbone-certdata-sync  --refresh</span><br></pre></td></tr></table></figure>
+<p>建立gnupg目录:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /var/lib/openvas/openvasmd/gnupg/</span><br></pre></td></tr></table></figure>
+<p>打开openvassd</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openvassd</span><br></pre></td></tr></table></figure>
+<p>check第五次</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openvas-check-setup --v9</span><br></pre></td></tr></table></figure>
+<img src="/2020/01/15/Openvas-Install-Guide/7.png">
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openvasmd --rebuild</span><br></pre></td></tr></table></figure>
+....
+check第六次
+<img src="/2020/01/15/Openvas-Install-Guide/8.png">
+创建admin用户
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openvasmd --create-user=admin --role=Admin</span><br><span class="line">openvasmd --user=admin --new-password=admin</span><br></pre></td></tr></table></figure>
+....
+check第七次
+<img src="/2020/01/15/Openvas-Install-Guide/9.png">
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openvas-manage-certs -a</span><br><span class="line">ERROR:certtool binary not found!</span><br></pre></td></tr></table></figure>
+原因是没有创建证书,且首先得安装证书生成工具
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install gnutls-utils</span><br><span class="line">openvas-manage-certs -a</span><br></pre></td></tr></table></figure>
+check第八次
+<img src="/2020/01/15/Openvas-Install-Guide/10.png">
+按照要求启动gsad openvasmd
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gsad --listen=0.0.0.0 --port=9390</span><br></pre></td></tr></table></figure>
+check第九次
+<img src="/2020/01/15/Openvas-Install-Guide/11.png">
+提示安装nmap扫描工具
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install nmap</span><br></pre></td></tr></table></figure>
+check第十次
+<img src="/2020/01/15/Openvas-Install-Guide/12.png">
+提示关闭SELINUX
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/selinux</span><br><span class="line">selinux=disabled</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+check第十一次
+<img src="/2020/01/15/Openvas-Install-Guide/13.png">
+出现installation OK证明安装成功
+#### 二、nginx反代
+实际上通过简单的配置即可以达到域名访问的效果，如：
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gsad --listen=0.0.0.0 --allow-header-host=openvas.cc</span><br></pre></td></tr></table></figure>
+
+<p>但通过nginx做domian-to-service的代理，无论对横向扩展，还是端口规范来说都是很好的选择<br>首先我尝试了不配置证书直接nginx反代，访问时会报错。<br><img src="/2020/01/15/Openvas-Install-Guide/14.png"><br>所以还是得做证书，首先使用openssl生成一对ssl的证书</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -des3 -out openvas.key 1024</span><br><span class="line">ENTER password:******</span><br><span class="line">openssl req -new -key openvas.key -out openvas.csr</span><br><span class="line">openssl x509 -req -days 3650 -<span class="keyword">in</span> openvas.csr -signkey openvas.key -out openvas.crt</span><br></pre></td></tr></table></figure>
+<p>3650指证书有效期，建议大家填长一点。成功生成一对密钥之后，开始写nginx的配置文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/conf.d/openvas.conf</span><br><span class="line">server &#123;</span><br><span class="line">        listen  80;</span><br><span class="line">        server_name     openvas.cc;</span><br><span class="line">        rewrite ^(.*)$  https://<span class="variable">$host</span><span class="variable">$1</span> permanent;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">  listen 443 ssl;</span><br><span class="line">  server_name openvas.cc;</span><br><span class="line">  location / &#123;</span><br><span class="line">  proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">  proxy_set_header Host <span class="variable">$http_host</span>;</span><br><span class="line">  proxy_set_header X-Forwarded-Proto https;</span><br><span class="line">  proxy_redirect off;</span><br><span class="line">  proxy_ssl_verify off;</span><br><span class="line">  proxy_pass https://192.168.1.103:9390;</span><br><span class="line">  &#125;</span><br><span class="line">  ssl_certificate /etc/nginx/certs/openvas.crt;</span><br><span class="line">  ssl_certificate_key /etc/nginx/certs/openvas.key;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>nginx配置完成，但是直接启动是会报错的，因为gsad启动时会开启80端口和443端口，导致端口被占用，nginx就无法进行正常工作，于是需要在启动gsad时，加一些参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gsad --listen=0.0.0.0 --port=9390</span><br></pre></td></tr></table></figure>
+<p>–port是指将GSA的web管理开在哪个端口上，先启动gsad，然后kill掉80和443的pid，再启动nginx，这样就可以正常启动nginx.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -s reload</span><br><span class="line">service nginx start</span><br></pre></td></tr></table></figure>
+<p>在host里面做一条domain-to-ip的绑定</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br><span class="line">192.168.1.103 openvas.cc</span><br></pre></td></tr></table></figure>
+<p>访问openvas.cc，报错<br><img src="/2020/01/15/Openvas-Install-Guide/15.png"><br>根据报错，我们需要确定GSA的启动配置是否正确，查阅资料得需要在启动gsad时声明供外界访问的域名或IP，命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gsad --listen=0.0.0.0 --port=9390 --allow-header-host=openvas.cc</span><br></pre></td></tr></table></figure>
+<p>这样不论是本机测试，或者是局域网测试，均可以通过域名访问，需要注意的是在局域网测试时需要在本机或者路由器处，绑定openvas的IP和域名对应关系。<br><img src="/2020/01/15/Openvas-Install-Guide/16.png"></p>
+<h4 id="三、Centos-YUM安装"><a href="#三、Centos-YUM安装" class="headerlink" title="三、Centos-YUM安装"></a>三、Centos-YUM安装</h4><p>配置阿里源&amp;&amp;yum upgrade<br>配置atomic源， Atomic源支持Fedora，RHEL和CentOS的YUM包管理 ，相当于windows下的某软件管家一样</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -q -O - http://www.atomicorp.com/installers/atomic | sh</span><br></pre></td></tr></table></figure>
+<p>安装好之后再次yum upgrade<br>执行完成之后开始安装openvas</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install openvas</span><br></pre></td></tr></table></figure>
+<p>顺利安装完成，进行第一次检查</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openvas-setup</span><br></pre></td></tr></table></figure>
+<p>提示需要关闭SELINUX</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/selinux</span><br><span class="line">SELINUX=disabled</span><br></pre></td></tr></table></figure>
+<p>第二次检查</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openvas-setup</span><br><span class="line">Step 1: Update NVT, CERT, and SCAP data</span><br><span class="line">17.54-18.08</span><br></pre></td></tr></table></figure>
+<p>启动成功，可以访问80端口进行test扫描<br><img src="/2020/01/15/Openvas-Install-Guide/17.png"><br>PS:本次执行居然没有遇到python36-paramiko包安装的问题，神奇</p>
 
       
 
@@ -259,21 +316,32 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Fedora</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">SSL</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Centos</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">VPN</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">openvas</a>
         		</li>
       		
 		</ul>
 	</div>
 
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/环境搭建//" class="article-tag-list-link color5">环境搭建</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -323,7 +391,7 @@
     <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/01/15/Openvas-Install-Guide/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -337,18 +405,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          ELK的空间维护
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">无线WiFi流量的抓取与分析(一)</div>
+    <a href="/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ELK的空间维护</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -387,7 +446,7 @@
 <script src="https://billts.site/js/gitment.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "SSL-VPN流量抓取",
+  id: "Openvas Install Guide",
   owner: 'canbaoafeizai',
   repo: 'canbaoafeizai.github.io',
   oauth: {
