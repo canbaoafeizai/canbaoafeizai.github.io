@@ -142,249 +142,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-OpenVas配置slave的debug心得" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/26/OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E5%BF%83%E5%BE%97/">OpenVas配置slave的debug心得</a>
-    </h1>
-  
-
-        
-        <a href="/2020/01/26/OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E5%BF%83%E5%BE%97/" class="archive-article-date">
-  	<time datetime="2020-01-26T03:09:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>作为安全行业从业者，一定会有一款适合自己的扫描器，在众多开源扫描器中，相信有很多人会选择openvas，绿骨头组织的这款产品因其性能卓越，扩展性强，接入点、接入方式灵活等众多优点，至今已经成为了企业的安全解决方案之一。<br>这款扫描器有一个非常优秀的功能点，即以GMP协议为支撑，平台支持灵活任务下发。因此这个功能是一定要尝试的，试想当你想对一批目标进行定时扫描或者常规扫描时，你只需要简单的配置，通过web界面或者cli脚本，将任务下发给你的scanner-slave集群，然后坐等收集扫描结果，是不是很爽！<br>但最近在配置openvas的主从服务器时，遇到了一些BUG甚是头疼，磕了很久终于解决，于是记录下来，以防有同道中人掉坑里。</p>
-<h4 id="一、名词扫盲"><a href="#一、名词扫盲" class="headerlink" title="一、名词扫盲"></a>一、名词扫盲</h4><p>在配置扫描器的时候，海量的教程，海量的词汇经常让我头晕晕的，比如Openvasmd、gvmd、openvassd、gasd、OMP、GMP等等，首先我们来过一遍这些名词。<br>| 名称        | 功能    |  常用指数  |<br>| ——–   | :—-:   | :—-: |<br>| gvmd        | GVM10自带的守护进程 |   10   |<br>| openvasmd       | GVM9及之前的守护进程的叫法 |   10   |<br>| openvassd        | GVM的扫描器进程，作用就是进行漏洞扫描，并将结果反馈给管理模块。 |   10   |<br>|  OSPd            | 多个扫描器之间使用OSP协议进行通信，而OSPd就是通信进程。 | 5 |<br>| GOS | 全称Greenbone Operating System。GSM设备的操作系统。提供商业版本，具有企业支持功能的GVM框架。 | 5 |<br>| GSM | 全称Greenbone Security Manager，绿骨公司系列产品之一，常以应用程序或虚拟机形式出现。 | 8 |<br>| GMP | 全称Greenbone Management Protocol，听名字就知道是管理协议，gvmd和openvasmd使用该协议、基于XML与其他模块进行通信，以前叫OMP。 | 8 |<br>| OSP | 全称Open Scanner Protocol，多种绿骨公司产品之间用于通信的协议 | 5 |<br>| GVM | 全称Greenbone Vulnerability Manager，这是许多服务的一个框架，作为一个商业产品也是组成GSM的一部分，以前直接叫openvas。 | 10 |<br>| GVM9 | GVM9代版本，也叫OpenVas9，用在GOS 4代系列。 | 10 |<br>| GVM10 | GVM10代版本，用在GOS 5代系列。 | 10 |<br>| GSE | 全称Greenbone Source Edition，绿骨应用栈，支撑漏洞扫描，漏洞管理，GVM等，用以支持第三方调用，比如Linux的某个分支提供GVM，但它是以GSE为基础构建的。 | 3 |</p>
-<h4 id="二、配置slave-scanner的三种方法"><a href="#二、配置slave-scanner的三种方法" class="headerlink" title="二、配置slave-scanner的三种方法"></a>二、配置slave-scanner的三种方法</h4><p>不论是跟GMP还是OSP server通信，首先需要选择一种通信方法，常用的有以下三种方法:</p>
-<h5 id="2-1-TLS"><a href="#2-1-TLS" class="headerlink" title="2.1 TLS"></a>2.1 TLS</h5><p>TLS连接类型是GOS 3.1及更高版本中用于通信的默认连接类型,也是笔者要重点介绍的配置方法.<br>笔者的测试环境为centos7,具体版本见2.3,一台slave和一台master,且防火墙关闭(方便测试)</p>
-<h6 id="Master配置"><a href="#Master配置" class="headerlink" title="Master配置"></a>Master配置</h6><p>第一步:登录到GSA上,进入 Configuration-&gt; Credentials<br><img src="/2020/01/26/OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E5%BF%83%E5%BE%97/C:%5CUsers%5Cchen%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200126221449902.png" alt="image-20200126221449902"><br><img src="/2020/01/26/OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E5%BF%83%E5%BE%97/C:%5CUsers%5Cchen%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200126221608208.png" alt="image-20200126221608208"><br>第二步:然后进入Configuration-&gt; Scanner<br><img src="/2020/01/26/OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E5%BF%83%E5%BE%97/C:%5CUsers%5Cchen%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200126221720283.png" alt="image-20200126221720283"><br>Type一定要选GMP Scanner.Credential选刚刚创建的test.<br>第三步:创建任务<br><img src="/2020/01/26/OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E5%BF%83%E5%BE%97/C:%5CUsers%5Cchen%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200126222100080.png" alt="image-20200126222100080"><br>第四步:<br>任务创建之后需要在master上给相应的scanner配置slave的cacert.pem<br>slave上cert默认路径在/var/lib/gvm/CA/cacert.pem<br>此处需要把slave上的cacert.pem复制到master上.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gvmd --get-scanners                   //查找<span class="built_in">test</span>的uuid</span><br><span class="line">gvmd --modify-scanner=<span class="string">"test-uuid"</span> --scanner-ca-pub=/path/to/slave/cacert.pem</span><br></pre></td></tr></table></figure>
-<p>此处配置完成master后,最好重启一下gvmd以及gsad.原因后面会说.<br>接下来配置Slave.</p>
-<h6 id="Slave配置"><a href="#Slave配置" class="headerlink" title="Slave配置"></a>Slave配置</h6><p>第一步,创建一个非admin的账号</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gvmd --create-user=<span class="built_in">test</span> --new-password=<span class="built_in">test</span> --role=Admin</span><br></pre></td></tr></table></figure>
-<p>第二步:保证gvmd监听在TCP-port上,而不是Unix socket,这一步笔者在实验的时候错了许多次,总结出几个要注意的点.首先执行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service gvmd stop</span><br><span class="line">service gsad stop</span><br></pre></td></tr></table></figure>
-<p>其次执行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gvmd --listen=0.0.0.0 --port=9391</span><br><span class="line">gsad --mlisten=0.0.0.0 --mport=9391</span><br></pre></td></tr></table></figure>
-<p>确保gsad正常运行的前提下,gvmd监听9391端口:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -anop | grep  gvmd</span><br><span class="line">tcp        0      0 0.0.0.0:9391            0.0.0.0:*               LISTEN      13034/gvmd: Waiting  off (0.00/0/0)</span><br></pre></td></tr></table></figure>
-<p>期间打开log,跟进报错:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/log/gvm/gvmd.log</span><br></pre></td></tr></table></figure>
-<h6 id="启动task"><a href="#启动task" class="headerlink" title="启动task"></a>启动task</h6><p>点击启动task,此处可能会遇到如下几个问题:<br>问题一:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">failed to connect xxxx port 9391.</span><br></pre></td></tr></table></figure>
-<p>解决方案:确保slave上的9391端口开放,确保防火墙能通过.<br>问题二:(master)slave_connect failed  | (slave)read_from_client_tls</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/<span class="built_in">log</span>/gvm/gvmd-master:</span><br><span class="line">md manage:WARNING:slave_connect: failed to open connection to XXXX on 9391</span><br><span class="line">lib  serv:WARNING:gvm_server_verify: the certificate is not trusted</span><br><span class="line">lib  serv:WARNING:gvm_server_verify: the certificate hasn<span class="string">'t got a known issuer</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/<span class="built_in">log</span>/gvm/gvm-slave:</span><br><span class="line">md   main:read_from_client_tls: failed to <span class="built_in">read</span> from client: The TLS connection was non-properly terminated.</span><br></pre></td></tr></table></figure>
-<p>1.笔者首先抓了master上的包,发现有向slave的9391端口发的包, slave的9391端口也有返回包,排除了网络不可达的问题.<br>2.笔者通过查阅各种资料,确保cacert没有搞错,路径没有搞错<br>3.经历一天的排除+尝试,一遍遍确认自己配置是正确的前提下,笔者终于找到了找到了一个可能的原因,即当执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gvmd  --modify-scanner=&quot;uuid&quot; --scanner-ca-pub=/path/to/cacert.pem</span><br></pre></td></tr></table></figure>
-<p>之后,gvmd并不能立即加载该证书,并且即使按照上面步骤执行也会重复出现上述报错.<br>此处需要在配置完证书之后,重启一下gvmd使其加载证书,重启task即可在两边的log中发现如下log,且GSA上也终于从requested变成了running.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Status of task test6  has changed to Running</span><br></pre></td></tr></table></figure>
-<h5 id="2-2-ssh"><a href="#2-2-ssh" class="headerlink" title="2.2 ssh"></a>2.2 ssh</h5><p>从GOS 4开始，SSH是默认的连接类型，可通过GVM建立管理守护进程之间的连接。 GMP协议通过SSH隧道传输并转发到gvmd / openvasmd,目前笔者还没有测试过.</p>
-<h5 id="2-3-Unix-Domain-Socket"><a href="#2-3-Unix-Domain-Socket" class="headerlink" title="2.3 Unix Domain Socket"></a>2.3 Unix Domain Socket</h5><p>Unix Domain Socket是Greenbone Source Edition中gvmd的默认类型。 但只可以使用<br>在与进程相同的主机上运行client-tools时。<br>gvmd/openvasmd提供的Unix Domain Socket的从GVM 9中的openvasmd.sock更改为GVM 10中的gvmd.sock。<br>在GOS 4代里sock路径一般为/run/openvas/openvasmd.sock.<br>在GOS 5代里sock路径一般为/run/gvm/gvmd.sock.<br>基于OSPd的扫描器也可以通过Unix Domain Socket访问。<br>举个例子,笔者的实验环境为:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep gvm  </span><br><span class="line">rpm -qa | grep openvas </span><br><span class="line">gvmd-8.0.0-6928.el7.art.x86_64</span><br><span class="line">gvm-libs-10.0.0-6924.el7.art.x86_64</span><br><span class="line">openvas-scanner-6.0.0-6930.el7.art.x86_64</span><br><span class="line">openvas-smb-1.0.5-6923.el7.art.x86_64</span><br></pre></td></tr></table></figure>
-<p>默认启动的gvmd使用的是Unix Domain Socket,如下:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano |grep gvmd</span><br><span class="line">unix  2      [ ACC ]     STREAM     LISTENING     25846    /var/run/gvmd.sock</span><br></pre></td></tr></table></figure>
-<h4 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h4><p>官方文档永远是最好的教程,其次是开源社区.<br>附一份官方参考文档:<a href="https://readthedocs.org/projects/gvm-tools/downloads/pdf/latest/" target="_blank" rel="noopener">https://readthedocs.org/projects/gvm-tools/downloads/pdf/latest/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Fedora</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Centos</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">openvas</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">debug</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/26/OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E5%BF%83%E5%BE%97/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Openvas不同版本gvm和gsad的解读" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/26/Openvas%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACgvm%E5%92%8Cgsad%E7%9A%84%E8%A7%A3%E8%AF%BB/">OpenVas配置slave的debug心得</a>
-    </h1>
-  
-
-        
-        <a href="/2020/01/26/Openvas%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACgvm%E5%92%8Cgsad%E7%9A%84%E8%A7%A3%E8%AF%BB/" class="archive-article-date">
-  	<time datetime="2020-01-26T03:09:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<p>作为安全行业从业者，一定会有一款适合自己的扫描器，在众多开源扫描器中，相信有很多人会选择openvas，绿骨头组织的这款产品因其性能卓越，扩展性强，接入点、接入方式灵活等众多优点，至今已经成为了企业的安全解决方案之一。<br>这款扫描器有一个非常优秀的功能点，即以GMP协议为支撑，平台支持灵活任务下发。因此这个功能是一定要尝试的，试想当你想对一批目标进行定时扫描或者常规扫描时，你只需要简单的配置，通过web界面或者cli脚本，将任务下发给你的scanner-slave集群，然后坐等收集扫描结果，是不是很爽！<br>但最近在配置openvas的主从服务器时，遇到了一些BUG甚是头疼，磕了很久终于解决，于是记录下来，以防有同道中人掉坑里。</p>
-<h4 id="一、名词扫盲"><a href="#一、名词扫盲" class="headerlink" title="一、名词扫盲"></a>一、名词扫盲</h4><p>在配置扫描器的时候，海量的教程，海量的词汇经常让我头晕晕的，比如Openvasmd、gvmd、openvassd、gasd、OMP、GMP等等，首先我们来过一遍这些名词。<br>| 名称        | 功能    |  常用指数  |<br>| ——–   | :—-:   | :—-: |<br>| gvmd        | GVM10自带的守护进程 |   10   |<br>| openvasmd       | GVM9及之前的守护进程的叫法 |   10   |<br>| openvassd        | GVM的扫描器进程，作用就是进行漏洞扫描，并将结果反馈给管理模块。 |   10   |<br>|  OSPd            | 多个扫描器之间使用OSP协议进行通信，而OSPd就是通信进程。 | 5 |<br>| GOS | 全称Greenbone Operating System。GSM设备的操作系统。提供商业版本，具有企业支持功能的GVM框架。 | 5 |<br>| GSM | 全称Greenbone Security Manager，绿骨公司系列产品之一，常以应用程序或虚拟机形式出现。 | 8 |<br>| GMP | 全称Greenbone Management Protocol，听名字就知道是管理协议，gvmd和openvasmd使用该协议、基于XML与其他模块进行通信，以前叫OMP。 | 8 |<br>| OSP | 全称Open Scanner Protocol，多种绿骨公司产品之间用于通信的协议 | 5 |<br>| GVM | 全称Greenbone Vulnerability Manager，这是许多服务的一个框架，作为一个商业产品也是组成GSM的一部分，以前直接叫openvas。 | 10 |<br>| GVM9 | GVM9代版本，也叫OpenVas9，用在GOS 4代系列。 | 10 |<br>| GVM10 | GVM10代版本，用在GOS 5代系列。 | 10 |<br>| GSE | 全称Greenbone Source Edition，绿骨应用栈，支撑漏洞扫描，漏洞管理，GVM等，用以支持第三方调用，比如Linux的某个分支提供GVM，但它是以GSE为基础构建的。 | 3 |</p>
-<h4 id="二、配置slave-scanner的三种方法"><a href="#二、配置slave-scanner的三种方法" class="headerlink" title="二、配置slave-scanner的三种方法"></a>二、配置slave-scanner的三种方法</h4><p>不论是跟GMP还是OSP server通信，首先需要选择一种通信方法，常用的有以下三种方法:</p>
-<h5 id="2-1-TLS"><a href="#2-1-TLS" class="headerlink" title="2.1 TLS"></a>2.1 TLS</h5><p>TLS连接类型是GOS 3.1及更高版本中用于通信的默认连接类型,也是笔者要重点介绍的配置方法.<br>笔者的测试环境为centos7,具体版本见2.3,一台slave和一台master,且防火墙关闭(方便测试)</p>
-<h6 id="Master配置"><a href="#Master配置" class="headerlink" title="Master配置"></a>Master配置</h6><p>第一步:登录到GSA上,进入 Configuration-&gt; Credentials<br><img src="/2020/01/26/Openvas%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACgvm%E5%92%8Cgsad%E7%9A%84%E8%A7%A3%E8%AF%BB/2.png" alt="image-20200126221449902"><br><img src="/2020/01/26/Openvas%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACgvm%E5%92%8Cgsad%E7%9A%84%E8%A7%A3%E8%AF%BB/3.png" alt="image-20200126221608208"><br>第二步:然后进入Configuration-&gt; Scanner<br><img src="/2020/01/26/Openvas%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACgvm%E5%92%8Cgsad%E7%9A%84%E8%A7%A3%E8%AF%BB/4.png" alt="image-20200126221720283"><br>Type一定要选GMP Scanner.Credential选刚刚创建的test.<br>第三步:创建任务<br><img src="/2020/01/26/Openvas%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACgvm%E5%92%8Cgsad%E7%9A%84%E8%A7%A3%E8%AF%BB/5.png" alt="image-20200126222100080"><br>第四步:<br>任务创建之后需要在master上给相应的scanner配置slave的cacert.pem<br>slave上cert默认路径在/var/lib/gvm/CA/cacert.pem<br>此处需要把slave上的cacert.pem复制到master上.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gvmd --get-scanners                   //查找<span class="built_in">test</span>的uuid</span><br><span class="line">gvmd --modify-scanner=<span class="string">"test-uuid"</span> --scanner-ca-pub=/path/to/slave/cacert.pem</span><br></pre></td></tr></table></figure>
-<p>此处配置完成master后,最好重启一下gvmd以及gsad.原因后面会说.<br>接下来配置Slave.</p>
-<h6 id="Slave配置"><a href="#Slave配置" class="headerlink" title="Slave配置"></a>Slave配置</h6><p>第一步,创建一个非admin的账号</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gvmd --create-user=<span class="built_in">test</span> --new-password=<span class="built_in">test</span> --role=Admin</span><br></pre></td></tr></table></figure>
-<p>第二步:保证gvmd监听在TCP-port上,而不是Unix socket,这一步笔者在实验的时候错了许多次,总结出几个要注意的点.首先执行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service gvmd stop</span><br><span class="line">service gsad stop</span><br></pre></td></tr></table></figure>
-<p>其次执行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gvmd --listen=0.0.0.0 --port=9391</span><br><span class="line">gsad --mlisten=0.0.0.0 --mport=9391</span><br></pre></td></tr></table></figure>
-<p>确保gsad正常运行的前提下,gvmd监听9391端口:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -anop | grep  gvmd</span><br><span class="line">tcp        0      0 0.0.0.0:9391            0.0.0.0:*               LISTEN      13034/gvmd: Waiting  off (0.00/0/0)</span><br></pre></td></tr></table></figure>
-<p>期间打开log,跟进报错:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/log/gvm/gvmd.log</span><br></pre></td></tr></table></figure>
-<h6 id="启动task"><a href="#启动task" class="headerlink" title="启动task"></a>启动task</h6><p>点击启动task,此处可能会遇到如下几个问题:<br>问题一:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">failed to connect xxxx port 9391.</span><br></pre></td></tr></table></figure>
-<p>解决方案:确保slave上的9391端口开放,确保防火墙能通过.<br>问题二:(master)slave_connect failed  | (slave)read_from_client_tls</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/<span class="built_in">log</span>/gvm/gvmd-master:</span><br><span class="line">md manage:WARNING:slave_connect: failed to open connection to XXXX on 9391</span><br><span class="line">lib  serv:WARNING:gvm_server_verify: the certificate is not trusted</span><br><span class="line">lib  serv:WARNING:gvm_server_verify: the certificate hasn<span class="string">'t got a known issuer</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/<span class="built_in">log</span>/gvm/gvm-slave:</span><br><span class="line">md   main:read_from_client_tls: failed to <span class="built_in">read</span> from client: The TLS connection was non-properly terminated.</span><br></pre></td></tr></table></figure>
-<p>1.笔者首先抓了master上的包,发现有向slave的9391端口发的包, slave的9391端口也有返回包,排除了网络不可达的问题.<br>2.笔者通过查阅各种资料,确保cacert没有搞错,路径没有搞错<br>3.经历一天的排除+尝试,一遍遍确认自己配置是正确的前提下,笔者终于找到了找到了一个可能的原因,即当执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gvmd  --modify-scanner=&quot;uuid&quot; --scanner-ca-pub=/path/to/cacert.pem</span><br></pre></td></tr></table></figure>
-<p>之后,gvmd并不能立即加载该证书,并且即使按照上面步骤执行也会重复出现上述报错.<br>此处需要在配置完证书之后,重启一下gvmd使其加载证书,重启task即可在两边的log中发现如下log,且GSA上也终于从requested变成了running.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Status of task test6  has changed to Running</span><br></pre></td></tr></table></figure>
-<h5 id="2-2-ssh"><a href="#2-2-ssh" class="headerlink" title="2.2 ssh"></a>2.2 ssh</h5><p>从GOS 4开始，SSH是默认的连接类型，可通过GVM建立管理守护进程之间的连接。 GMP协议通过SSH隧道传输并转发到gvmd / openvasmd,目前笔者还没有测试过.</p>
-<h5 id="2-3-Unix-Domain-Socket"><a href="#2-3-Unix-Domain-Socket" class="headerlink" title="2.3 Unix Domain Socket"></a>2.3 Unix Domain Socket</h5><p>Unix Domain Socket是Greenbone Source Edition中gvmd的默认类型。 但只可以使用<br>在与进程相同的主机上运行client-tools时。<br>gvmd/openvasmd提供的Unix Domain Socket的从GVM 9中的openvasmd.sock更改为GVM 10中的gvmd.sock。<br>在GOS 4代里sock路径一般为/run/openvas/openvasmd.sock.<br>在GOS 5代里sock路径一般为/run/gvm/gvmd.sock.<br>基于OSPd的扫描器也可以通过Unix Domain Socket访问。<br>举个例子,笔者的实验环境为:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep gvm  </span><br><span class="line">rpm -qa | grep openvas </span><br><span class="line">gvmd-8.0.0-6928.el7.art.x86_64</span><br><span class="line">gvm-libs-10.0.0-6924.el7.art.x86_64</span><br><span class="line">openvas-scanner-6.0.0-6930.el7.art.x86_64</span><br><span class="line">openvas-smb-1.0.5-6923.el7.art.x86_64</span><br></pre></td></tr></table></figure>
-<p>默认启动的gvmd使用的是Unix Domain Socket,如下:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano |grep gvmd</span><br><span class="line">unix  2      [ ACC ]     STREAM     LISTENING     25846    /var/run/gvmd.sock</span><br></pre></td></tr></table></figure>
-<h4 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h4><p>官方文档永远是最好的教程,其次是开源社区.<br>附一份官方参考文档:<a href="https://readthedocs.org/projects/gvm-tools/downloads/pdf/latest/" target="_blank" rel="noopener">https://readthedocs.org/projects/gvm-tools/downloads/pdf/latest/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Fedora</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Centos</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">openvas</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">debug</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/26/Openvas%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACgvm%E5%92%8Cgsad%E7%9A%84%E8%A7%A3%E8%AF%BB/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-Openvas-Install-Guide" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1009,23 +766,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Fedora</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">跨网段</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Centos</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">vpn</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">openvas</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">debug</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">PI</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1053,19 +802,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Fedora</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">openvas</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">跨网段</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">vpn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">PI</a>
               </li>
              
               <li class="article-tag-list-item">
