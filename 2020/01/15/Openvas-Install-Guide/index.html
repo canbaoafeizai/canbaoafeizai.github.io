@@ -29,11 +29,13 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;11.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;12.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;13.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;14.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;15.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;16.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;17.png">
-<meta property="og:updated_time" content="2020-01-15T10:38:10.455Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;18.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;19.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;20.png">
+<meta property="og:updated_time" content="2020-01-20T08:54:15.240Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;1.png">
   
@@ -252,13 +254,14 @@ check第十次
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/selinux</span><br><span class="line">selinux=disabled</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
 check第十一次
 <img src="/2020/01/15/Openvas-Install-Guide/13.png">
-出现installation OK证明安装成功
-#### 二、nginx反代
+出现installation OK证明安装成功，访问127.0.0.1即可。
+####  二、nginx反代
 实际上通过简单的配置即可以达到域名访问的效果，如：
-
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gsad --listen=0.0.0.0 --allow-header-host=openvas.cc</span><br></pre></td></tr></table></figure>
+但通过nginx做domian-to-service的代理，无论对横向扩展，还是端口规范来说都是很好的选择
+首先我尝试了不配置证书直接nginx反代，访问时会报错。
+所以还是得做证书，首先使用openssl生成一对ssl的证书
 
-<p>但通过nginx做domian-to-service的代理，无论对横向扩展，还是端口规范来说都是很好的选择<br>首先我尝试了不配置证书直接nginx反代，访问时会报错。<br><img src="/2020/01/15/Openvas-Install-Guide/14.png"><br>所以还是得做证书，首先使用openssl生成一对ssl的证书</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -des3 -out openvas.key 1024</span><br><span class="line">ENTER password:******</span><br><span class="line">openssl req -new -key openvas.key -out openvas.csr</span><br><span class="line">openssl x509 -req -days 3650 -<span class="keyword">in</span> openvas.csr -signkey openvas.key -out openvas.crt</span><br></pre></td></tr></table></figure>
 <p>3650指证书有效期，建议大家填长一点。成功生成一对密钥之后，开始写nginx的配置文件。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/conf.d/openvas.conf</span><br><span class="line">server &#123;</span><br><span class="line">        listen  80;</span><br><span class="line">        server_name     openvas.cc;</span><br><span class="line">        rewrite ^(.*)$  https://<span class="variable">$host</span><span class="variable">$1</span> permanent;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">  listen 443 ssl;</span><br><span class="line">  server_name openvas.cc;</span><br><span class="line">  location / &#123;</span><br><span class="line">  proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">  proxy_set_header Host <span class="variable">$http_host</span>;</span><br><span class="line">  proxy_set_header X-Forwarded-Proto https;</span><br><span class="line">  proxy_redirect off;</span><br><span class="line">  proxy_ssl_verify off;</span><br><span class="line">  proxy_pass https://192.168.1.103:9390;</span><br><span class="line">  &#125;</span><br><span class="line">  ssl_certificate /etc/nginx/certs/openvas.crt;</span><br><span class="line">  ssl_certificate_key /etc/nginx/certs/openvas.key;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -281,7 +284,32 @@ check第十一次
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/selinux</span><br><span class="line">SELINUX=disabled</span><br></pre></td></tr></table></figure>
 <p>第二次检查</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openvas-setup</span><br><span class="line">Step 1: Update NVT, CERT, and SCAP data</span><br><span class="line">17.54-18.08</span><br></pre></td></tr></table></figure>
-<p>启动成功，可以访问80端口进行test扫描<br><img src="/2020/01/15/Openvas-Install-Guide/17.png"><br>PS:本次执行居然没有遇到python36-paramiko包安装的问题，神奇</p>
+<p>启动成功，可以访问80端口进行test扫描<br><img src="/2020/01/15/Openvas-Install-Guide/17.png"></p>
+<h4 id="DEBUG问题"><a href="#DEBUG问题" class="headerlink" title="DEBUG问题"></a>DEBUG问题</h4><p>问题一：执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install openvas*</span><br></pre></td></tr></table></figure>
+<img src="/2020/01/15/Openvas-Install-Guide/18.png">
+会遇到python36-paramiko包安装的问题，尝试yum无果，尝试pip无果，最终发现需要通过rpm包
+可以一个一个找缺失包
+https://centos.pkgs.org/7/epel-x86_64/python36-pyasn1-0.4.7-1.el7.noarch.rpm.html
+可以用一个源去解决
+https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/e/
+问题二：有时候运行openvas跑一个task会卡在1%，这里记录一下我的调试方法
+首先看三个日志中有无启动运行的信息
+gvmd.log任务状态变化
+gsad.log 前端是否下发任务
+openvassd.log 扫描器是否启动，并且到哪步针对哪个IP进行什么扫描会写进log，比如扫描完成一个就可以看到一个finish testing。
+
+<p>如果上面几个仍然看不到想要的信息，那么推荐进redis里面看看，输入MONITOR，监听openvas的socket看看正在跑什么东西:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -s /var/run/redis/redis.sock </span><br><span class="line">redis /var/run/redis/redis.sock&gt; MONITOR</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，卡在如下界面，推测原因是正在将数据库中的东西读入redis，一般等待几分钟就会正常跑起来，<br><img src="/2020/01/15/Openvas-Install-Guide/19.png"></p>
+<p>问题三：</p>
+<p>在openvassd.log中看到如下报错</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lib  kb:CRITICAL:2020-01-20 08h48.33 utc:14819: redis_new: cannot access redis at <span class="string">'/var/run/redis/redis.sock'</span></span><br><span class="line">lib  kb:CRITICAL:2020-01-20 08h48.33 utc:14819: get_redis_ctx: redis connection error: No such file or directory</span><br></pre></td></tr></table></figure>
+
+<p>但明明redis已经启动，却没有redis.sock，估计是sock地址什么的没绑定上，于是</p>
+<p>解决方案:让它自己来！</p>
+<p><img src="/2020/01/15/Openvas-Install-Guide/20.png" alt="image-20200120165337805"></p>
 
       
 
@@ -404,6 +432,15 @@ check第十一次
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/01/26/Openvas%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACgvm%E5%92%8Cgsad%E7%9A%84%E8%A7%A3%E8%AF%BB/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          OpenVas配置slave的debug心得
+        
+      </div>
+    </a>
   
   
     <a href="/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/" id="article-nav-older" class="article-nav-link-wrap">
@@ -554,6 +591,42 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">debug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">ELK</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">LINUX</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">空间</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">SSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">VPN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量分析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">跨网段</a>
               </li>
              
@@ -570,35 +643,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量分析</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">嗅探</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">ELK</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">LINUX</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">空间</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">SSL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">VPN</a>
               </li>
             
             <div class="clearfix"></div>
