@@ -21,7 +21,7 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;26&#x2F;OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF&#x2F;3.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;26&#x2F;OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF&#x2F;4.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;26&#x2F;OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF&#x2F;5.png">
-<meta property="og:updated_time" content="2020-01-26T15:20:07.020Z">
+<meta property="og:updated_time" content="2020-01-27T02:34:12.693Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;26&#x2F;OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF&#x2F;6.png">
   
@@ -43,12 +43,13 @@
 
 </head>
 
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript"></script>
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
       
-<div class="overlay" style="background: #4d4d4d"></div>
+<div class="overlay" style="background: #88acdb"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
@@ -89,7 +90,19 @@
 		<nav class="header-nav">
 			<div class="social">
 				
+					<a class="github" target="_blank" href="https://github.com/canbaoafeizai" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="bilibili" target="_blank" href="https://space.bilibili.com/108165453" title="bilibili"><i class="icon-bilibili"></i></a>
+		        
+					<a class="mail" target="_blank" href="/mailto:fczcmcm@gmail.com" title="mail"><i class="icon-mail"></i></a>
+		        
 			</div>
+			<!-- 网易云音乐插件 -->
+
+    <div style="bottom:50px left:auto; width:85%">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=2080326&auto=1&height=32"></iframe>
+    </div>
+
 		</nav>
 	</header>		
 </div>
@@ -98,7 +111,7 @@
     <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
       
 <nav id="mobile-nav">
-  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+  	<div class="overlay js-overlay" style="background: #88acdb"></div>
 	<div class="btnctn js-mobile-btnctn">
   		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
 	</div>
@@ -124,6 +137,12 @@
 			<nav class="header-nav">
 				<div class="social">
 					
+						<a class="github" target="_blank" href="https://github.com/canbaoafeizai" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="bilibili" target="_blank" href="https://space.bilibili.com/108165453" title="bilibili"><i class="icon-bilibili"></i></a>
+			        
+						<a class="mail" target="_blank" href="/mailto:fczcmcm@gmail.com" title="mail"><i class="icon-mail"></i></a>
+			        
 				</div>
 			</nav>
 
@@ -212,7 +231,9 @@ TLS连接类型是GOS 3.1及更高版本中用于通信的默认连接类型,也
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep gvm  </span><br><span class="line">rpm -qa | grep openvas </span><br><span class="line">gvmd-8.0.0-6928.el7.art.x86_64</span><br><span class="line">gvm-libs-10.0.0-6924.el7.art.x86_64</span><br><span class="line">openvas-scanner-6.0.0-6930.el7.art.x86_64</span><br><span class="line">openvas-smb-1.0.5-6923.el7.art.x86_64</span><br></pre></td></tr></table></figure>
 <p>默认启动的gvmd使用的是Unix Domain Socket,如下:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano |grep gvmd</span><br><span class="line">unix  2      [ ACC ]     STREAM     LISTENING     25846    /var/run/gvmd.sock</span><br></pre></td></tr></table></figure>
-<h4 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h4><p>官方文档永远是最好的教程,其次是开源社区.<br>附一份官方参考文档:<a href="https://readthedocs.org/projects/gvm-tools/downloads/pdf/latest/" target="_blank" rel="noopener">https://readthedocs.org/projects/gvm-tools/downloads/pdf/latest/</a></p>
+<h4 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h4><p>1.官方文档永远是最好的教程,其次是开源社区.</p>
+<p>2.Debug时要有自己的主线+思考，不是盲目地遇到 一个问题就去查，别人的前置环境和自己的不一样会让自己掉进去，越陷越深。</p>
+<p>附一份官方参考文档:<a href="https://readthedocs.org/projects/gvm-tools/downloads/pdf/latest/" target="_blank" rel="noopener">https://readthedocs.org/projects/gvm-tools/downloads/pdf/latest/</a></p>
 
       
 
@@ -354,6 +375,19 @@ TLS连接类型是GOS 3.1及更高版本中用于通信的默认连接类型,也
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、名词扫盲"><span class="toc-number">1.</span> <span class="toc-text">一、名词扫盲</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Master配置"><span class="toc-number">1.0.1.</span> <span class="toc-text">Master配置</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Slave配置"><span class="toc-number">1.0.2.</span> <span class="toc-text">Slave配置</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#启动task"><span class="toc-number">1.0.3.</span> <span class="toc-text">启动task</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-ssh"><span class="toc-number">1.1.</span> <span class="toc-text">2.2 ssh</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-Unix-Domain-Socket"><span class="toc-number">1.2.</span> <span class="toc-text">2.3 Unix Domain Socket</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、总结"><span class="toc-number">2.</span> <span class="toc-text">三、总结</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -673,5 +707,9 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
 
 </div>
   </div>
+  <!-- 雪花特效2 -->
+
+  <script type="text/javascript" src="snow2.js"></script>
+
 </body>
 </html>

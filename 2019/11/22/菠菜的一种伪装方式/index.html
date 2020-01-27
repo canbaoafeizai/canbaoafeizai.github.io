@@ -43,12 +43,13 @@
 
 </head>
 
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript"></script>
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
       
-<div class="overlay" style="background: #4d4d4d"></div>
+<div class="overlay" style="background: #88acdb"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
@@ -89,7 +90,19 @@
 		<nav class="header-nav">
 			<div class="social">
 				
+					<a class="github" target="_blank" href="https://github.com/canbaoafeizai" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="bilibili" target="_blank" href="https://space.bilibili.com/108165453" title="bilibili"><i class="icon-bilibili"></i></a>
+		        
+					<a class="mail" target="_blank" href="/mailto:fczcmcm@gmail.com" title="mail"><i class="icon-mail"></i></a>
+		        
 			</div>
+			<!-- 网易云音乐插件 -->
+
+    <div style="bottom:50px left:auto; width:85%">
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=2080326&auto=1&height=32"></iframe>
+    </div>
+
 		</nav>
 	</header>		
 </div>
@@ -98,7 +111,7 @@
     <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
       
 <nav id="mobile-nav">
-  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+  	<div class="overlay js-overlay" style="background: #88acdb"></div>
 	<div class="btnctn js-mobile-btnctn">
   		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
 	</div>
@@ -124,6 +137,12 @@
 			<nav class="header-nav">
 				<div class="social">
 					
+						<a class="github" target="_blank" href="https://github.com/canbaoafeizai" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="bilibili" target="_blank" href="https://space.bilibili.com/108165453" title="bilibili"><i class="icon-bilibili"></i></a>
+			        
+						<a class="mail" target="_blank" href="/mailto:fczcmcm@gmail.com" title="mail"><i class="icon-mail"></i></a>
+			        
 				</div>
 			</nav>
 
@@ -337,6 +356,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、-背景"><span class="toc-number">1.</span> <span class="toc-text">一、 背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、分析过程"><span class="toc-number">2.</span> <span class="toc-text">二、分析过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-判断是否为服务器被黑"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 判断是否为服务器被黑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-判断是否是首页的JS跳转"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 判断是否是首页的JS跳转</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#首页-gt-js跳转-gt-菠菜网站"><span class="toc-number">2.2.1.</span> <span class="toc-text">首页 -&gt; js跳转-&gt; 菠菜网站</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-推测菠菜的思路"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 推测菠菜的思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-模拟百度spider"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 模拟百度spider</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、-总结"><span class="toc-number">3.</span> <span class="toc-text">三、 总结</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -656,5 +688,9 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
 
 </div>
   </div>
+  <!-- 雪花特效2 -->
+
+  <script type="text/javascript" src="snow2.js"></script>
+
 </body>
 </html>
