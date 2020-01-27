@@ -21,7 +21,7 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;26&#x2F;OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF&#x2F;3.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;26&#x2F;OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF&#x2F;4.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;26&#x2F;OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF&#x2F;5.png">
-<meta property="og:updated_time" content="2020-01-27T02:34:12.693Z">
+<meta property="og:updated_time" content="2020-01-27T11:58:38.866Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;26&#x2F;OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF&#x2F;6.png">
   
@@ -43,7 +43,7 @@
 
 </head>
 
-<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript"></script>
+<script src="jquery.js" type="text/javascript"></script>
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -220,6 +220,7 @@ TLS连接类型是GOS 3.1及更高版本中用于通信的默认连接类型,也
 <h6 id="启动task"><a href="#启动task" class="headerlink" title="启动task"></a>启动task</h6><p>点击启动task,此处可能会遇到如下几个问题:<br>问题一:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">failed to connect xxxx port 9391.</span><br></pre></td></tr></table></figure>
 <p>解决方案:确保slave上的9391端口开放,确保防火墙能通过.<br>问题二:(master)slave_connect failed  | (slave)read_from_client_tls</p>
+<p> 该问题广泛出现在Greenbone 开源社区，github issue，同样的配置不见得能解决同样的问题，因此笔者进行了深入的分析和研究。 </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/<span class="built_in">log</span>/gvm/gvmd-master:</span><br><span class="line">md manage:WARNING:slave_connect: failed to open connection to XXXX on 9391</span><br><span class="line">lib  serv:WARNING:gvm_server_verify: the certificate is not trusted</span><br><span class="line">lib  serv:WARNING:gvm_server_verify: the certificate hasn<span class="string">'t got a known issuer</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/<span class="built_in">log</span>/gvm/gvm-slave:</span><br><span class="line">md   main:read_from_client_tls: failed to <span class="built_in">read</span> from client: The TLS connection was non-properly terminated.</span><br></pre></td></tr></table></figure>
 <p>1.笔者首先抓了master上的包,发现有向slave的9391端口发的包, slave的9391端口也有返回包,排除了网络不可达的问题.<br>2.笔者通过查阅各种资料,确保cacert没有搞错,路径没有搞错<br>3.经历一天的排除+尝试,一遍遍确认自己配置是正确的前提下,笔者终于找到了找到了一个可能的原因,即当执行</p>
