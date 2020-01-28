@@ -89,10 +89,6 @@
 			</div>
 			<!-- 网易云音乐插件 -->
 
-    <div style="bottom:50px left:auto; width:85%">
-        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=2080326&auto=1&height=32"></iframe>
-    </div>
-
 		</nav>
 	</header>		
 </div>
@@ -273,7 +269,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>环境：Fedora29/centos7<br>openvas的三个组件<br>gvmd: Greenbone Vulnerability Manager(gvmd) 是一个把普通的漏洞扫描整合进一个全漏洞管理方案的中心服务<br>gasd:  Greenbone Security Assistant(GSA) 是GVM的web interface.<br>OpenVas Scanner:扫描器</p>
+        <p>环境：Fedora29/centos7</p>
 <h4 id="一、Fedora-YUM安装"><a href="#一、Fedora-YUM安装" class="headerlink" title="一、Fedora-YUM安装"></a>一、Fedora-YUM安装</h4><p>安装openvas软件包及依赖。<br>安装redis使用定制sock进行发布订阅，从openvas8以后开始使用redis推送消息，之前用的是lua。<br>sqlite3是openvas的内置数据库，存储例如每一次用户扫描的id，扫描结果等等，openvas还可以支持postgresql，本文只测试sqlite3的数据库。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum update -y</span><br><span class="line">$ yum install openvas* -y</span><br><span class="line">$ yum install redis* -y</span><br><span class="line">$ yum install sqlite3* -y</span><br></pre></td></tr></table></figure>
         
@@ -472,15 +468,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">SSL</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">VPN</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
         		</li>
       		
 		</ul>
@@ -640,11 +636,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">菠菜</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">菠菜</a>
         		</li>
       		
 		</ul>
@@ -877,6 +873,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">ELK</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">LINUX</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">空间</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Fedora</a>
               </li>
              
@@ -894,26 +902,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">debug</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">ELK</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">LINUX</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">空间</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量分析</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -937,11 +925,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量分析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">无线</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">嗅探</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
               </li>
             
             <div class="clearfix"></div>
@@ -1084,5 +1080,5 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
 
   <script type="text/javascript" src="snow2.js"></script>
 
-</body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
