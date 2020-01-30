@@ -159,6 +159,71 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-加密连接webshell的攻击流量" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/">waf对webshell流量检测的性能分析</a>
+    </h1>
+  
+
+        
+        <a href="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/" class="archive-article-date">
+  	<time datetime="2020-01-29T12:11:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>最近在一次授权渗透测试中遇到了一个棘手的场景，万能的队友已经找到了后台上传点，并传了小马然后开心地用antsword进行连接，但是由于明文传输很快被waf感知，并引起了管理员的注意，很快我们的马失效了，真是偷鸡不成蚀把米。<br>痛定思痛，我们判断对方并不能尽快修复漏洞，于是临阵抱佛脚，寄希望于通过加密算法提高攻击的质量。首先要做三件事，第一，迅速在本地复现对方环境，第二，配置各种加密攻击流量载荷，第三，用开源安全模块modsecurity测试载荷加密后的效果。<br></p>
+        
+          <a class="article-more-a" href="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-OpenVas配置slave的debug之路" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -887,18 +952,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">跨网段</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">vpn</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">PI</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Fedora</a>
               </li>
              
@@ -916,6 +969,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">debug</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">跨网段</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">vpn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">PI</a>
               </li>
              
               <li class="article-tag-list-item">

