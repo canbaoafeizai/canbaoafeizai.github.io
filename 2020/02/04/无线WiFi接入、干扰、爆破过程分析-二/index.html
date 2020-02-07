@@ -6,14 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | T1ger</title>
+  <title>无线WiFi接入、干扰、爆破过程分析(二) | T1ger</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="T1ger">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;index.html">
+  <meta name="description" content="一、实验背景​     在使用IEEE802.11b&#x2F;g通信标准的无线网络中，广泛使用的无线网络加密协议主要包括WEP加密协议和WPA加密协议两种。其中WEP协议也称有限等效加密协议，这种协议目前已经有相当多的安全漏洞，使用改加密协议的无线数据信息很容易遭受攻击，已经基本被弃用，WPA协议也被称为WiFi保护访问协议，这种加密协议采用两种技术完成数据信息的加密传输，一种技术是临时密钥完整性技术，在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无线WiFi接入、干扰、爆破过程分析(二)">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C&#x2F;index.html">
 <meta property="og:site_name" content="T1ger">
+<meta property="og:description" content="一、实验背景​     在使用IEEE802.11b&#x2F;g通信标准的无线网络中，广泛使用的无线网络加密协议主要包括WEP加密协议和WPA加密协议两种。其中WEP协议也称有限等效加密协议，这种协议目前已经有相当多的安全漏洞，使用改加密协议的无线数据信息很容易遭受攻击，已经基本被弃用，WPA协议也被称为WiFi保护访问协议，这种加密协议采用两种技术完成数据信息的加密传输，一种技术是临时密钥完整性技术，在">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C&#x2F;1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C&#x2F;2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C&#x2F;3.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C&#x2F;4.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C&#x2F;5.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C&#x2F;6.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C&#x2F;7.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C&#x2F;8.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C&#x2F;9.png">
+<meta property="og:updated_time" content="2020-02-07T14:54:13.672Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C&#x2F;1.png">
   
     <link rel="alternative" href="/atom.xml" title="T1ger" type="application/atom+xml">
   
@@ -151,491 +164,250 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-无线WiFi接入、干扰、爆破过程分析-二" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      无线WiFi接入、干扰、爆破过程分析(二)
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/" class="archive-article-date">
+
+        
+        <a href="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/" class="archive-article-date">
   	<time datetime="2020-02-04T09:48:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-04</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/">无线WiFi接入、干扰、爆破过程分析(二)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
+        
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/" class="archive-article-date">
-  	<time datetime="2020-01-29T12:11:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/">waf对webshell流量检测的性能分析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/26/OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF/" class="archive-article-date">
-  	<time datetime="2020-01-26T15:06:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/26/OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF/">OpenVas配置slave的debug之路</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Fedora</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Centos</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">openvas</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">debug</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/15/Openvas-Install-Guide/" class="archive-article-date">
-  	<time datetime="2020-01-15T10:30:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/15/Openvas-Install-Guide/">Openvas Install Guide</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Fedora</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Centos</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">openvas</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/环境搭建//" class="article-tag-list-link color5">环境搭建</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
+    <div class="article-entry" itemprop="articleBody">
       
-        </div></section>
+        <h4 id="一、实验背景"><a href="#一、实验背景" class="headerlink" title="一、实验背景"></a>一、实验背景</h4><p>​     在使用IEEE802.11b/g通信标准的无线网络中，广泛使用的无线网络加密协议主要包括WEP加密协议和WPA加密协议两种。其中WEP协议也称有限等效加密协议，这种协议目前已经有相当多的安全漏洞，使用改加密协议的无线数据信息很容易遭受攻击，已经基本被弃用，WPA协议也被称为WiFi保护访问协议，这种加密协议采用两种技术完成数据信息的加密传输，一种技术是临时密钥完整性技术，在该技术的支持下WPA加密协议使用128位密钥，同时对每一个数据包来说单击一次鼠标操作就能达到改变密钥的目的，该加密技术可以兼容目前的无线硬件设备以及WEP加密协议；另外一种技术就是可扩展认证技术，WPA加密协议在这种技术支持下能为无限用户提供更多安全、灵活的网络访问功能，同时这种协议要比WEP协议更安全、更高级。</p>
+<p>因此，本实验目标既是对WPA2加密网络的探测和破解。</p>
+<a id="more"></a>
+
+<h4 id="二、实验原理"><a href="#二、实验原理" class="headerlink" title="二、实验原理"></a>二、实验原理</h4><p>无线终端接入网络的过程主要分成：扫描、认证、关联三个步骤。下图是客户端STA与路由AP之间的连接过程:<br><img src="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/1.png" alt="avatar"></p>
+<h5 id="2-1-无线用户接入AP的过程"><a href="#2-1-无线用户接入AP的过程" class="headerlink" title="2.1 无线用户接入AP的过程"></a>2.1 无线用户接入AP的过程</h5><ul>
+<li><p>扫描:无线终端在加入网络之前,首先需要在所处区域搜索网络,搜索的方式即是通过主动扫描或被动扫描.</p>
+<ul>
+<li>主动扫描:无线终端通过发送Probe Request帧来请求加入网络,AP收到无线终端发送的请求帧后,会发送Probe Respnse帧做出相应.</li>
+<li>被动扫描:AP会定期向外广播Beacon帧(携带自身关联 的SSID),无线终端通过侦听Beacon帧来发现网络</li>
+</ul>
+</li>
+<li><p>认证:当无线终端收到AP的Probe Response帧,从候选AP中选择一个进行关联.在关联之前,需要及进行身份认证,身份认证包括开放系统认证和共享密钥认证.</p>
+<ul>
+<li>认证过程:无线终端通过发生Authentication Request帧向指定AP请求认证;AP收到后会发送Authentcation Response帧做出相应.</li>
+</ul>
+</li>
+<li><p>关联:认证通过后,无线终端方可与指定AP建立关联</p>
+<ul>
+<li>关联过程:无线终端发送association request帧向指定AP请求关联,AP收到后会发送association response帧做出回应.</li>
+</ul>
+</li>
+<li><p>四步握手:关联完成之后,STA与AP会进行四步握手协议交互过程.这个过程的目的是通过STA和AP都有的主秘钥,协商出一个对会话信息进行加密的会话密钥.我们破解WPA2加密的无线网络,主要是为了对这四步握手进行解析和暴力破解.<br><img src="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/2.png" alt="avatar"></p>
+<h5 id="2-2-字典攻击"><a href="#2-2-字典攻击" class="headerlink" title="2.2 字典攻击"></a>2.2 字典攻击</h5><p>WPA-PSK安全体系是比较完善的.但始终是用一个密码保护的.一般情况下可以用字典攻击进行攻击.</p>
+<p>我们平时说的WPA密码其实叫<strong>PSK（pre-shared key），</strong>长度一般是8-63字节，它加上ssid通过一定的算法可以得到PMK（pairwise master key）。<strong>PMK=SHA-1(ssid,psk)</strong> ，PMK的长度是定长的，都是64字节。<strong>由于计算PMK的过程开销比较大，是我们破解花费时间长的关键，所以采用以空间换时间的原则把PMK事先生成好，这个事先生成好的表就是常说的HASH表（生成PMK的算法是一种哈希），这个工作就是用airlib-ng这个工具来完成的，我们的快速破解就是这么来的。 **<br>认证的时候会生成一个</strong>PTK（pairwise temporary<strong>），这是一组密钥，具体细节不详细说了，它的生成方法也是采用的哈希，参数是连接的客户端MAC地址、AP的BSSID、A-NONCE、S-NONCE、PMK，其中A-NONCE和S-NONCE是两个随机数，确保每次连接都会生成不同的PTK。PTK的计算消耗很小。PTK加上报文数据采用一定的算法（AES或TKIP），得到密文，同时会得到一个签名，叫做</strong>MIC（message integrality check）<strong>，</strong>tkip之所以被破解和这个mic有很大关系<strong>。</strong>四次握手包中含有以上的哪些东西呢？客户端的MAC地址，AP的BSSID，A-NONCE，S-NONE，MIC，最关键的PMK和PTK是不包含在握手包里的！**<br>认证的原理是在获得以上的所有参数后，客户端算出一个MIC，把原文连同MIC一起发给AP，AP采用相同的参数与算法计算出MIC，并与客户端发过来的比较，如果一致，则认证通过，否则失败。<br>目前的破解方法是我们获得握手包后，用我们字典中的PSK+ssid先生成PMK（如果有HASH表则略过），然后结合握手包中的（客户端MAC，AP的BSSID，A-NONCE，S-NONCE）计算PTK，再加上原始的报文数据算出MIC并与AP发送的MIC比较，如果一致，那么该PSK就是密钥。 过程如图:<br><img src="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/3.png" alt="avatar"><br>目前最耗时的就是算PMK，可谓破解的瓶颈。即使搞定了运算量的问题，海量的密钥存储也是个问题（PMK都是64字节长度）！<br>最近出来的tkiptun-ng只是可以解开使用tkip加密了的数据包，并不是说能够快速算出PMK或PSK。如果感兴趣，可以到书店看看讲哈希的书，说不定你把这些HASH算法都破解出来了。 </p>
+</li>
+</ul>
+<h5 id="2-3-取消身份验证攻击"><a href="#2-3-取消身份验证攻击" class="headerlink" title="2.3 取消身份验证攻击"></a>2.3 取消身份验证攻击</h5><p>在无线安全领域,有一种攻击方式叫做取消身份验证洪水攻击,也叫做验证阻断洪水攻击,通常被简称为Deauth攻击.这也是无线网络拒绝服务攻击的一种形式,它使用欺骗的方式,假冒AP通过向周围发送取消身份验证帧,将客户端转化为未关联且未认证的状态.对于目前广泛使用的无线客户端适配器工具来说,这种形式的攻击在打断客户端无线服务方面非常有效和快捷.正常情况下,攻击者发送一个取消身份验证帧,客户端断开与AP的连接之后,客户端还会尝试重新关联和验证以再次获取网络服务.但是攻击者可以通过反复发送取消身份验证帧的方法使所有客户端持续连接不上网络,以此实现无线网络拒绝服务.</p>
+<h4 id="三、实验目的"><a href="#三、实验目的" class="headerlink" title="三、实验目的"></a>三、实验目的</h4><ul>
+<li><p>掌握WIFI爆破的方法</p>
+</li>
+<li><p>了解无线DDOS攻击的攻击原理,掌握攻击方法</p>
+</li>
+</ul>
+<h4 id="四、实验内容"><a href="#四、实验内容" class="headerlink" title="四、实验内容"></a>四、实验内容</h4><ol>
+<li>将网卡设置成监听模式</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/4.png" alt="avatar"></p>
+<ol start="2">
+<li>监听周围的无线信号,得到待破解wifi的BSSID,ESSID,CH,便于下一步收集.</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/5.png" alt="avatar"></p>
+<p>可以看到我们要破解的wifi信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ESSID:TP-LINK_EE85</span><br><span class="line">BSSID:B0:95:8E:5B:EE:85</span><br><span class="line">CH:1</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>对特定wifi进行数据监听收集,以便得到四部握手数据包.输入命令对指定的数据包进行收集.</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng --bssid B0:95:8E:5B:EE:85 -c 1 -w wifi.pkg wlan0mon</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/6.png" alt="avatar">   </p>
+<ol start="4">
+<li>针对已经连接的客户端,使用取消认证攻击,让客户端重新连接路由器,以便快速获取四部握手数据包,输入命令:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aireplay-ng -0 1 -a AP的mac地址 -c 客户端的mac地址 wlan0mon</span><br></pre></td></tr></table></figure>
+<img src="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/7.png" alt="avatar"></li>
+</ol>
+<p>很快客户端就掉线了.并获取到了WPA handshake,获取四步握手包.</p>
+<p><img src="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/8.png" alt="avatar"></p>
+<ol start="5">
+<li>运行aircrack-ng软件,使用字典对获取的四步握手包进行暴力破解.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aircrack-ng -w 密码字典 四部握手包的数据包</span><br><span class="line">aircrack-ng -w pass.txt wifi.pkg-01.cap</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p><img src="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/9.png" alt="avatar"><br>KEY FOUND后面得到的内容就是wifi密码,破解时间由字典的大小和密码的复杂度决定.</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" target="_blank" rel="noopener" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/" class="archive-article-date">
-  	<time datetime="2019-12-12T05:37:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/">ELK的空间维护</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">ELK</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">LINUX</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">空间</a>
-        		</li>
-      		
-		</ul>
-	</div>
+      
 
-          
-
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" target="_blank" rel="noopener" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/" class="archive-article-date">
-  	<time datetime="2019-12-06T15:16:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-06</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">waf对webshell流量检测的性能分析</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/">SSL-VPN流量抓取</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">SSL</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">VPN</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、实验背景"><span class="toc-number">1.</span> <span class="toc-text">一、实验背景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、实验原理"><span class="toc-number">2.</span> <span class="toc-text">二、实验原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-无线用户接入AP的过程"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 无线用户接入AP的过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-字典攻击"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 字典攻击</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-取消身份验证攻击"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 取消身份验证攻击</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、实验目的"><span class="toc-number">3.</span> <span class="toc-text">三、实验目的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#四、实验内容"><span class="toc-number">4.</span> <span class="toc-text">四、实验内容</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/02/%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90(%E4%B8%80)/" class="archive-article-date">
-  	<time datetime="2019-12-02T12:23:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/02/%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90(%E4%B8%80)/">无线WiFi流量的抓取与分析(一)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">无线</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">嗅探</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/" class="archive-article-date">
-  	<time datetime="2019-12-02T12:23:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/">无线WiFi流量的抓取与分析(一)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">无线</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">嗅探</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2019-11-22T04:03:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/11/22/%E8%8F%A0%E8%8F%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E4%BC%AA%E8%A3%85%E6%96%B9%E5%BC%8F/">菠菜的一种伪装方式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">菠菜</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/安全事件分析//" class="article-tag-list-link color2">安全事件分析</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/11/17/Pi+hexo+freemyip+vpn/" class="archive-article-date">
-  	<time datetime="2019-11-17T10:05:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-17</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/11/17/Pi+hexo+freemyip+vpn/">Pi+hexo+freemyip+vpn = ?</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">跨网段</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">vpn</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">PI</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/环境搭建//" class="article-tag-list-link color5">环境搭建</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
+<script src="https://billts.site/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "无线WiFi接入、干扰、爆破过程分析(二)",
+  owner: 'canbaoafeizai',
+  repo: 'canbaoafeizai.github.io',
+  oauth: {
+    client_id: 'ea88e39f301f623db965',
+    client_secret: '0786bebc88d9924a00eede769540f72603ce3c4a',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -658,8 +430,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
