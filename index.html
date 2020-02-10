@@ -153,30 +153,30 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-无线WiFi接入、干扰、爆破过程分析-二" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-无线WiFi假冒AP攻击-(三)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/">无线WiFi接入、干扰、爆破过程分析(二)</a>
+      <a class="article-title" href="/2020/02/09/%E6%97%A0%E7%BA%BFWiFi%E5%81%87%E5%86%92AP%E6%94%BB%E5%87%BB-(%E4%B8%89)/">无线WiFi假冒AP攻击(三)</a>
     </h1>
   
 
         
-        <a href="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/" class="archive-article-date">
-  	<time datetime="2020-02-04T09:48:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-04</time>
+        <a href="/2020/02/09/%E6%97%A0%E7%BA%BFWiFi%E5%81%87%E5%86%92AP%E6%94%BB%E5%87%BB-(%E4%B8%89)/" class="archive-article-date">
+  	<time datetime="2020-02-09T04:02:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="一、实验背景"><a href="#一、实验背景" class="headerlink" title="一、实验背景"></a>一、实验背景</h4><p>​     在使用IEEE802.11b/g通信标准的无线网络中，广泛使用的无线网络加密协议主要包括WEP加密协议和WPA加密协议两种。其中WEP协议也称有限等效加密协议，这种协议目前已经有相当多的安全漏洞，使用改加密协议的无线数据信息很容易遭受攻击，已经基本被弃用，WPA协议也被称为WiFi保护访问协议，这种加密协议采用两种技术完成数据信息的加密传输，一种技术是临时密钥完整性技术，在该技术的支持下WPA加密协议使用128位密钥，同时对每一个数据包来说单击一次鼠标操作就能达到改变密钥的目的，该加密技术可以兼容目前的无线硬件设备以及WEP加密协议；另外一种技术就是可扩展认证技术，WPA加密协议在这种技术支持下能为无限用户提供更多安全、灵活的网络访问功能，同时这种协议要比WEP协议更安全、更高级。</p>
-<p>因此，本实验目标既是对WPA2加密网络的探测和破解。</p>
+        <h4 id="一、实验原理"><a href="#一、实验原理" class="headerlink" title="一、实验原理"></a>一、实验原理</h4><p>hostapd是用于访问点和身份验证服务器的用户空间守护程序，它可以创建无线热点。</p>
+<p>Dnsmasq是一个小巧且方便地用于配置DNS和DHCP的工具，适用于小型网络，它提供了DNS功能和可选择的DHCP功能。</p>
         
-          <a class="article-more-a" href="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/#more">more >></a>
+          <a class="article-more-a" href="/2020/02/09/%E6%97%A0%E7%BA%BFWiFi%E5%81%87%E5%86%92AP%E6%94%BB%E5%87%BB-(%E4%B8%89)/#more">more >></a>
         
       
 
@@ -190,11 +190,96 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">无线</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">钓鱼WIFI</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量劫持</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/09/%E6%97%A0%E7%BA%BFWiFi%E5%81%87%E5%86%92AP%E6%94%BB%E5%87%BB-(%E4%B8%89)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-无线WiFi接入、干扰、爆破过程分析-(二)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)/">无线WiFi接入、干扰、爆破过程分析(二)</a>
+    </h1>
+  
+
+        
+        <a href="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)/" class="archive-article-date">
+  	<time datetime="2020-02-04T09:48:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="一、实验背景"><a href="#一、实验背景" class="headerlink" title="一、实验背景"></a>一、实验背景</h4><p>​     在使用IEEE802.11b/g通信标准的无线网络中，广泛使用的无线网络加密协议主要包括WEP加密协议和WPA加密协议两种。其中WEP协议也称有限等效加密协议，这种协议目前已经有相当多的安全漏洞，使用改加密协议的无线数据信息很容易遭受攻击，已经基本被弃用，WPA协议也被称为WiFi保护访问协议，这种加密协议采用两种技术完成数据信息的加密传输，一种技术是临时密钥完整性技术，在该技术的支持下WPA加密协议使用128位密钥，同时对每一个数据包来说单击一次鼠标操作就能达到改变密钥的目的，该加密技术可以兼容目前的无线硬件设备以及WEP加密协议；另外一种技术就是可扩展认证技术，WPA加密协议在这种技术支持下能为无限用户提供更多安全、灵活的网络访问功能，同时这种协议要比WEP协议更安全、更高级。</p>
+<p>因此，本实验目标既是对WPA2加密网络的探测和破解。</p>
+        
+          <a class="article-more-a" href="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">无线</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -208,7 +293,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-%E4%BA%8C/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)/">展开全文 >></a>
         </p>
       
 
@@ -614,15 +699,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">SSL</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">VPN</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
         		</li>
       		
 		</ul>
@@ -698,11 +783,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">无线</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">无线</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -782,11 +867,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">无线</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">无线</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -921,102 +1006,10 @@
 
 
   
-    <article id="post-Pi+hexo+freemyip+vpn" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/17/Pi+hexo+freemyip+vpn/">Pi+hexo+freemyip+vpn = ?</a>
-    </h1>
-  
-
-        
-        <a href="/2019/11/17/Pi+hexo+freemyip+vpn/" class="archive-article-date">
-  	<time datetime="2019-11-17T10:05:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-背景介绍"><a href="#1-背景介绍" class="headerlink" title="1. 背景介绍"></a>1. 背景介绍</h2><h4 id="1-1-目标"><a href="#1-1-目标" class="headerlink" title="1.1 目标"></a>1.1 目标</h4><p>校园网中通过域名访问内网资源，比如通过域名访问博客，通过域名直接连接内网远程桌面等等</p>
-<h4 id="1-2-可以白嫖的资源："><a href="#1-2-可以白嫖的资源：" class="headerlink" title="1.2 可以白嫖的资源："></a>1.2 可以白嫖的资源：</h4><p>瞅了瞅手上的东西只有一台树莓派<br>一个pptp-vpn<br>一个宿舍里面用来提供无线的TP-LINK<br>向freemyip申请一个免费的域名<br>隔壁宿舍的wifi<br>隔壁的wifi不能搞，只能在自己的TPlink上想办法</p>
-        
-          <a class="article-more-a" href="/2019/11/17/Pi+hexo+freemyip+vpn/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">跨网段</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">vpn</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">PI</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/环境搭建//" class="article-tag-list-link color5">环境搭建</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/11/17/Pi+hexo+freemyip+vpn/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+    </nav>
   
 
 
@@ -1147,6 +1140,26 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">无线</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">钓鱼WIFI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量劫持</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量分析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">攻击</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">SSL</a>
               </li>
              
@@ -1155,23 +1168,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量分析</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">无线</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">嗅探</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">攻击</a>
               </li>
             
             <div class="clearfix"></div>
