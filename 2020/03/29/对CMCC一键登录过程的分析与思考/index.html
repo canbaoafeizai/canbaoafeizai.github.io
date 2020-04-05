@@ -16,27 +16,27 @@
 <meta property="og:site_name" content="T1ger">
 <meta property="og:description" content="一、背景最近越来越多的运营商推出了一款新的业务：一键登录和号码认证功能，面向解决的痛点问题是之前各类身份认证逻辑，存在信息传输过程不安全、验证逻辑容易被绕过、甚至接口被爆漏洞导致被拖库等等，大厂商如CMCC、电信联通等都推出了一键登录业务，用运营商自身信息优势提供电信级别的认证方案，可以预测将来会越来越火。从上游厂商直接拿解决方案似乎已经成为了一种发展趋势。作为信息安全专业的学生，我本着学习的态度">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C1.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C2.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C7.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C8.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C9.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C10.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C11.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C12.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C13.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C14.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C15.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C3.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C4.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C5.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C6.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C11.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C12.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C14.png">
-<meta property="og:updated_time" content="2020-04-05T16:06:18.764Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;7.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;8.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;9.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;10.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;11.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;12.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;13.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;14.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;15.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;3.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;4.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;5.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;6.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;11.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;12.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;14.png">
+<meta property="og:updated_time" content="2020-04-05T16:15:30.643Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C1.png">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;1.png">
   
     <link rel="alternative" href="/atom.xml" title="T1ger" type="application/atom+xml">
   
@@ -105,9 +105,11 @@
 				
 					<a class="github" target="_blank" href="https://github.com/canbaoafeizai" title="github"><i class="icon-github"></i></a>
 		        
+					<a class="weixin" target="_blank" href="https://user-images.githubusercontent.com/29101121/78503793-67015c00-779b-11ea-9df5-87c27bf729c6.png " title="weixin"><i class="icon-weixin"></i></a>
+		        
 					<a class="bilibili" target="_blank" href="https://space.bilibili.com/108165453" title="bilibili"><i class="icon-bilibili"></i></a>
 		        
-					<a class="mail" target="_blank" href="/mailto:fczcmcm@gmail.com" title="mail"><i class="icon-mail"></i></a>
+					<a class="mail" target="_blank" href="/fczcmcm@gmail.com" title="mail"><i class="icon-mail"></i></a>
 		        
 			</div>
 			<!-- 网易云音乐插件 -->
@@ -146,9 +148,11 @@
 					
 						<a class="github" target="_blank" href="https://github.com/canbaoafeizai" title="github"><i class="icon-github"></i></a>
 			        
+						<a class="weixin" target="_blank" href="https://user-images.githubusercontent.com/29101121/78503793-67015c00-779b-11ea-9df5-87c27bf729c6.png " title="weixin"><i class="icon-weixin"></i></a>
+			        
 						<a class="bilibili" target="_blank" href="https://space.bilibili.com/108165453" title="bilibili"><i class="icon-bilibili"></i></a>
 			        
-						<a class="mail" target="_blank" href="/mailto:fczcmcm@gmail.com" title="mail"><i class="icon-mail"></i></a>
+						<a class="mail" target="_blank" href="/fczcmcm@gmail.com" title="mail"><i class="icon-mail"></i></a>
 			        
 				</div>
 			</nav>
@@ -195,10 +199,11 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h2><p>最近越来越多的运营商推出了一款新的业务：一键登录和号码认证功能，面向解决的痛点问题是之前各类身份认证逻辑，存在信息传输过程不安全、验证逻辑容易被绕过、甚至接口被爆漏洞导致被拖库等等，大厂商如CMCC、电信联通等都推出了一键登录业务，用运营商自身信息优势提供电信级别的认证方案，可以预测将来会越来越火。从上游厂商直接拿解决方案似乎已经成为了一种发展趋势。作为信息安全专业的学生，我本着学习的态度打开文档和APK，学习CMCC老大哥协议设计的安全理念，此处记录一下我的学习笔记，仅作学习使用。</p>
+<a id="more"></a>
 <h2 id="二、协议流程"><a href="#二、协议流程" class="headerlink" title="二、协议流程"></a>二、协议流程</h2><p>首先介绍一下这个功能，在用户视角看来是这样的，通常当我们点击登录时，要输入用户名+密码或者手机号+验证码等信息，现在以上的验证逻辑完全变成了下图，只需要点一下本机号码登录，所有的验证逻辑由APP和服务端及运营商完成，中间信息完全对用户屏蔽，避免了很多人为造成的安全问题而且对用户来说非常方便。</p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C1.png" alt="image-20200329224247998"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/1.png" alt="image-20200329224247998"></p>
 <p>面对如此好的用户体验，尤其是一个安全认证功能，作为安全人员来讲，我们是一定要关注涉及到权限变化、认证功能背后的逻辑是否存在可能的问题。</p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C2.png" alt="image-20200329223857307"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/2.png" alt="image-20200329223857307"></p>
 <p>上图为CMCC文档中给出的流程图，根据文档总结流程如下：</p>
 <p>流程概括：</p>
 <p>①应用客户端向认证SDK发送取号请求</p>
@@ -217,24 +222,24 @@
 <p>①应用客户端向认证SDK发送取号请求</p>
 <p>（这里的取号请求，是请求SDK完成网络判断、蜂窝数据网络切换等操作并缓存凭证scrip，并非是取手机号，根据运营商向微网SDK返回的响应参数猜测判断，取的“号”是手机掩码或网络类型）</p>
 <p>客户端请求参数：</p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C7.png" alt="image-20200404115048527"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/7.png" alt="image-20200404115048527"></p>
 <p>②认证SDK向认证服务端完成取号逻辑，对开发者屏蔽。</p>
 <p>③认证SDK向应用客户端返回取号响应</p>
 <p>SDK响应参数：</p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C8.png" alt="image-20200404115100889"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/8.png" alt="image-20200404115100889"></p>
 <p>④用户向应用客户端请求登录<br>⑤应用客户端向认证SDK发送用户授权请求<br>授权请求参数：</p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C9.png" alt="image-20200404115148102"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/9.png" alt="image-20200404115148102"></p>
 <p>⑥认证SDK向用户拉起授权页<br>⑦用户向认证SDK确认<br>⑧认证SDK向认证服务端完成token获取逻辑<br>⑨认证SDK向应用客户端返回token<br>SDK返回响应参数</p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C10.png" alt="image-20200404115216934"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/10.png" alt="image-20200404115216934"></p>
 <p>⑩应用客户端携带token到应用服务器<br>⑪应用服务端向认证服务端请求获取手机号码接口<br>服务端获取手机号码请求参数</p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C11.png" alt="image-20200404115227575"></p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C12.png" alt="image-20200404115254730"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/11.png" alt="image-20200404115227575"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/12.png" alt="image-20200404115254730"></p>
 <p>请求示例：</p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C13.png" alt="image-20200404115316548"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/13.png" alt="image-20200404115316548"></p>
 <p>⑫认证服务端返回手机号码信息给应用服务端<br>认证服务端返回给应用服务端的响应参数：</p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C14.png" alt="image-20200404115330541"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/14.png" alt="image-20200404115330541"></p>
 <p>响应示例：</p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C15.png" alt="image-20200404115339433"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/15.png" alt="image-20200404115339433"></p>
 <p>总体流程上可以归纳为三个阶段：</p>
 <p>一、 APP通过SDK向运营商发起一次http请求，CMCC识别到这是谁在用哪个APP向它请求，进而给这个手机号打个标记，并返回给APP客户端token。背靠原理：CMCC具有全网级别的，识别由sim卡通过4G网络发起http请求的手机号是多少的能力。</p>
 <p>二、用户触发一键登录逻辑时，首先向用户请求授权读取sim卡信息，APP客户端会拿到SIM卡中的手机号。</p>
@@ -248,11 +253,11 @@
 </ol>
 <h4 id="1、蜂窝网取号逻辑"><a href="#1、蜂窝网取号逻辑" class="headerlink" title="1、蜂窝网取号逻辑"></a>1、蜂窝网取号逻辑</h4><p>场景：这一步是整个流程的开始，其实也是整个业务最核心关键的地方，即SDK通过一次http请求认证端，由认证端返回一个token，该token在CMCC认证端那里是和手机号绑定的。这也是CMCC最核心的电信级别的认证能力，只有wap运营商能通过蜂窝网SIM流量卡的一次请求知道这请求是哪个手机号发出的，别的公司组织是没办法拿到这些信息的。</p>
 <h4 id="2、-SDK请求SIM卡中的手机号信息"><a href="#2、-SDK请求SIM卡中的手机号信息" class="headerlink" title="2、 SDK请求SIM卡中的手机号信息"></a>2、 SDK请求SIM卡中的手机号信息</h4><p>场景：当用户点击一键登录时，APP向用户请求授权获取SIM卡中存储的手机号信息，这里使用官方的demoapk作为测试学习对象。</p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C3.png" alt></p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C4.png" alt="image-20200329230127440"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/3.png" alt></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/4.png" alt="image-20200329230127440"></p>
 <p>对应监听前端的click事件，在第274行displayLogin()下断点进行调试分析该步骤的程序逻辑。</p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C5.png" alt></p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C6.png" alt="image-20200329232658201"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/5.png" alt></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/6.png" alt="image-20200329232658201"></p>
 <ol>
 <li>Android在6.0之前采用的是静态权限，什么是静态权限呢？就是你安装的时候会询问你是否允许App内的所有权限，只要有一个拒绝，那么这个App你就无法安装了；6.0开始，采用动态权限管理，也就是说你的App可以先安装，具体使用什么权限的时候再去请求就好了，默认权限是全部禁止的。Build.VERSION.SDK_INT   表示的是手机的系统版本号，比如Android 7.0表示的就是API 24,所以Build.VERSION.SDK_INT=24，所以权限申请会根Build.VERSION.SDK_INT的值产生不同的结果，当请求权限时会根据手机当前版本号判断走哪个方法</li>
 <li>进入判断逻辑后，SDK会通过checkSelfPermission判断当前应用程序是否获取到READ_PHONE_STATE权限。怎么形象描述这个过程呢？我们一般都在manifest中把我们的权限加进来，对于6.0以下的手机就去查看manifest有没有权限，有的话就授权，没有就不授权，所以不会有什么对话框出来要你授权。如果没有，则执行requestPermissions函数向用户请求授权。</li>
@@ -263,12 +268,12 @@
 <h4 id="3、APP服务端和CMCC的交互"><a href="#3、APP服务端和CMCC的交互" class="headerlink" title="3、APP服务端和CMCC的交互"></a>3、APP服务端和CMCC的交互</h4><p>流程十一和十二是需要很仔细设计的地方，在这里一个设计不好就会导致重放、劫持等各种各样层出不穷的攻击。</p>
 <p>场景：服务端带着客户端传来的token，发给认证端把token交换为相应的手机号</p>
 <p>先把服务端发出去的参数图贴一下：</p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C11.png" alt="image-20200404115227575"></p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C12.png" alt="image-20200404115254730"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/11.png" alt="image-20200404115227575"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/12.png" alt="image-20200404115254730"></p>
 <p>token是服务端必须通过公网传输，且是整个消息中唯一要保护的内容。时间戳防重放，IP强校验、appid做标识都没有问题。sign是认证服务端用来确保发起请求的真的是app的服务端，确保的依据是appsecret参与签名了。这里有两套算法，如果使用RSA私钥签名，则需要提前在社区配置一套验签公钥，这样发过去社区直接用公钥解密，完全没有问题。如果使用MD5做哈希，参数里面需要加上开发者被分配的唯一secret，这里secret实际上代表了私钥的意思，相当于用了只有自己的私钥做签名，发过去以后对方也能通过secret和其他参数进行哈希做比对。</p>
 <p>可以看到非常正确地执行了<strong>私钥签名</strong>。</p>
 <p>再来看一下返回的手机号信息：</p>
-<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/E:%5Cgitrepo%5Cblog%5Csource_posts%5C%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83%5C14.png" alt="image-20200404115330541"></p>
+<p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/14.png" alt="image-20200404115330541"></p>
 <p>对于手机号这种隐私信息，传输的时候一定要加密，这里的加密方式为RSA，注意这里用的是应用公钥2，也就是另外一套RSA公私钥，认证端用开发者配置的公钥加密手机号，这样只有开发者拥有相应的私钥进行解密，可以看到非常正确地执行了<strong>公钥加密</strong>。</p>
 <h2 id="四、思考"><a href="#四、思考" class="headerlink" title="四、思考"></a>四、思考</h2><p>公钥加密、私钥签名这是我们从大学里就能学到的再常见不过的东西，也是最正确、最不偷懒的做法，CMCC老大哥就做的非常到位，读者读到这里，可能觉得这不是很正常的事情么，这有什么好学习的？</p>
 <p>其实不然，一键登录这个功能市场上起码有十家以上的代理商在做，就这一块能做到上述私钥签名、公钥加密的，笔者横向对比了很多家公司的接口文档，发现除了运营商做到了，其他的寥寥无几，甚至把password、secret、key等等乱七八糟混在一起用，显得极其不专业而且并不安全。那么其他代理商明知道这样什么是安全的，他又不傻，为什么不做呢？</p>
@@ -279,27 +284,6 @@
 
       
 
-      
-        <div class="page-reward">
-          <a href="javascript:;" target="_blank" rel="noopener" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -428,22 +412,6 @@
 
   
 
-  
-  <div id="gitment-ctn"></div> 
-<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
-<script src="https://billts.site/js/gitment.js"></script>
-<script>
-var gitment = new Gitment({
-  id: "对CMCC一键登录过程的分析与思考",
-  owner: 'canbaoafeizai',
-  repo: 'canbaoafeizai.github.io',
-  oauth: {
-    client_id: 'ea88e39f301f623db965',
-    client_secret: '0786bebc88d9924a00eede769540f72603ce3c4a',
-  },
-})
-gitment.render('gitment-ctn')
-</script>
   
 
 
@@ -750,8 +718,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
 </div>
   </div>
   <!-- 雪花特效2 -->
-
-  <script type="text/javascript" src="snow2.js"></script>
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
