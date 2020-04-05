@@ -34,7 +34,7 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;11.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;12.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;14.png">
-<meta property="og:updated_time" content="2020-04-05T16:15:30.643Z">
+<meta property="og:updated_time" content="2020-04-05T16:35:02.182Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;1.png">
   
@@ -206,18 +206,7 @@
 <p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/2.png" alt="image-20200329223857307"></p>
 <p>上图为CMCC文档中给出的流程图，根据文档总结流程如下：</p>
 <p>流程概括：</p>
-<p>①应用客户端向认证SDK发送取号请求</p>
-<p>②认证SDK向认证服务端完成取号逻辑</p>
-<p>③认证SDK向应用客户端返回取号响应</p>
-<p>④用户向应用客户端请求登录</p>
-<p>⑤应用客户端向认证SDK发送用户授权请求</p>
-<p>⑥认证SDK向用户拉起授权页</p>
-<p>⑦用户向认证SDK确认</p>
-<p>⑧认证SDK向认证服务端完成token获取逻辑</p>
-<p>⑨认证SDK向应用客户端返回token</p>
-<p>⑩应用客户端携带token到应用服务器</p>
-<p>⑪应用服务端向认证服务端请求获取手机号码接口</p>
-<p>⑫认证服务端返回手机号码信息给应用服务端</p>
+<p>①应用客户端向认证SDK发送取号请求<br>②认证SDK向认证服务端完成取号逻辑<br>③认证SDK向应用客户端返回取号响应<br>④用户向应用客户端请求登录<br>⑤应用客户端向认证SDK发送用户授权请求<br>⑥认证SDK向用户拉起授权页<br>⑦用户向认证SDK确认<br>⑧认证SDK向认证服务端完成token获取逻辑<br>⑨认证SDK向应用客户端返回token<br>⑩应用客户端携带token到应用服务器<br>⑪应用服务端向认证服务端请求获取手机号码接口<br>⑫认证服务端返回手机号码信息给应用服务端</p>
 <p>2）流程参数详细说明：</p>
 <p>①应用客户端向认证SDK发送取号请求</p>
 <p>（这里的取号请求，是请求SDK完成网络判断、蜂窝数据网络切换等操作并缓存凭证scrip，并非是取手机号，根据运营商向微网SDK返回的响应参数猜测判断，取的“号”是手机掩码或网络类型）</p>

@@ -6,12 +6,12 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>无线WiFi流量的抓取与分析(一) | T1ger</title>
+  <title>无线WiFi流量的抓取与分析 | T1ger</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="一、无线WiFi网络状态检测与感知分析二、无线WiFi网络流量嗅探与分析实验环境KALI系统(自带aircrack-ng套件)网卡型号(支持aircrack-ng套件的型号,否则无法使用工具)">
 <meta name="keywords" content="流量分析,无线,嗅探">
 <meta property="og:type" content="article">
-<meta property="og:title" content="无线WiFi流量的抓取与分析(一)">
+<meta property="og:title" content="无线WiFi流量的抓取与分析">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90(%E4%B8%80)&#x2F;index.html">
 <meta property="og:site_name" content="T1ger">
 <meta property="og:description" content="一、无线WiFi网络状态检测与感知分析二、无线WiFi网络流量嗅探与分析实验环境KALI系统(自带aircrack-ng套件)网卡型号(支持aircrack-ng套件的型号,否则无法使用工具)">
@@ -28,7 +28,7 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90(%E4%B8%80)&#x2F;11.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90(%E4%B8%80)&#x2F;12.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90(%E4%B8%80)&#x2F;13.png">
-<meta property="og:updated_time" content="2020-02-04T15:01:54.943Z">
+<meta property="og:updated_time" content="2020-04-05T16:34:37.958Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;02&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90(%E4%B8%80)&#x2F;1.jpg">
   
@@ -179,7 +179,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      无线WiFi流量的抓取与分析(一)
+      无线WiFi流量的抓取与分析
     </h1>
   
 
@@ -195,7 +195,8 @@
         <h2 id="一、无线WiFi网络状态检测与感知分析"><a href="#一、无线WiFi网络状态检测与感知分析" class="headerlink" title="一、无线WiFi网络状态检测与感知分析"></a>一、无线WiFi网络状态检测与感知分析</h2><h2 id="二、无线WiFi网络流量嗅探与分析"><a href="#二、无线WiFi网络流量嗅探与分析" class="headerlink" title="二、无线WiFi网络流量嗅探与分析"></a>二、无线WiFi网络流量嗅探与分析</h2><h3 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h3><p>KALI系统(自带aircrack-ng套件)<br>网卡型号(支持aircrack-ng套件的型号,否则无法使用工具)</p>
 <a id="more"></a>
 <h4 id="1-1-实验原理"><a href="#1-1-实验原理" class="headerlink" title="1.1 实验原理"></a>1.1 实验原理</h4><p>  使用无线网卡在2.4GHz或5GHz某一固定频道可以对数据包进行嗅探，提取数据包中的数据得到wifi相关的信息.</p>
-<h4 id="1-2-实验流程"><a href="#1-2-实验流程" class="headerlink" title="1.2 实验流程"></a>1.2 实验流程</h4><h5 id="iwconfig命令"><a href="#iwconfig命令" class="headerlink" title="iwconfig命令"></a>iwconfig命令</h5><p><img src="/2019/12/02/%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90(%E4%B8%80)/1.jpg" alt="avatar"><br>可以查看到当前网卡的状态,如图,当前网卡名为wlan0,工作在Managed模式.执行如下命令将网卡变成监听模式</p>
+<h4 id="1-2-实验流程"><a href="#1-2-实验流程" class="headerlink" title="1.2 实验流程"></a>1.2 实验流程</h4><h5 id="iwconfig命令"><a href="#iwconfig命令" class="headerlink" title="iwconfig命令"></a>iwconfig命令</h5><p><img src="/2019/12/02/%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90(%E4%B8%80)/1.jpg" alt="avatar"></p>
+<p>可以查看到当前网卡的状态,如图,当前网卡名为wlan0,工作在Managed模式.执行如下命令将网卡变成监听模式</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airmon-ng start wlan0</span><br></pre></td></tr></table></figure>
 <p><img src="/2019/12/02/%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90(%E4%B8%80)/2.png" alt="avatar"><br>再次执行iwconfig查看网卡模式,可以看到网卡名称变为wlanmon,模式变为Monitor<br><img src="/2019/12/02/%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90(%E4%B8%80)/3.png" alt="avatar"><br>接下来执行命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">airodump-ng wlan0mon</span><br></pre></td></tr></table></figure>
@@ -309,11 +310,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/12/02/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/12/02/%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          无线WiFi流量的抓取与分析(一)
+          无线WiFi流量的抓取与分析
         
       </div>
     </a>
