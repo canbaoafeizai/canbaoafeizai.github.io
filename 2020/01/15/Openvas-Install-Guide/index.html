@@ -35,7 +35,9 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;18.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;19.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;20.png">
-<meta property="og:updated_time" content="2020-01-28T09:16:34.305Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;21.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;22.png">
+<meta property="og:updated_time" content="2020-03-17T11:42:29.369Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;1.png">
   
@@ -321,6 +323,44 @@ openvassd.log 扫描器是否启动，并且到哪步针对哪个IP进行什么�
 <p>但明明redis已经启动，却没有redis.sock，估计是sock地址什么的没绑定上，于是</p>
 <p>解决方案:让它自己来！</p>
 <p><img src="/2020/01/15/Openvas-Install-Guide/20.png" alt="image-20200120165337805"></p>
+<p>问题四：</p>
+<p>现象：前端启动一个任务，request之后直接变interrupted</p>
+<p>查看gvmd.log</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">event task:MESSAGE:2020-03-14 09h59.33 UTC:20075: Task <span class="built_in">test</span> (83a7a580-ed5b-4378-bb59</span><br><span class="line">-8924e6bcec06) has been requested to start by user</span><br><span class="line">event task:MESSAGE:2020-03-14 09h59.44 UTC:20090: Status of task <span class="built_in">test</span> (83a7a580-ed5b</span><br><span class="line">-4378-bb59-8924e6bcec06) has changed to Running</span><br><span class="line">md   main:WARNING:2020-03-14 09h59.45 UTC:20090: openvas_scanner_read: Failed to rea</span><br><span class="line">d from scanner: Connection reset by peer</span><br><span class="line">event task:MESSAGE:2020-03-14 09h59.45 UTC:20090: Status of task <span class="built_in">test</span> (83a7a580-ed5b</span><br><span class="line">-4378-bb59-8924e6bcec06) has changed to Interrupted</span><br></pre></td></tr></table></figure>
+
+<p>查看gsad.log</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sd   main:MESSAGE:2020-01-20 15h00.45 utc:7589: Plugin 2016/gb_disk_pulse_enterprise</span><br><span class="line">_server_bof_vuln.nasl is deprecated. It will neither loaded nor launched.</span><br><span class="line">sd   main:MESSAGE:2020-01-20 15h00.45 utc:7589: Plugin 2016/gb_disk_savvy_login_buff</span><br><span class="line">er_overflow_vuln_oct.nasl is deprecated. It will neither loaded nor launched.</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>推测原因是很多nvts失效了，加载不上，于是启动更新nvt库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/sbin/greenbone-nvt-sync</span><br></pre></td></tr></table></figure>
+
+<p>结果速度太慢了，难以接受，查看help里有wget选项，于是改了一下源码，给wget加上了proxy，速度很快就更新完了，然后就可以正常启动了HH。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/sbin/greenbone-nvt-sync</span><br><span class="line">371行</span><br><span class="line">wget <span class="string">"<span class="variable">$COMMUNITY_NVT_HTTP_FEED</span>"</span> -O <span class="variable">$TMP_NVT</span> -e <span class="string">"http_proxy=http://"</span> --proxy-user= --proxy-password=</span><br></pre></td></tr></table></figure>
+
+<p>最后加入crontab里每日更新即可。</p>
+<p>问题五：nginx和gsad在80端口上的冲突</p>
+<p>gsad进程会默认监听80和443，因此会导致nginx启动不起来，我的处理方法如下：</p>
+<p>先关闭gsad所有进程，然后启动已经配好ssl的nginx，接着启动gsad，将开放端口放到9390，并修改配置文件，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/gsad</span><br><span class="line">OPTIONS=<span class="string">"--listen=0.0.0.0 --port=9390 "</span></span><br></pre></td></tr></table></figure>
+
+<p>问题六：配置openvas只能通过域名访问，IP不能访问</p>
+<p>nginx里增加如下配置，注意是增加，而不是在原有的基础上修改，不加这些配置，就无法使用ssl协议，但这样仍然有个缺点是9390对外依旧开放，暂时还没想到解决方法， 但至少IP访问被禁了。</p>
+<p><img src="/2020/01/15/Openvas-Install-Guide/21.png" alt="image-20200120165337805"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">//原有的配置</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">  listen 443 default;</span><br><span class="line">  ssl_certificate  cert/openvas.pem;</span><br><span class="line">  ssl_certificate_key cert/openvas.key;</span><br><span class="line">  ssl_session_timeout 5m;</span><br><span class="line">  ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;</span><br><span class="line">  ssl_prefer_server_ciphers on;</span><br><span class="line">  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;  </span><br><span class="line">  server_name _;</span><br><span class="line">  <span class="built_in">return</span> 403;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>问题六：在GSA前端操作时，点击任务开始按钮弹出“Service temporaly down”</p>
+<p>一般排查流程为，检查gsad、gvmd、openvassd，前两个一般没有问题。第三个会出现时而卡顿的现象，关也关不掉，开也开不开，</p>
+<p>在gvmd.log中会出现要么是“连接不到openvassd.sock”，要么是“user不能启动”</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">md   main:WARNING:2020-03-15 07h58.14 utc:23198: openvas_scanner_connect_unix: Faile</span><br><span class="line">d to connect to scanner (/var/run/openvassd.sock): Connection refused</span><br><span class="line">event task:MESSAGE:2020-03-15 08h01.22 UTC:1069: Task <span class="built_in">test</span> (83a7a580-ed5b-4378-bb59-</span><br><span class="line">8924e6bcec06) could not be started by User123</span><br></pre></td></tr></table></figure>
+
+<p>如果尝试把三个进程都kill掉再重启还出现这种问题，最快的解决方案就是reboot。</p>
+<p>·················debug两天</p>
+<p>可能原因一：</p>
+<p>启动test组正常，启动某些组就跑不动直到上面的状态，发现了一个很可能的原因，机器的硬核配置太低，某云的1核两G，如果一次置放的IP组太多，很可能导致openvassd并发数量过多卡死，于是通过调整配置再没有发现类似的情况：</p>
+<p><img src="/2020/01/15/Openvas-Install-Guide/22.png" alt="image-20200120165337805"></p>
+<p>启动task的时候,这里的默认配置为4和20,经过实验,建议在配置不高的机器上将这里的配置改为5和4,以上配置测试了两个200IP的task,没有出现openvassd卡死的情况.服务器内存占用也没有到警戒线.</p>
+<p>可能原因二：</p>
+<p>现象是gvm内存占用极多 ，通过ps -ef | grep gvmd可以看到gvmd在scaping data.</p>
 
       
 
@@ -647,6 +687,22 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">SSL</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">VPN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量分析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">协议</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">无线</a>
               </li>
              
@@ -659,23 +715,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量分析</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">嗅探</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">攻击</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">SSL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">VPN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">嗅探</a>
               </li>
              
               <li class="article-tag-list-item">
