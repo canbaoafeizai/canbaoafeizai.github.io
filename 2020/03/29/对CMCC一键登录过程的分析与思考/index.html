@@ -9,7 +9,7 @@
   <title>对CMCC一键登录过程的分析与思考 | T1ger</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="一、背景最近越来越多的运营商推出了一款新的业务：一键登录和号码认证功能，面向解决的痛点问题是之前各类身份认证逻辑，存在信息传输过程不安全、验证逻辑容易被绕过、甚至接口被爆漏洞导致被拖库等等，大厂商如CMCC、电信联通等都推出了一键登录业务，用运营商自身信息优势提供电信级别的认证方案，可以预测将来会越来越火。从上游厂商直接拿解决方案似乎已经成为了一种发展趋势。作为信息安全专业的学生，我本着学习的态度">
-<meta name="keywords" content="协议">
+<meta name="keywords" content="protocol">
 <meta property="og:type" content="article">
 <meta property="og:title" content="对CMCC一键登录过程的分析与思考">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;index.html">
@@ -34,7 +34,7 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;11.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;12.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;14.png">
-<meta property="og:updated_time" content="2020-04-06T02:26:00.851Z">
+<meta property="og:updated_time" content="2020-04-06T08:44:39.962Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;1.png">
   
@@ -204,13 +204,7 @@
 <p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/1.png" alt="image-20200329224247998"></p>
 <p>面对如此好的用户体验，尤其是一个安全认证功能，作为安全人员来讲，我们是一定要关注涉及到权限变化、认证功能背后的逻辑是否存在可能的问题。</p>
 <p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/2.png" alt="image-20200329223857307"></p>
-<p>上图为CMCC文档中给出的流程图，根据文档总结流程如下：</p>
-<p>流程概括：</p>
-<p>①应用客户端向认证SDK发送取号请求<br>②认证SDK向认证服务端完成取号逻辑<br>③认证SDK向应用客户端返回取号响应<br>④用户向应用客户端请求登录<br>⑤应用客户端向认证SDK发送用户授权请求<br>⑥认证SDK向用户拉起授权页<br>⑦用户向认证SDK确认<br>⑧认证SDK向认证服务端完成token获取逻辑<br>⑨认证SDK向应用客户端返回token<br>⑩应用客户端携带token到应用服务器<br>⑪应用服务端向认证服务端请求获取手机号码接口<br>⑫认证服务端返回手机号码信息给应用服务端</p>
-<p>2）流程参数详细说明：</p>
-<p>①应用客户端向认证SDK发送取号请求</p>
-<p>（这里的取号请求，是请求SDK完成网络判断、蜂窝数据网络切换等操作并缓存凭证scrip，并非是取手机号，根据运营商向微网SDK返回的响应参数猜测判断，取的“号”是手机掩码或网络类型）</p>
-<p>客户端请求参数：</p>
+<p>上图为CMCC文档中给出的流程图，根据文档总结流程如下：<br>流程概括：<br>①应用客户端向认证SDK发送取号请求<br>②认证SDK向认证服务端完成取号逻辑<br>③认证SDK向应用客户端返回取号响应<br>④用户向应用客户端请求登录<br>⑤应用客户端向认证SDK发送用户授权请求<br>⑥认证SDK向用户拉起授权页<br>⑦用户向认证SDK确认<br>⑧认证SDK向认证服务端完成token获取逻辑<br>⑨认证SDK向应用客户端返回token<br>⑩应用客户端携带token到应用服务器<br>⑪应用服务端向认证服务端请求获取手机号码接口<br>⑫认证服务端返回手机号码信息给应用服务端<br>2）流程参数详细说明：<br>①应用客户端向认证SDK发送取号请求<br>（这里的取号请求，是请求SDK完成网络判断、蜂窝数据网络切换等操作并缓存凭证scrip，并非是取手机号，根据运营商向微网SDK返回的响应参数猜测判断，取的“号”是手机掩码或网络类型）<br>客户端请求参数：</p>
 <p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/7.png" alt="image-20200404115048527"></p>
 <p>②认证SDK向认证服务端完成取号逻辑，对开发者屏蔽。</p>
 <p>③认证SDK向应用客户端返回取号响应</p>
@@ -229,18 +223,13 @@
 <p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/14.png" alt="image-20200404115330541"></p>
 <p>响应示例：</p>
 <p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/15.png" alt="image-20200404115339433"></p>
-<p>总体流程上可以归纳为三个阶段：</p>
-<p>一、 APP通过SDK向运营商发起一次http请求，CMCC识别到这是谁在用哪个APP向它请求，进而给这个手机号打个标记，并返回给APP客户端token。背靠原理：CMCC具有全网级别的，识别由sim卡通过4G网络发起http请求的手机号是多少的能力。</p>
-<p>二、用户触发一键登录逻辑时，首先向用户请求授权读取sim卡信息，APP客户端会拿到SIM卡中的手机号。</p>
-<p>三、APP的客户端会把手机号，以及步骤一得到的token一起发给APP服务端的一键登录接口，进而服务端会带着客户端发来的token去请求CMCC的获取手机号码接口，CMCC会查到这个token对应的手机号并返回给APP服务端。依靠的依然是步骤一CMCC通过token查对应手机号的能力。</p>
-<p>四、服务端此时拥有从sim卡中获取的本机手机号，以及本机流量卡token在CMCC处兑换到的手机号，比对即可完成用户手机号的一键登录。</p>
+<p>总体流程上可以归纳为三个阶段：<br>一、 APP通过SDK向运营商发起一次http请求，CMCC识别到这是谁在用哪个APP向它请求，进而给这个手机号打个标记，并返回给APP客户端token。背靠原理：CMCC具有全网级别的，识别由sim卡通过4G网络发起http请求的手机号是多少的能力。<br>二、用户触发一键登录逻辑时，首先向用户请求授权读取sim卡信息，APP客户端会拿到SIM卡中的手机号。<br>三、APP的客户端会把手机号，以及步骤一得到的token一起发给APP服务端的一键登录接口，进而服务端会带着客户端发来的token去请求CMCC的获取手机号码接口，CMCC会查到这个token对应的手机号并返回给APP服务端。依靠的依然是步骤一CMCC通过token查对应手机号的能力。<br>四、服务端此时拥有从sim卡中获取的本机手机号，以及本机流量卡token在CMCC处兑换到的手机号，比对即可完成用户手机号的一键登录。</p>
 <h2 id="三、安全性分析"><a href="#三、安全性分析" class="headerlink" title="三、安全性分析"></a>三、安全性分析</h2><p>​        分析对象：</p>
 <ol>
 <li>SDK通过蜂窝网请求认证端获取手机号token</li>
 <li>用户给APP的授权信息</li>
-<li>APP服务端向CMCC认证过程中传递的凭证信息和协议安全设计</li>
+<li>APP服务端向CMCC认证过程中传递的凭证信息和协议安全设计<h4 id="1、蜂窝网取号逻辑"><a href="#1、蜂窝网取号逻辑" class="headerlink" title="1、蜂窝网取号逻辑"></a>1、蜂窝网取号逻辑</h4>场景：这一步是整个流程的开始，其实也是整个业务最核心关键的地方，即SDK通过一次http请求认证端，由认证端返回一个token，该token在CMCC认证端那里是和手机号绑定的。这也是CMCC最核心的电信级别的认证能力，只有wap运营商能通过蜂窝网SIM流量卡的一次请求知道这请求是哪个手机号发出的，别的公司组织是没办法拿到这些信息的。</li>
 </ol>
-<h4 id="1、蜂窝网取号逻辑"><a href="#1、蜂窝网取号逻辑" class="headerlink" title="1、蜂窝网取号逻辑"></a>1、蜂窝网取号逻辑</h4><p>场景：这一步是整个流程的开始，其实也是整个业务最核心关键的地方，即SDK通过一次http请求认证端，由认证端返回一个token，该token在CMCC认证端那里是和手机号绑定的。这也是CMCC最核心的电信级别的认证能力，只有wap运营商能通过蜂窝网SIM流量卡的一次请求知道这请求是哪个手机号发出的，别的公司组织是没办法拿到这些信息的。</p>
 <h4 id="2、-SDK请求SIM卡中的手机号信息"><a href="#2、-SDK请求SIM卡中的手机号信息" class="headerlink" title="2、 SDK请求SIM卡中的手机号信息"></a>2、 SDK请求SIM卡中的手机号信息</h4><p>场景：当用户点击一键登录时，APP向用户请求授权获取SIM卡中存储的手机号信息，APP获取手机号是一个非常敏感的事件，里面涉及到安卓底层api的一些授权。</p>
 <p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/3.png" alt></p>
 <p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/4.png" alt="image-20200329230127440"></p>
@@ -254,19 +243,14 @@
 <li>使用READ_PHONE_STATE权限是需要在AndroidManifest.xml文件里面是需要注册的，申请到动态权限后，不论重启APP还是手机均不需要再次申请权限。</li>
 <li>这一步授权完成之后，APP就已经拿到了用户的手机号信息。</li>
 </ol>
-<h4 id="3、APP服务端和CMCC的交互"><a href="#3、APP服务端和CMCC的交互" class="headerlink" title="3、APP服务端和CMCC的交互"></a>3、APP服务端和CMCC的交互</h4><p>流程十一和十二是需要很仔细设计的地方，在这里一个设计不好就会导致重放、劫持等各种各样层出不穷的攻击。</p>
-<p>场景：服务端带着客户端传来的token，发给认证端把token交换为相应的手机号</p>
-<p>先把服务端发出去的参数图贴一下：</p>
+<h4 id="3、APP服务端和CMCC的交互"><a href="#3、APP服务端和CMCC的交互" class="headerlink" title="3、APP服务端和CMCC的交互"></a>3、APP服务端和CMCC的交互</h4><p>流程十一和十二是需要很仔细设计的地方，在这里一个设计不好就会导致重放、劫持等各种各样层出不穷的攻击。<br>场景：服务端带着客户端传来的token，发给认证端把token交换为相应的手机号<br>先把服务端发出去的参数图贴一下：</p>
 <p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/11.png" alt="image-20200404115227575"></p>
 <p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/12.png" alt="image-20200404115254730"></p>
 <p>token是服务端必须通过公网传输，且是整个消息中唯一要保护的内容。时间戳防重放，IP强校验、appid做标识都没有问题。sign是认证服务端用来确保发起请求的真的是app的服务端，确保的依据是appsecret参与签名了。这里有两套算法，如果使用RSA私钥签名，则需要提前在社区配置一套验签公钥，这样发过去社区直接用公钥解密，完全没有问题。如果使用MD5做哈希，参数里面需要加上开发者被分配的唯一secret，这里secret实际上代表了私钥的意思，相当于用了只有自己的私钥做签名，发过去以后对方也能通过secret和其他参数进行哈希做比对。</p>
-<p>可以看到非常正确地执行了<strong>私钥签名</strong>。</p>
-<p>再来看一下返回的手机号信息：</p>
+<p>可以看到非常正确地执行了<strong>私钥签名</strong>。<br>再来看一下返回的手机号信息：</p>
 <p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/14.png" alt="image-20200404115330541"></p>
-<p>对于手机号这种隐私信息，传输的时候一定要加密，这里的加密方式为RSA，注意这里用的是应用公钥2，也就是另外一套RSA公私钥，认证端用开发者配置的公钥加密手机号，这样只有开发者拥有相应的私钥进行解密，可以看到非常正确地执行了<strong>公钥加密</strong>。</p>
-<h2 id="四、思考"><a href="#四、思考" class="headerlink" title="四、思考"></a>四、思考</h2><p>公钥加密、私钥签名这是我们从大学里就能学到的再常见不过的东西，也是最正确、最不偷懒的做法，CMCC老大哥就做的非常到位，读者读到这里，可能觉得这不是很正常的事情么，这有什么好学习的？</p>
-<p>其实不然，一键登录这个功能市场上起码有十家以上的代理商在做，就这一块能做到上述私钥签名、公钥加密的，笔者横向对比了很多家公司的接口文档，发现除了运营商做到了，其他的寥寥无几，甚至把password、secret、key等等乱七八糟混在一起用，显得极其不专业而且并不安全。那么其他代理商明知道这样什么是安全的，他又不傻，为什么不做呢？</p>
-<p>可能有各种各样的原因，比如说：代理要同时做三家运营商的业务代理，三家运营商的加密验签方式不同，代理商要一个接口对三个接口，也非常不容易，在各种阻拦困扰下很容易就选择弱加密算法，甚至明文传手机号屡见不鲜，这也是安全事故频发的一个重要原因。又比如我们如果选择CMCC的接口，需要做两套公私钥和一个appsecret再配进去，而如果选择运营商的接口，可能啥都不用配，一个appkey走天下，看起来好像运营商帮你承担了大多数风险，真实的情况可能是APP的各种用户数据在链路上被人洗劫一空，这是非常危险的。</p>
+<p>对于手机号这种隐私信息，传输的时候一定要加密，这里的加密方式为RSA，注意这里用的是应用公钥2，也就是另外一套RSA公私钥，认证端用开发者配置的公钥加密手机号，这样只有开发者拥有相应的私钥进行解密，可以看到非常正确地执行了<strong>公钥加密</strong>。<br>这一步交互之后，服务端获取到了用户流量卡的手机号，但恰恰是这里还有一个比较危险的问题，那就是比对逻辑是由开发者自己搞定的，SDK的所有功能仅仅是帮APP服务端获取到手机号，APP服务端有了token对的手机号，APP用户端有sim卡中的手机号，谁给谁传，怎么传，怎么比对，仍然是待考证的问题，中间逻辑设计不好仍然会出现各种绕过，各种劫持等等。</p>
+<h2 id="四、思考"><a href="#四、思考" class="headerlink" title="四、思考"></a>四、思考</h2><p>公钥加密、私钥签名这是我们从大学里就能学到的再常见不过的东西，也是最正确、最不偷懒的做法，CMCC老大哥就做的非常到位，读者读到这里，可能觉得这不是很正常的事情么，这有什么好学习的？<br>其实不然，一键登录这个功能市场上起码有十家以上的代理商在做，就这一块能做到上述私钥签名、公钥加密的，笔者横向对比了很多家公司的接口文档，发现除了运营商做到了，其他的寥寥无几，甚至把password、secret、key等等乱七八糟混在一起用，显得极其不专业而且并不安全。那么其他代理商明知道这样什么是安全的，他又不傻，为什么不做呢？<br>可能有各种各样的原因，比如说：代理要同时做三家运营商的业务代理，三家运营商的加密验签方式不同，代理商要一个接口对三个接口，也非常不容易，在各种阻拦困扰下很容易就选择弱加密算法，甚至明文传手机号屡见不鲜，这也是安全事故频发的一个重要原因。又比如我们如果选择CMCC的接口，需要做两套公私钥和一个appsecret再配进去，而如果选择运营商的接口，可能啥都不用配，一个appkey走天下，看起来好像运营商帮你承担了大多数风险，真实的情况可能是APP的各种用户数据在链路上被人洗劫一空，这是非常危险的。</p>
 <p>我们不能为了做安全保障，把公司的业务停掉吧？</p>
 <p>我们不能为了做业务顺利，就违背基本的安全原则吧？</p>
 <p>安全脱离了业务没有意义，业务脱离了安全漏洞百出，积极寻找在业务和安全的博弈平衡，这在极大的程度上考验着安全从业人员的专业性和能力。</p>
@@ -283,7 +267,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">协议</a>
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">protocol</a>
         		</li>
       		
 		</ul>
@@ -560,10 +544,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">协议</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">无线</a>
               </li>
              
@@ -593,6 +573,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">webshell</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">protocol</a>
               </li>
             
             <div class="clearfix"></div>
