@@ -5,27 +5,25 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>waf对webshell流量检测的性能分析 | T1ger</title>
+  <link rel="dns-prefetch" href="http://www.t1ger.top">
+  <title>waf对webshell流量检测的性能分析 | 珍惜现在</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前言最近在一次授权渗透测试中遇到了一个棘手的场景，万能的队友已经找到了后台上传点，并传了小马然后开心地用antsword进行连接，但是由于明文传输很快被waf感知，并引起了管理员的注意，很快我们的马失效了，真是偷鸡不成蚀把米。痛定思痛，我们判断对方并不能尽快修复漏洞，于是临阵抱佛脚，寄希望于通过加密算法提高攻击的质量。首先要做三件事，第一，迅速在本地复现对方环境，第二，配置各种加密攻击流量载荷，第">
 <meta name="keywords" content="waf,webshell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="waf对webshell流量检测的性能分析">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;index.html">
-<meta property="og:site_name" content="T1ger">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;index.html">
+<meta property="og:site_name" content="珍惜现在">
 <meta property="og:description" content="前言最近在一次授权渗透测试中遇到了一个棘手的场景，万能的队友已经找到了后台上传点，并传了小马然后开心地用antsword进行连接，但是由于明文传输很快被waf感知，并引起了管理员的注意，很快我们的马失效了，真是偷鸡不成蚀把米。痛定思痛，我们判断对方并不能尽快修复漏洞，于是临阵抱佛脚，寄希望于通过加密算法提高攻击的质量。首先要做三件事，第一，迅速在本地复现对方环境，第二，配置各种加密攻击流量载荷，第">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;2.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;1.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;3.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;4.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;5.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;3.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;4.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;5.png">
 <meta property="og:updated_time" content="2020-04-06T08:25:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;2.png">
-  
-    <link rel="alternative" href="/atom.xml" title="T1ger" type="application/atom+xml">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;29&#x2F;%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F&#x2F;2.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -314,7 +312,7 @@ waf也只能检测到Host header is a numeric IP address,这基本是说waf对�
     <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.t1ger.top/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/" alt="微信分享二维码">
     </div>
 </div>
 

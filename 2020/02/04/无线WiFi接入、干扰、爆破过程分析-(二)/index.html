@@ -5,31 +5,29 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>无线WiFi接入、干扰、爆破过程分析(二) | T1ger</title>
+  <link rel="dns-prefetch" href="http://www.t1ger.top">
+  <title>无线WiFi接入、干扰、爆破过程分析(二) | 珍惜现在</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="一、实验背景​     在使用IEEE802.11b&#x2F;g通信标准的无线网络中，广泛使用的无线网络加密协议主要包括WEP加密协议和WPA加密协议两种。其中WEP协议也称有限等效加密协议，这种协议目前已经有相当多的安全漏洞，使用改加密协议的无线数据信息很容易遭受攻击，已经基本被弃用，WPA协议也被称为WiFi保护访问协议，这种加密协议采用两种技术完成数据信息的加密传输，一种技术是临时密钥完整性技术，在">
 <meta name="keywords" content="流量分析,无线,攻击">
 <meta property="og:type" content="article">
 <meta property="og:title" content="无线WiFi接入、干扰、爆破过程分析(二)">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;index.html">
-<meta property="og:site_name" content="T1ger">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;index.html">
+<meta property="og:site_name" content="珍惜现在">
 <meta property="og:description" content="一、实验背景​     在使用IEEE802.11b&#x2F;g通信标准的无线网络中，广泛使用的无线网络加密协议主要包括WEP加密协议和WPA加密协议两种。其中WEP协议也称有限等效加密协议，这种协议目前已经有相当多的安全漏洞，使用改加密协议的无线数据信息很容易遭受攻击，已经基本被弃用，WPA协议也被称为WiFi保护访问协议，这种加密协议采用两种技术完成数据信息的加密传输，一种技术是临时密钥完整性技术，在">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;1.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;2.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;3.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;4.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;5.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;6.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;7.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;8.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;9.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;3.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;4.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;5.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;6.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;7.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;8.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;9.png">
 <meta property="og:updated_time" content="2020-02-07T15:17:41.078Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;1.png">
-  
-    <link rel="alternative" href="/atom.xml" title="T1ger" type="application/atom+xml">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;02&#x2F;04&#x2F;%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)&#x2F;1.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -332,7 +330,7 @@
     <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.t1ger.top/2020/02/04/%E6%97%A0%E7%BA%BFWiFi%E6%8E%A5%E5%85%A5%E3%80%81%E5%B9%B2%E6%89%B0%E3%80%81%E7%88%86%E7%A0%B4%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90-(%E4%BA%8C)/" alt="微信分享二维码">
     </div>
 </div>
 

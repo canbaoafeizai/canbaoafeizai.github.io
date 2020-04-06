@@ -5,32 +5,30 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>mysql-udf提权 | T1ger</title>
+  <link rel="dns-prefetch" href="http://www.t1ger.top">
+  <title>mysql-udf提权 | 珍惜现在</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="最近在一次授权测试中，从配置文件里读到了mysql的密码，连进去以后使用sqlmap想提权，但却始终没法提权，后来在锥宝宝的指导下复现了一下，大概搞明白了。 0x01 攻击模板   名称 详细描述    PreCondition 网络层：外网可以访问到mysql数据库服务；    应用层：1. 攻击者拿到了mysql数据库root账号和密码 2.secure-file-priv目录无限制；3. 启">
 <meta name="keywords" content="sqlmap,提权">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql-udf提权">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;index.html">
-<meta property="og:site_name" content="T1ger">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;index.html">
+<meta property="og:site_name" content="珍惜现在">
 <meta property="og:description" content="最近在一次授权测试中，从配置文件里读到了mysql的密码，连进去以后使用sqlmap想提权，但却始终没法提权，后来在锥宝宝的指导下复现了一下，大概搞明白了。 0x01 攻击模板   名称 详细描述    PreCondition 网络层：外网可以访问到mysql数据库服务；    应用层：1. 攻击者拿到了mysql数据库root账号和密码 2.secure-file-priv目录无限制；3. 启">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;1.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;2.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;3.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;4.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;5.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;6.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;7.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;8.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;9.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;10.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;3.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;4.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;5.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;6.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;7.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;8.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;9.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;10.png">
 <meta property="og:updated_time" content="2020-04-06T08:19:30.244Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;1.png">
-  
-    <link rel="alternative" href="/atom.xml" title="T1ger" type="application/atom+xml">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;1.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -329,7 +327,7 @@
     <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.t1ger.top/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/" alt="微信分享二维码">
     </div>
 </div>
 

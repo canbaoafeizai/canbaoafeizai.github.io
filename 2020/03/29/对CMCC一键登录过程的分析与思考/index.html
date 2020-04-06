@@ -5,40 +5,38 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>对CMCC一键登录过程的分析与思考 | T1ger</title>
+  <link rel="dns-prefetch" href="http://www.t1ger.top">
+  <title>对CMCC一键登录过程的分析与思考 | 珍惜现在</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="一、背景最近越来越多的运营商推出了一款新的业务：一键登录和号码认证功能，面向解决的痛点问题是之前各类身份认证逻辑，存在信息传输过程不安全、验证逻辑容易被绕过、甚至接口被爆漏洞导致被拖库等等，大厂商如CMCC、电信联通等都推出了一键登录业务，用运营商自身信息优势提供电信级别的认证方案，可以预测将来会越来越火。从上游厂商直接拿解决方案似乎已经成为了一种发展趋势。作为信息安全专业的学生，我本着学习的态度">
 <meta name="keywords" content="protocol">
 <meta property="og:type" content="article">
 <meta property="og:title" content="对CMCC一键登录过程的分析与思考">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;index.html">
-<meta property="og:site_name" content="T1ger">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;index.html">
+<meta property="og:site_name" content="珍惜现在">
 <meta property="og:description" content="一、背景最近越来越多的运营商推出了一款新的业务：一键登录和号码认证功能，面向解决的痛点问题是之前各类身份认证逻辑，存在信息传输过程不安全、验证逻辑容易被绕过、甚至接口被爆漏洞导致被拖库等等，大厂商如CMCC、电信联通等都推出了一键登录业务，用运营商自身信息优势提供电信级别的认证方案，可以预测将来会越来越火。从上游厂商直接拿解决方案似乎已经成为了一种发展趋势。作为信息安全专业的学生，我本着学习的态度">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;1.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;2.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;7.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;8.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;9.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;10.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;11.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;12.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;13.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;14.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;15.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;3.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;4.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;5.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;6.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;11.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;12.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;14.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;7.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;8.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;9.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;10.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;11.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;12.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;13.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;14.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;15.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;3.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;4.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;5.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;6.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;11.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;12.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;14.png">
 <meta property="og:updated_time" content="2020-04-06T08:44:39.962Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;1.png">
-  
-    <link rel="alternative" href="/atom.xml" title="T1ger" type="application/atom+xml">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;1.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -323,7 +321,7 @@
     <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://www.t1ger.top/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/" alt="微信分享二维码">
     </div>
 </div>
 
