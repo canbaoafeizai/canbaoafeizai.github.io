@@ -8,16 +8,19 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>rsyslog-ElK | T1ger</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、五分钟搭好ELK二、五分钟配好rsyslog三、写一些logstash的配置文件">
+  <meta name="description" content="一、五分钟搭好ELK搭ELK从入门到放弃是一个痛苦的过程，从开始面对一堆报错毫无头绪到后来非常熟练轻松是一个成长的过程，这里总结一下centos快速起ELK的方法。 首先是下载，很多人其实ELK卡在下载这一步就没了，国内的下载速度即使挂上vpn也慢的离谱，但是用AMZ的国外速度其实是非常非常快的，平均60M的速度简直不要太爽，建议用AMZ云先down下来，再从AMZ上down下来，这样速度也可以达">
 <meta name="keywords" content="ELK">
 <meta property="og:type" content="article">
 <meta property="og:title" content="rsyslog-ElK">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;15&#x2F;rsyslog-ElK&#x2F;index.html">
 <meta property="og:site_name" content="T1ger">
-<meta property="og:description" content="一、五分钟搭好ELK二、五分钟配好rsyslog三、写一些logstash的配置文件">
+<meta property="og:description" content="一、五分钟搭好ELK搭ELK从入门到放弃是一个痛苦的过程，从开始面对一堆报错毫无头绪到后来非常熟练轻松是一个成长的过程，这里总结一下centos快速起ELK的方法。 首先是下载，很多人其实ELK卡在下载这一步就没了，国内的下载速度即使挂上vpn也慢的离谱，但是用AMZ的国外速度其实是非常非常快的，平均60M的速度简直不要太爽，建议用AMZ云先down下来，再从AMZ上down下来，这样速度也可以达">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-05T16:01:07.734Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;15&#x2F;rsyslog-ElK&#x2F;2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;15&#x2F;rsyslog-ElK&#x2F;1.png">
+<meta property="og:updated_time" content="2020-04-06T08:19:12.726Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;15&#x2F;rsyslog-ElK&#x2F;2.png">
   
     <link rel="alternative" href="/atom.xml" title="T1ger" type="application/atom+xml">
   
@@ -179,7 +182,34 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="一、五分钟搭好ELK"><a href="#一、五分钟搭好ELK" class="headerlink" title="一、五分钟搭好ELK"></a>一、五分钟搭好ELK</h2><h2 id="二、五分钟配好rsyslog"><a href="#二、五分钟配好rsyslog" class="headerlink" title="二、五分钟配好rsyslog"></a>二、五分钟配好rsyslog</h2><h2 id="三、写一些logstash的配置文件"><a href="#三、写一些logstash的配置文件" class="headerlink" title="三、写一些logstash的配置文件"></a>三、写一些logstash的配置文件</h2>
+        <h2 id="一、五分钟搭好ELK"><a href="#一、五分钟搭好ELK" class="headerlink" title="一、五分钟搭好ELK"></a>一、五分钟搭好ELK</h2><p>搭ELK从入门到放弃是一个痛苦的过程，从开始面对一堆报错毫无头绪到后来非常熟练轻松是一个成长的过程，这里总结一下centos快速起ELK的方法。</p>
+<p>首先是下载，很多人其实ELK卡在下载这一步就没了，国内的下载速度即使挂上vpn也慢的离谱，但是用AMZ的国外速度其实是非常非常快的，平均60M的速度简直不要太爽，建议用AMZ云先down下来，再从AMZ上down下来，这样速度也可以达到几M每秒。HH，贴一张图。</p>
+<a id="more"></a>
+
+<p><img src="/2020/03/15/rsyslog-ElK/2.png" alt="image-20200406103234314"></p>
+<p>下载完三个tar.gz文件以后放在/opt目录下解压，重命名，然后依次启动即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">groupadd elk</span><br><span class="line">useradd elk -g elk -p elasticsearch</span><br><span class="line">chown -R elk:elk /opt/elasticsearch</span><br><span class="line">chown -R elk:elk /optkibana</span><br><span class="line"><span class="comment">##root权限启动logstash，指定一个conf文件</span></span><br><span class="line">screen -S logstash  /opt/logstash/bin/logstash -f config/test.conf</span><br><span class="line"><span class="comment">##elk权限启动E和K</span></span><br><span class="line">su elk</span><br><span class="line">screen -S  elasticsearch /opt/elasticsearch/bin/elasticsearch</span><br><span class="line">screen -S  kibana /opt/kibana/bin/kibana</span><br><span class="line"><span class="comment">##访问127.0.0.1:5601 完事</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二、五分钟配好rsyslog"><a href="#二、五分钟配好rsyslog" class="headerlink" title="二、五分钟配好rsyslog"></a>二、五分钟配好rsyslog</h2><p>logstash和rsyslog的无缝配合给了日志审计童鞋们非常便利的工具方案， 用rsyslog的日志的中心化收集其实非常方便，以一台server为中心，其他的服务器将日志同步过来即可。这里记录一下最简单的log同步。</p>
+<p>服务端配置：</p>
+<p>服务端配置非常简单，创建一个conf文件/etc/rsyslog.d/test.conf</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="variable">$hostname</span> != <span class="string">'hostname'</span> <span class="keyword">then</span> /var/<span class="built_in">log</span>/<span class="built_in">test</span></span><br><span class="line">service rsyslog restart</span><br></pre></td></tr></table></figure>
+
+<p>上述配置意思是rsyslog接收到的所有日志，只要host不是自己，通通存到/var/log/test里去。</p>
+<p>客户端配置：</p>
+<p>客户端的任务是把要发送的日志集中到一个log文件里，加上一些标签啊，tag啊，通过rsyslog发送即可。</p>
+<p>创建一个conf文件/etc/rsyslog.d/test.conf，配置日志路径，配置标签，配置好远端的地址和端口，这里的facility为模块可选有20多种，serverity为等级可选有8种，我们只需要把参数配置好，调用发送就可以。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">module(load=<span class="string">"imfile"</span> PollingInterval=<span class="string">"10"</span>)</span><br><span class="line">input(<span class="built_in">type</span>=<span class="string">"imfile"</span></span><br><span class="line">        File=<span class="string">"/var/log/soc"</span></span><br><span class="line">        Facility=<span class="string">"local0"</span></span><br><span class="line">        Severity=<span class="string">"info"</span></span><br><span class="line">        Tag=<span class="string">"T1ger-TEST"</span></span><br><span class="line">        freshStartTail=<span class="string">"on"</span></span><br><span class="line">)</span><br><span class="line">local0.*   @1.1.1.1:514</span><br></pre></td></tr></table></figure>
+
+<p>选好日志格式以后，配置rsyslog服务端的信息。需要注意的是，所有conf文件重启rsyslog后生效。</p>
+<p>　#<em>.</em> @@remote-host:514 //@@是TCP协议，@是UDP协议</p>
+<p>可以看到，我们往客户端log里写东西，在服务端立即就能看到同步的带着TAG的消息。</p>
+<p><img src="/2020/03/15/rsyslog-ElK/1.png" alt="image-20200406110211904"></p>
+<h2 id="三、写一些logstash的配置文件"><a href="#三、写一些logstash的配置文件" class="headerlink" title="三、写一些logstash的配置文件"></a>三、写一些logstash的配置文件</h2><p>上一步相当于从各个日志服务器把日志导入到日志中心，那么我们要把rsyslog和logstash配合起来使用，其实就是写logstash的conf文件。关于logstash的配置文件，配置方法文档教程一大堆，都是根据最原始的三步模板配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">input&#123;</span><br><span class="line">//定义输入流，输入可以是log文件，可以是csv文件，可以给不同的文件打上type，即标签</span><br><span class="line">path =&gt; /var/log/test</span><br><span class="line">type =&gt;</span><br><span class="line">&#125;</span><br><span class="line">filter&#123;</span><br><span class="line">//设置各种过滤规则，可以根据读取路径或者type设置不同的处理规则，打上不同的标签等，可以按字符格式匹配IP、port等等</span><br><span class="line">if [path] =&gt;</span><br><span class="line">if [type] =&gt;</span><br><span class="line">&#125;</span><br><span class="line">output&#123;</span><br><span class="line">//设置输出流，除了输出到elasticsearch，也可以输出到控制台，也可以输出到文件</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置完成以后重启一下logstash，就可以在kibana里看到我们导入的日志，进行可视化分析等等。</p>
+
       
 
       
@@ -437,6 +467,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">sqlmap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">提权</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">跨网段</a>
               </li>
              
@@ -469,6 +507,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">攻击</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">钓鱼WIFI</a>
               </li>
              
@@ -477,15 +519,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">嗅探</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">攻击</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">waf</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">webshell</a>
               </li>
             
             <div class="clearfix"></div>

@@ -157,6 +157,111 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-mysql-udf提权" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/">mysql-udf提权</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/" class="archive-article-date">
+  	<time datetime="2020-04-06T03:14:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在一次授权测试中，从配置文件里读到了mysql的密码，连进去以后使用sqlmap想提权，但却始终没法提权，后来在锥宝宝的指导下复现了一下，大概搞明白了。</p>
+<h2 id="0x01-攻击模板"><a href="#0x01-攻击模板" class="headerlink" title="0x01 攻击模板"></a>0x01 攻击模板</h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>详细描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PreCondition</td>
+<td>网络层：外网可以访问到mysql数据库服务；</td>
+</tr>
+<tr>
+<td></td>
+<td>应用层：1. 攻击者拿到了mysql数据库root账号和密码 2.secure-file-priv目录无限制；3. 启动MySQL的用户强制指定为root，而不是默认</td>
+</tr>
+<tr>
+<td>PostCondition(权限提升)</td>
+<td>P(mysql-root)-&gt;P(linux-root)</td>
+</tr>
+<tr>
+<td>Vuln</td>
+<td>mysql-user-define-function</td>
+</tr>
+</tbody></table>
+<p>这里注意mysql的root账户和root启动mysql是两码事，后面会再说。</p>
+        
+          <a class="article-more-a" href="/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">sqlmap</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">提权</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-对CMCC一键登录过程的分析与思考" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -253,7 +358,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="一、五分钟搭好ELK"><a href="#一、五分钟搭好ELK" class="headerlink" title="一、五分钟搭好ELK"></a>一、五分钟搭好ELK</h2><h2 id="二、五分钟配好rsyslog"><a href="#二、五分钟配好rsyslog" class="headerlink" title="二、五分钟配好rsyslog"></a>二、五分钟配好rsyslog</h2><h2 id="三、写一些logstash的配置文件"><a href="#三、写一些logstash的配置文件" class="headerlink" title="三、写一些logstash的配置文件"></a>三、写一些logstash的配置文件</h2>
+        <h2 id="一、五分钟搭好ELK"><a href="#一、五分钟搭好ELK" class="headerlink" title="一、五分钟搭好ELK"></a>一、五分钟搭好ELK</h2><p>搭ELK从入门到放弃是一个痛苦的过程，从开始面对一堆报错毫无头绪到后来非常熟练轻松是一个成长的过程，这里总结一下centos快速起ELK的方法。</p>
+<p>首先是下载，很多人其实ELK卡在下载这一步就没了，国内的下载速度即使挂上vpn也慢的离谱，但是用AMZ的国外速度其实是非常非常快的，平均60M的速度简直不要太爽，建议用AMZ云先down下来，再从AMZ上down下来，这样速度也可以达到几M每秒。HH，贴一张图。</p>
+        
+          <a class="article-more-a" href="/2020/03/15/rsyslog-ElK/#more">more >></a>
+        
       
 
       
@@ -507,6 +616,21 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">waf</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">webshell</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -900,90 +1024,6 @@
 
 
   
-    <article id="post-无线WiFi流量的抓取与分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/02/%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90/">无线WiFi流量的抓取与分析</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/02/%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90/" class="archive-article-date">
-  	<time datetime="2019-12-02T12:23:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、无线WiFi网络状态检测与感知分析"><a href="#一、无线WiFi网络状态检测与感知分析" class="headerlink" title="一、无线WiFi网络状态检测与感知分析"></a>一、无线WiFi网络状态检测与感知分析</h2><h2 id="二、无线WiFi网络流量嗅探与分析"><a href="#二、无线WiFi网络流量嗅探与分析" class="headerlink" title="二、无线WiFi网络流量嗅探与分析"></a>二、无线WiFi网络流量嗅探与分析</h2><h3 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h3><p>KALI系统(自带aircrack-ng套件)<br>网卡型号(支持aircrack-ng套件的型号,否则无法使用工具)</p>
-        
-          <a class="article-more-a" href="/2019/12/02/%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">无线</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">嗅探</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/02/%E6%97%A0%E7%BA%BFWiFi%E6%B5%81%E9%87%8F%E7%9A%84%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1106,6 +1146,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">sqlmap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">提权</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">跨网段</a>
               </li>
              
@@ -1138,6 +1186,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">攻击</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">钓鱼WIFI</a>
               </li>
              
@@ -1146,15 +1198,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">嗅探</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">攻击</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">waf</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">webshell</a>
               </li>
             
             <div class="clearfix"></div>

@@ -34,7 +34,7 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;11.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;12.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;14.png">
-<meta property="og:updated_time" content="2020-04-05T16:35:02.182Z">
+<meta property="og:updated_time" content="2020-04-06T02:26:00.851Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83&#x2F;1.png">
   
@@ -241,7 +241,7 @@
 <li>APP服务端向CMCC认证过程中传递的凭证信息和协议安全设计</li>
 </ol>
 <h4 id="1、蜂窝网取号逻辑"><a href="#1、蜂窝网取号逻辑" class="headerlink" title="1、蜂窝网取号逻辑"></a>1、蜂窝网取号逻辑</h4><p>场景：这一步是整个流程的开始，其实也是整个业务最核心关键的地方，即SDK通过一次http请求认证端，由认证端返回一个token，该token在CMCC认证端那里是和手机号绑定的。这也是CMCC最核心的电信级别的认证能力，只有wap运营商能通过蜂窝网SIM流量卡的一次请求知道这请求是哪个手机号发出的，别的公司组织是没办法拿到这些信息的。</p>
-<h4 id="2、-SDK请求SIM卡中的手机号信息"><a href="#2、-SDK请求SIM卡中的手机号信息" class="headerlink" title="2、 SDK请求SIM卡中的手机号信息"></a>2、 SDK请求SIM卡中的手机号信息</h4><p>场景：当用户点击一键登录时，APP向用户请求授权获取SIM卡中存储的手机号信息，这里使用官方的demoapk作为测试学习对象。</p>
+<h4 id="2、-SDK请求SIM卡中的手机号信息"><a href="#2、-SDK请求SIM卡中的手机号信息" class="headerlink" title="2、 SDK请求SIM卡中的手机号信息"></a>2、 SDK请求SIM卡中的手机号信息</h4><p>场景：当用户点击一键登录时，APP向用户请求授权获取SIM卡中存储的手机号信息，APP获取手机号是一个非常敏感的事件，里面涉及到安卓底层api的一些授权。</p>
 <p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/3.png" alt></p>
 <p><img src="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/4.png" alt="image-20200329230127440"></p>
 <p>对应监听前端的click事件，在第274行displayLogin()下断点进行调试分析该步骤的程序逻辑。</p>
@@ -352,6 +352,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          mysql-udf提权
+        
+      </div>
+    </a>
   
   
     <a href="/2020/03/15/rsyslog-ElK/" id="article-nav-older" class="article-nav-link-wrap">
@@ -519,6 +528,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">sqlmap</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">提权</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">跨网段</a>
               </li>
              
@@ -551,6 +568,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">攻击</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">钓鱼WIFI</a>
               </li>
              
@@ -559,15 +580,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">嗅探</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">攻击</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">waf</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
+                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">webshell</a>
               </li>
             
             <div class="clearfix"></div>
