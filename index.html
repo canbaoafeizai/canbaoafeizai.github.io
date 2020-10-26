@@ -10,9 +10,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="珍惜现在">
-<meta property="og:url" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;index.html">
+<meta property="og:url" content="http://www.t1ger.top/index.html">
 <meta property="og:site_name" content="珍惜现在">
-<meta property="og:locale" content="en">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="T1ger">
 <meta name="twitter:card" content="summary">
   
   
@@ -29,7 +30,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <script src="jquery.js" type="text/javascript"></script>
 <body>
@@ -149,6 +150,252 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ELK-kafka踩坑记-md" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/21/ELK-kafka%E8%B8%A9%E5%9D%91%E8%AE%B0-md/">ELK+kafka踩坑记.md</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/21/ELK-kafka%E8%B8%A9%E5%9D%91%E8%AE%B0-md/" class="archive-article-date">
+  	<time datetime="2020-10-21T02:44:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>​    本次的背景是在与组内同学对接口时发现的两个坑点，感觉排查问题的过程蛮有意思的，记录一下。本次的背景是将蜜罐数据从kafka读到ES中，主要进行了两项内容，第一是logstash从kafka里读取数据，第二是用kibana把geo地址数据作成maps系列的图。</p>
+<h2 id="一、-Logstash对接kafka配置"><a href="#一、-Logstash对接kafka配置" class="headerlink" title="一、 Logstash对接kafka配置"></a>一、 Logstash对接kafka配置</h2><p>​    在熟悉kafka配置的同学的指导下，上来我就从文档里摘了一部分与kafka的配置，开始冲：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">input&#123;</span><br><span class="line">      kafka&#123;</span><br><span class="line">        bootstrap_servers =&gt; <span class="string">"domain:9093"</span></span><br><span class="line">        client_id =&gt; <span class="string">"test"</span></span><br><span class="line">        group_id =&gt; <span class="string">"test"</span></span><br><span class="line">        auto_offset_reset =&gt; <span class="string">"latest"</span></span><br><span class="line">        consumer_threads =&gt; 2</span><br><span class="line">        topics =&gt; [<span class="string">"honeypot"</span>,<span class="string">"sniffer"</span>]</span><br><span class="line">        ssl_truststore_location =&gt; <span class="string">"/opt/logstash/config/kafka/truststore.jks"</span></span><br><span class="line">        ssl_truststore_password =&gt; <span class="string">"123456"</span></span><br><span class="line">        jaas_path =&gt; <span class="string">"/opt/logstash/config/kafka/kafka_client_jaas.conf"</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>疑难现象： 客户端logstash正常启动，有一条报错信息不断重复，在网卡上可以监听到与kafka服务器的通信。</p>
+        
+          <a class="article-more-a" href="/2020/10/21/ELK-kafka%E8%B8%A9%E5%9D%91%E8%AE%B0-md/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ELK</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">kafka</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/21/ELK-kafka%E8%B8%A9%E5%9D%91%E8%AE%B0-md/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-nginx-modsecurity-waf旁路部署" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/04/nginx-modsecurity-waf%E6%97%81%E8%B7%AF%E9%83%A8%E7%BD%B2/">nginx+modsecurity-waf旁路部署</a>
+    </h1>
+  
+
+        
+        <a href="/2020/08/04/nginx-modsecurity-waf%E6%97%81%E8%B7%AF%E9%83%A8%E7%BD%B2/" class="archive-article-date">
+  	<time datetime="2020-08-04T07:46:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>​    通过nginx的镜像流量及modsecurity开源waf相互配置，来达到Waf旁路部署的效果，搭建环境做了测试记录，一方面为了符合等保规范，另一方面也是为了推动安全建设。</p>
+<p>FAQ: 为什么不直接串行部署？</p>
+<p>​    首先，企业对生产网的流量出错容忍度其实很低，一切都要给生产让路，毕竟有了饭吃才能谈其他的，常用的串行部署都是为了能够实时封禁，这样一旦发生误报误封，一分钟造成的损失都是难以估量的，可如果把串行部署的waf改为只记录，不封禁的配置的话，waf就仅仅起到了影响了server处理速度的作用，不如旁路部署来的灵活，因此常见的银行证券类实时性要求较高的企业里，waf设备的部署都是旁路。</p>
+<p>测试环境: centos7+nginx 1.17.5+modsecurity 3.0</p>
+        
+          <a class="article-more-a" href="/2020/08/04/nginx-modsecurity-waf%E6%97%81%E8%B7%AF%E9%83%A8%E7%BD%B2/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">modsecurity</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">waf</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/08/04/nginx-modsecurity-waf%E6%97%81%E8%B7%AF%E9%83%A8%E7%BD%B2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Ossec" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/30/Ossec/">Ossec</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/30/Ossec/" class="archive-article-date">
+  	<time datetime="2020-07-30T01:21:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="OSSEC的C-S架构部署-ELK的可视化展示"><a href="#OSSEC的C-S架构部署-ELK的可视化展示" class="headerlink" title="OSSEC的C/S架构部署+ELK的可视化展示"></a>OSSEC的C/S架构部署+ELK的可视化展示</h2><h3 id="一、软件版本"><a href="#一、软件版本" class="headerlink" title="一、软件版本"></a>一、软件版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ELK-RPM:</span><br><span class="line">elasticsearch-7.5.1-x86_64.rpm</span><br><span class="line">logstash-7.5.1.rpm</span><br><span class="line">kibana-7.5.1-x86_64.rpm</span><br><span class="line">OSSEC:</span><br><span class="line">ossec-hids-3.6.0.tar.gz</span><br><span class="line">ossec-agent-win32-3.6.0-14066.exe</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2020/07/30/Ossec/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">ossec</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">elk</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/30/Ossec/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-mysql-udf提权" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -210,11 +457,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">sqlmap</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">sqlmap</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">提权</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">提权</a>
         		</li>
       		
 		</ul>
@@ -238,7 +485,7 @@
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
                 <i class="icon-font icon-back"></i>
             </a>
             <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
@@ -290,7 +537,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">protocol</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">protocol</a>
         		</li>
       		
 		</ul>
@@ -314,7 +561,7 @@
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
                 <i class="icon-font icon-back"></i>
             </a>
             <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
@@ -367,7 +614,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">ELK</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ELK</a>
         		</li>
       		
 		</ul>
@@ -391,7 +638,7 @@
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
                 <i class="icon-font icon-back"></i>
             </a>
             <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
@@ -444,15 +691,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">无线</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">无线</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">钓鱼WIFI</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">钓鱼WIFI</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量劫持</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">流量劫持</a>
         		</li>
       		
 		</ul>
@@ -476,7 +723,7 @@
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
                 <i class="icon-font icon-back"></i>
             </a>
             <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
@@ -529,15 +776,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">无线</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">无线</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">流量分析</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">攻击</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">攻击</a>
         		</li>
       		
 		</ul>
@@ -561,87 +808,7 @@
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-加密连接webshell的攻击流量" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/">waf对webshell流量检测的性能分析</a>
-    </h1>
-  
-
-        
-        <a href="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/" class="archive-article-date">
-  	<time datetime="2020-01-29T12:11:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>最近在一次授权渗透测试中遇到了一个棘手的场景，万能的队友已经找到了后台上传点，并传了小马然后开心地用antsword进行连接，但是由于明文传输很快被waf感知，并引起了管理员的注意，很快我们的马失效了，真是偷鸡不成蚀把米。<br>痛定思痛，我们判断对方并不能尽快修复漏洞，于是临阵抱佛脚，寄希望于通过加密算法提高攻击的质量。首先要做三件事，第一，迅速在本地复现对方环境，第二，配置各种加密攻击流量载荷，第三，用开源安全模块modsecurity测试载荷加密后的效果。<br></p>
-        
-          <a class="article-more-a" href="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">waf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">webshell</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/29/%E5%8A%A0%E5%AF%86%E8%BF%9E%E6%8E%A5webshell%E7%9A%84%E6%94%BB%E5%87%BB%E6%B5%81%E9%87%8F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
                 <i class="icon-font icon-back"></i>
             </a>
             <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
@@ -693,23 +860,23 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Fedora</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Fedora</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Centos</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Centos</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">openvas</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">openvas</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">debug</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">debug</a>
         		</li>
       		
 		</ul>
@@ -733,7 +900,7 @@
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
                 <i class="icon-font icon-back"></i>
             </a>
             <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
@@ -749,31 +916,33 @@
 
 
   
-    <article id="post-Openvas-Install-Guide" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-WAF对WebShell流量检测的性能分析-md" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/15/Openvas-Install-Guide/">Openvas Install Guide</a>
+      <a class="article-title" href="/2020/01/25/WAF%E5%AF%B9WebShell%E6%B5%81%E9%87%8F%E6%A3%80%E6%B5%8B%E7%9A%84%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-md/">WAF对WebShell流量检测的性能分析.md</a>
     </h1>
   
 
         
-        <a href="/2020/01/15/Openvas-Install-Guide/" class="archive-article-date">
-  	<time datetime="2020-01-15T10:30:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-15</time>
+        <a href="/2020/01/25/WAF%E5%AF%B9WebShell%E6%B5%81%E9%87%8F%E6%A3%80%E6%B5%8B%E7%9A%84%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-md/" class="archive-article-date">
+  	<time datetime="2020-01-25T09:02:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-25</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>环境：Fedora29/centos7</p>
-<h4 id="一、Fedora-YUM安装"><a href="#一、Fedora-YUM安装" class="headerlink" title="一、Fedora-YUM安装"></a>一、Fedora-YUM安装</h4><p>安装openvas软件包及依赖。<br>安装redis使用定制sock进行发布订阅，从openvas8以后开始使用redis推送消息，之前用的是lua。<br>sqlite3是openvas的内置数据库，存储例如每一次用户扫描的id，扫描结果等等，openvas还可以支持postgresql，本文只测试sqlite3的数据库。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum update -y</span><br><span class="line">$ yum install openvas* -y</span><br><span class="line">$ yum install redis* -y</span><br><span class="line">$ yum install sqlite3* -y</span><br></pre></td></tr></table></figure>
+        <p><strong>最近在一次授权渗透测试中遇到了一个棘手的场景，万能的队友已经找到了后台上传点，并传了小马然后开心地用antsword进行连接，但是由于明文传输很快被waf感知，并引起了管理员的注意，很快我们的马被清了，真是偷鸡不成蚀把米。</strong> </p>
+<p>痛定思痛，我们判断对方并不能尽快修复漏洞，于是临阵抱佛脚，希望于通过加密算法提高攻击的质量。首先要做三件事</p>
+<p>第一，迅速在本地复现对方环境</p>
+<p>第二，配置多种加密组合成攻击载荷</p>
+<p>第三，用开源安全模块modsecurity测试攻击载荷加密后的效果。</p>
         
-          <a class="article-more-a" href="/2020/01/15/Openvas-Install-Guide/#more">more >></a>
+          <a class="article-more-a" href="/2020/01/25/WAF%E5%AF%B9WebShell%E6%B5%81%E9%87%8F%E6%A3%80%E6%B5%8B%E7%9A%84%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-md/#more">more >></a>
         
       
 
@@ -787,36 +956,21 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Fedora</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">waf</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Centos</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">openvas</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">webshell</a>
         		</li>
       		
 		</ul>
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/环境搭建//" class="article-tag-list-link color5">环境搭建</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/15/Openvas-Install-Guide/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/01/25/WAF%E5%AF%B9WebShell%E6%B5%81%E9%87%8F%E6%A3%80%E6%B5%8B%E7%9A%84%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-md/">展开全文 >></a>
         </p>
       
 
@@ -830,177 +984,7 @@
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-ELK的空间维护" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/">ELK的空间维护</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/" class="archive-article-date">
-  	<time datetime="2019-12-12T05:37:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="背景问题"><a href="#背景问题" class="headerlink" title="背景问题"></a>背景问题</h2><p>场景如下：一台40G硬盘大小的阿里云日志服务器，每天日志成长量大约为2~3G，经常因为硬盘满了导致ELK服务异常或者挂掉，因此要解决问题，其实就是维护管理磁盘的问题。</p>
-<h4 id="日志流向"><a href="#日志流向" class="headerlink" title="日志流向"></a>日志流向</h4><p><img src="/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/3.png" alt="avatar"><br>该拓扑较为简单，本地log和远端log做同步，然后通过Logstash进行日志分类，Elasticsearch做索引，kibana做展示</p>
-        
-          <a class="article-more-a" href="/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">ELK</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color1">LINUX</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">空间</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/12/ELK%E7%9A%84%E7%A9%BA%E9%97%B4%E7%BB%B4%E6%8A%A4/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SSL-VPN流量抓取" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/">SSL-VPN流量抓取</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/" class="archive-article-date">
-  	<time datetime="2019-12-06T15:16:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、实验目的"><a href="#一、实验目的" class="headerlink" title="一、实验目的"></a>一、实验目的</h2><p>飞塔防火墙提供了一个SSL-VPN的功能，该VPN适用场景较多，相比于L2TP or IPSec更为灵活</p>
-<p>本实验目的为验证SSL-VPN隧道的流量加密功能</p>
-        
-          <a class="article-more-a" href="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">SSL</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color4">VPN</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color5">流量分析</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/06/SSL-VPN%E6%B5%81%E9%87%8F%E6%8A%93%E5%8F%96/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
                 <i class="icon-font icon-back"></i>
             </a>
             <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
@@ -1081,11 +1065,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     
       
-      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" target="_blank" rel="noopener" q-class="active:innerArchive">所有文章</a></li>
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
       
         
       
-      <li style="width: 50%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" target="_blank" rel="noopener" q-class="active:friends">友链</a></li>
+      <li style="width: 50%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
       
         
     </ul>
@@ -1106,103 +1090,111 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">ELK</a>
+                <a href="javascript:void(0)" class="js-tag color4">ELK</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">LINUX</a>
+                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">空间</a>
+                <a href="javascript:void(0)" class="js-tag color1">LINUX</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Fedora</a>
+                <a href="javascript:void(0)" class="js-tag color3">空间</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Centos</a>
+                <a href="javascript:void(0)" class="js-tag color2">Fedora</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">openvas</a>
+                <a href="javascript:void(0)" class="js-tag color2">Centos</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color3">openvas</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">debug</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">sqlmap</a>
+                <a href="javascript:void(0)" class="js-tag color1">debug</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">提权</a>
+                <a href="javascript:void(0)" class="js-tag color1">ossec</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">跨网段</a>
+                <a href="javascript:void(0)" class="js-tag color4">elk</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">vpn</a>
+                <a href="javascript:void(0)" class="js-tag color4">跨网段</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">PI</a>
+                <a href="javascript:void(0)" class="js-tag color4">vpn</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">SSL</a>
+                <a href="javascript:void(0)" class="js-tag color3">PI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">VPN</a>
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量分析</a>
+                <a href="javascript:void(0)" class="js-tag color3">提权</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">无线</a>
+                <a href="javascript:void(0)" class="js-tag color2">modsecurity</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">攻击</a>
+                <a href="javascript:void(0)" class="js-tag color4">waf</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">钓鱼WIFI</a>
+                <a href="javascript:void(0)" class="js-tag color4">protocol</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量劫持</a>
+                <a href="javascript:void(0)" class="js-tag color3">无线</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
+                <a href="javascript:void(0)" class="js-tag color2">钓鱼WIFI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">嗅探</a>
+                <a href="javascript:void(0)" class="js-tag color5">流量劫持</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">waf</a>
+                <a href="javascript:void(0)" class="js-tag color5">流量分析</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">webshell</a>
+                <a href="javascript:void(0)" class="js-tag color3">攻击</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">protocol</a>
+                <a href="javascript:void(0)" class="js-tag color3">嗅探</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">菠菜</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">webshell</a>
               </li>
             
             <div class="clearfix"></div>
@@ -1263,6 +1255,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           
             <li class="search-li">
               <a href="https://www.raosong.cc/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>折戟</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="https://www.jianshu.com/u/2f5082d01bec" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>东北人</a>
             </li>
           
         </ul>

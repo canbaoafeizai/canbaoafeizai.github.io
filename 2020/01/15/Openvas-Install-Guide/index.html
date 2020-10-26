@@ -9,37 +9,41 @@
   <title>Openvas Install Guide | 珍惜现在</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="环境：Fedora29&#x2F;centos7 一、Fedora-YUM安装安装openvas软件包及依赖。安装redis使用定制sock进行发布订阅，从openvas8以后开始使用redis推送消息，之前用的是lua。sqlite3是openvas的内置数据库，存储例如每一次用户扫描的id，扫描结果等等，openvas还可以支持postgresql，本文只测试sqlite3的数据库。 1234$ sud">
-<meta name="keywords" content="Fedora,Centos,openvas">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Openvas Install Guide">
-<meta property="og:url" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;index.html">
+<meta property="og:url" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/index.html">
 <meta property="og:site_name" content="珍惜现在">
 <meta property="og:description" content="环境：Fedora29&#x2F;centos7 一、Fedora-YUM安装安装openvas软件包及依赖。安装redis使用定制sock进行发布订阅，从openvas8以后开始使用redis推送消息，之前用的是lua。sqlite3是openvas的内置数据库，存储例如每一次用户扫描的id，扫描结果等等，openvas还可以支持postgresql，本文只测试sqlite3的数据库。 1234$ sud">
-<meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;1.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;2.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;3.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;4.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;5.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;6.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;7.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;8.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;9.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;10.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;11.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;12.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;13.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;15.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;16.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;17.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;18.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;19.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;20.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;21.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;22.png">
-<meta property="og:updated_time" content="2020-03-17T11:42:29.369Z">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/1.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/2.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/3.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/4.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/5.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/6.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/7.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/8.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/9.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/10.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/11.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/12.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/13.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/15.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/16.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/17.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/18.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/19.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/20.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/21.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/22.png">
+<meta property="article:published_time" content="2020-01-15T10:30:45.000Z">
+<meta property="article:modified_time" content="2020-03-17T11:42:29.369Z">
+<meta property="article:author" content="T1ger">
+<meta property="article:tag" content="Fedora">
+<meta property="article:tag" content="Centos">
+<meta property="article:tag" content="openvas">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Openvas-Install-Guide&#x2F;1.png">
+<meta name="twitter:image" content="http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/1.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -55,7 +59,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <script src="jquery.js" type="text/javascript"></script>
 <body>
@@ -203,7 +207,7 @@
 提示需要启动redis，且监听/tmp/redis.sock，编辑/etc/redis.conf配置文件，取消下列两行的注释
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vim</span> /etc/redis.<span class="keyword">conf</span></span><br><span class="line">unixsocket /tmp/redis.sock</span><br><span class="line">unixsocketperm <span class="number">700</span></span><br></pre></td></tr></table></figure>
 运行以下命令：
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server /etc/redis.conf &amp;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server &#x2F;etc&#x2F;redis.conf &amp;</span><br></pre></td></tr></table></figure>
 check第二次
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openvas-check-setup --v9</span><br></pre></td></tr></table></figure>
 <img src="/2020/01/15/Openvas-Install-Guide/3.png">
@@ -227,7 +231,7 @@ cat openvasmd.log查到有三个报错，建立scap、cert数据库、以及创�
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">greenbone-scapdata-sync</span><br><span class="line">greenbone-certdata-sync</span><br></pre></td></tr></table></figure>
 <p>方法二：在/var/lib/openvas/下建立两个文件夹，分别是cert-data、scap-data，然后把已经搭好的服务器上的数据copy过来，可以节省大量时间</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp user@ip:/path/to/cert-data/* ./cert-data/</span><br><span class="line">scp user@ip:/path/to/scap-data/* ./scap-data/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp user@ip:&#x2F;path&#x2F;to&#x2F;cert-data&#x2F;* .&#x2F;cert-data&#x2F;</span><br><span class="line">scp user@ip:&#x2F;path&#x2F;to&#x2F;scap-data&#x2F;* .&#x2F;scap-data&#x2F;</span><br></pre></td></tr></table></figure>
 <p>然后重建数据库：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">greenbone-scapdata-sync --refresh</span><br><span class="line">greenbone-certdata-sync  --refresh</span><br></pre></td></tr></table></figure>
 <p>建立gnupg目录:</p>
@@ -290,7 +294,7 @@ check第十一次
 <p>顺利安装完成，进行第一次检查</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openvas-setup</span><br></pre></td></tr></table></figure>
 <p>提示需要关闭SELINUX</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/selinux</span><br><span class="line">SELINUX=disabled</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;etc&#x2F;sysconfig&#x2F;selinux</span><br><span class="line">SELINUX&#x3D;disabled</span><br></pre></td></tr></table></figure>
 <p>第二次检查</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openvas-setup</span><br><span class="line">Step 1: Update NVT, CERT, and SCAP data</span><br><span class="line">17.54-18.08</span><br></pre></td></tr></table></figure>
 <p>启动成功，可以访问80端口进行test扫描<br><img src="/2020/01/15/Openvas-Install-Guide/17.png"></p>
@@ -370,15 +374,15 @@ openvassd.log 扫描器是否启动，并且到哪步针对哪个IP进行什么�
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Fedora</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Fedora</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">Centos</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Centos</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">openvas</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">openvas</a>
         		</li>
       		
 		</ul>
@@ -404,35 +408,35 @@ openvassd.log 扫描器是否启动，并且到哪步针对哪个IP进行什么�
 <div class="share-btn share-icons tooltip-left">
   <div class="tooltip tooltip-east">
     <span class="tooltip-item">
-      <a href="javascript:;" target="_blank" rel="noopener" class="share-sns share-outer">
+      <a href="javascript:;" class="share-sns share-outer">
         <i class="icon icon-share"></i>
       </a>
     </span>
     <span class="tooltip-content">
       <div class="share-wrap">
         <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="weibo">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
             <i class="icon icon-weibo"></i>
           </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-type="weixin">
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
             <i class="icon icon-weixin"></i>
           </a>
-          <a class="qq share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qq">
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
             <i class="icon icon-qq"></i>
           </a>
-          <a class="douban share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="douban">
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
             <i class="icon icon-douban"></i>
           </a>
-          <a class="qzone share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qzone">
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
             <i class="icon icon-qzone"></i>
           </a>
-          <a class="facebook share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="facebook">
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
             <i class="icon icon-facebook"></i>
           </a>
-          <a class="twitter share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="twitter">
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
             <i class="icon icon-twitter"></i>
           </a>
-          <a class="google share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="google">
+          <a class="google share-sns" href="javascript:;" data-type="google">
             <i class="icon icon-google"></i>
           </a>
         </div>
@@ -442,7 +446,7 @@ openvassd.log 扫描器是否启动，并且到哪步针对哪个IP进行什么�
 </div>
 
 <div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
       <img src="//pan.baidu.com/share/qrcode?url=http://www.t1ger.top/2020/01/15/Openvas-Install-Guide/" alt="微信分享二维码">
@@ -459,11 +463,11 @@ openvassd.log 扫描器是否启动，并且到哪步针对哪个IP进行什么�
   
 <nav id="article-nav">
   
-    <a href="/2020/01/26/OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/01/25/WAF%E5%AF%B9WebShell%E6%B5%81%E9%87%8F%E6%A3%80%E6%B5%8B%E7%9A%84%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90-md/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          OpenVas配置slave的debug之路
+          WAF对WebShell流量检测的性能分析.md
         
       </div>
     </a>
@@ -481,7 +485,7 @@ openvassd.log 扫描器是否启动，并且到哪步针对哪个IP进行什么�
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
                 <i class="icon-font icon-back"></i>
             </a>
             <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
@@ -577,11 +581,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     
       
-      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" target="_blank" rel="noopener" q-class="active:innerArchive">所有文章</a></li>
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
       
         
       
-      <li style="width: 50%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" target="_blank" rel="noopener" q-class="active:friends">友链</a></li>
+      <li style="width: 50%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
       
         
     </ul>
@@ -602,103 +606,111 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">ELK</a>
+                <a href="javascript:void(0)" class="js-tag color4">ELK</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">LINUX</a>
+                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">空间</a>
+                <a href="javascript:void(0)" class="js-tag color1">LINUX</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Fedora</a>
+                <a href="javascript:void(0)" class="js-tag color3">空间</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Centos</a>
+                <a href="javascript:void(0)" class="js-tag color2">Fedora</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">openvas</a>
+                <a href="javascript:void(0)" class="js-tag color2">Centos</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color3">openvas</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">debug</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">sqlmap</a>
+                <a href="javascript:void(0)" class="js-tag color1">debug</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">提权</a>
+                <a href="javascript:void(0)" class="js-tag color1">ossec</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">跨网段</a>
+                <a href="javascript:void(0)" class="js-tag color4">elk</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">vpn</a>
+                <a href="javascript:void(0)" class="js-tag color4">跨网段</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">PI</a>
+                <a href="javascript:void(0)" class="js-tag color4">vpn</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">SSL</a>
+                <a href="javascript:void(0)" class="js-tag color3">PI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">VPN</a>
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量分析</a>
+                <a href="javascript:void(0)" class="js-tag color3">提权</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">无线</a>
+                <a href="javascript:void(0)" class="js-tag color2">modsecurity</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">攻击</a>
+                <a href="javascript:void(0)" class="js-tag color4">waf</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">钓鱼WIFI</a>
+                <a href="javascript:void(0)" class="js-tag color4">protocol</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量劫持</a>
+                <a href="javascript:void(0)" class="js-tag color3">无线</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
+                <a href="javascript:void(0)" class="js-tag color2">钓鱼WIFI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">嗅探</a>
+                <a href="javascript:void(0)" class="js-tag color5">流量劫持</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">waf</a>
+                <a href="javascript:void(0)" class="js-tag color5">流量分析</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">webshell</a>
+                <a href="javascript:void(0)" class="js-tag color3">攻击</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">protocol</a>
+                <a href="javascript:void(0)" class="js-tag color3">嗅探</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">菠菜</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">webshell</a>
               </li>
             
             <div class="clearfix"></div>
@@ -759,6 +771,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           
             <li class="search-li">
               <a href="https://www.raosong.cc/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>折戟</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="https://www.jianshu.com/u/2f5082d01bec" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>东北人</a>
             </li>
           
         </ul>

