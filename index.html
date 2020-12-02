@@ -156,6 +156,118 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-利用tcpcopy部署waf的踩坑之旅" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/01/%E5%88%A9%E7%94%A8tcpcopy%E9%83%A8%E7%BD%B2waf%E7%9A%84%E8%B8%A9%E5%9D%91%E4%B9%8B%E6%97%85/">tcpcopy镜像流量导入waf的踩坑之旅</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/01/%E5%88%A9%E7%94%A8tcpcopy%E9%83%A8%E7%BD%B2waf%E7%9A%84%E8%B8%A9%E5%9D%91%E4%B9%8B%E6%97%85/" class="archive-article-date">
+  	<time datetime="2020-12-01T14:46:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="三种场景"><a href="#三种场景" class="headerlink" title="三种场景"></a>三种场景</h2><p>​    tcpcopy+intercept是一种常见的做压测的技术，同样基于它的原理，我们也可以用来部署waf，即利用tcpcopy+intercept将http请求转发到waf机器上，来实现几乎无业务影响的旁路部署技术。<br>我总共遇到了以下三种场景：</p>
+<ul>
+<li>传统网络架构;waf+intercept分别部署服务器</li>
+<li>传统网络架构;waf+intercept部署同一台服务器</li>
+<li>阿里云vpc网络;waf+intercept部署同一台服务器<br>在这个过程中，两种网络特点、两种业务场景下就会有不同的方案。<br>传统网络架构提出来主要是和阿里云vpc网络做区分。在传统场景下，所有服务器及路由器均有虚拟化服务器承担，而vpc网络中，二层三层的配置都要看阿里云的实现及结构，而一些不同的点给我们的方案带来了一些适配上的挑战。</li></ul>
+        
+          <a class="article-more-a" href="/2020/12/01/%E5%88%A9%E7%94%A8tcpcopy%E9%83%A8%E7%BD%B2waf%E7%9A%84%E8%B8%A9%E5%9D%91%E4%B9%8B%E6%97%85/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ELK</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">tcpcopy</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">intercept</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">modsecuriy</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">ubuntu</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ECS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">VPC</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Namespace</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">syslog</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/01/%E5%88%A9%E7%94%A8tcpcopy%E9%83%A8%E7%BD%B2waf%E7%9A%84%E8%B8%A9%E5%9D%91%E4%B9%8B%E6%97%85/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SiteServer疑似在野0day的复现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -912,98 +1024,6 @@
 
 
   
-    <article id="post-OpenVas配置slave的debug之路" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/26/OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF/">OpenVas配置slave的debug之路</a>
-    </h1>
-  
-
-        
-        <a href="/2020/01/26/OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF/" class="archive-article-date">
-  	<time datetime="2020-01-26T15:06:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>作为安全行业从业者，一定会有一款适合自己的扫描器，在众多开源扫描器中，相信有很多人会选择openvas，绿骨头组织的这款产品因其性能卓越，扩展性强，接入点、接入方式灵活等众多优点，至今已经成为了企业的安全解决方案之一。<br>这款扫描器有一个非常优秀的功能点，即以GMP协议为支撑，平台支持灵活任务下发。因此这个功能是一定要尝试的，试想当你想对一批目标进行定时扫描或者常规扫描时，你只需要简单的配置，通过web界面或者cli脚本，将任务下发给你的scanner-slave集群，然后坐等收集扫描结果，是不是很爽！<br>但最近在配置openvas的主从服务器时，遇到了一些BUG甚是头疼，磕了很久终于解决，于是记录下来，以防有同道中人掉坑里。</p>
-        
-          <a class="article-more-a" href="/2020/01/26/OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Fedora</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Centos</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">openvas</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">debug</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/26/OpenVas%E9%85%8D%E7%BD%AEslave%E7%9A%84debug%E4%B9%8B%E8%B7%AF/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1035,7 +1055,7 @@
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
-		open_in_new: false,
+		open_in_new: true,
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
@@ -1207,6 +1227,38 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">菠菜</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">tcpcopy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">intercept</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">modsecuriy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ECS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">VPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Namespace</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">syslog</a>
               </li>
             
             <div class="clearfix"></div>

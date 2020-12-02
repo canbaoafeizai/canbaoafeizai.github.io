@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://www.t1ger.top/2020/08/04/nginx-modsecurity-waf%E6%97%81%E8%B7%AF%E9%83%A8%E7%BD%B2/3.png">
 <meta property="og:image" content="http://www.t1ger.top/2020/08/04/nginx-modsecurity-waf%E6%97%81%E8%B7%AF%E9%83%A8%E7%BD%B2/4.png">
 <meta property="article:published_time" content="2020-08-04T07:46:16.000Z">
-<meta property="article:modified_time" content="2020-10-26T02:36:06.951Z">
+<meta property="article:modified_time" content="2020-12-02T05:48:29.359Z">
 <meta property="article:author" content="T1ger">
 <meta property="article:tag" content="waf">
 <meta property="article:tag" content="modsecurity">
@@ -199,32 +199,35 @@
 <h4 id="二、-nginx-modsecurity的旁路waf配置"><a href="#二、-nginx-modsecurity的旁路waf配置" class="headerlink" title="二、 nginx+modsecurity的旁路waf配置"></a>二、 nginx+modsecurity的旁路waf配置</h4><p>本文中的配置严格参照modsecurity官网给的md文件做参考， 如有不同请以官方配置手册为准。<a href="./nginx-modsecurity-waf旁路部署/./ModSecurity_3_NGINX_Quick_Start_Guide.pdf">ModSecurity_3_NGINX_Quick_Start_Guide.pdf</a>. </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@centos24-4 ModSecurity]<span class="comment"># rpm -ivh http://nginx.org/packages/centos/7/x86_64/RPMS/nginx-1.18.0-1.el7.ngx.x86_64.rpm</span></span><br><span class="line">[root@centos24-4 ModSecurity]<span class="comment"># systemctl enable nginx</span></span><br><span class="line">[root@centos24-4 ModSecurity]<span class="comment"># systemctl start nginx</span></span><br></pre></td></tr></table></figure>
 
-<p>1 创建一个虚拟server，该server监听端口80，并作为后续演示的入口。</p>
+<ul>
+<li>创建一个虚拟server，该server监听端口80，并作为后续演示的入口。</li>
+</ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/conf.d/proxy.conf</span><br><span class="line">server &#123; </span><br><span class="line">listen 80; </span><br><span class="line"> location / &#123;  </span><br><span class="line"> 	proxy_pass http://localhost:8085;  </span><br><span class="line"> 	proxy_set_header Host <span class="variable">$host</span>; </span><br><span class="line"> 	&#125; </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 
-<p>​        4.2 配置了一个监听在8085的Web-server，返回状态代码200和包含所请求URI的消息：</p>
+<ul>
+<li>配置了一个监听在8085的Web-server，返回状态代码200和包含所请求URI的消息：</li>
+</ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vim  /etc/nginx/conf.d/echo.conf </span><br><span class="line">server &#123; </span><br><span class="line">listen localhost:8085; </span><br><span class="line"> location / &#123;  </span><br><span class="line"> default_type text/plain;  </span><br><span class="line"> <span class="built_in">return</span> 200 <span class="string">"Thank you for requesting <span class="variable">$&#123;request_uri&#125;</span>\n"</span>; </span><br><span class="line"> &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@centos24-4 modules]<span class="comment">#  curl -I http://localhost</span></span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.18.0</span><br><span class="line">Date: Tue, 04 Aug 2020 08:53:50 GMT</span><br><span class="line">Content-Type: text/html</span><br><span class="line">Content-Length: 612</span><br><span class="line">Last-Modified: Tue, 21 Apr 2020 15:07:31 GMT</span><br><span class="line">Connection: keep-alive</span><br><span class="line">ETag: <span class="string">"5e9f0c33-264"</span></span><br><span class="line">Accept-Ranges: bytes</span><br></pre></td></tr></table></figure>
 
-<ol>
+<ul>
 <li>安装依赖组件</li>
-</ol>
+</ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum group install <span class="string">"Development Tools"</span></span><br><span class="line">yum install -y gperftools gperftools-devel gd-devel perl-devel perl-ExtUtils-Embed GeoIP GeoIP-devel GeoIP-data pcre pcre-devel openssl openssl-devel libtool libtool-ltdl-devel gcc gcc-c++ gcc-g77 autoconf automake geoip geip-devel libcurl libcurl-devel  yajl yajl-devel lmdb-devel  ssdeep-devel  lua-devel</span><br></pre></td></tr></table></figure>
 
-<ol start="2">
+<ul>
 <li>将modsecurity编译为nginx动态模块</li>
-</ol>
+</ul>
 <p>安装必需的必备软件包后，下一步就是将ModSecurity编译为NGINX动态模块。在ModSecurity 3 0的新模块化体系结构中，libmodsecurity是包含所有规则和功能的核心组件。</p>
 <p>从git上克隆代码并编译安装。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@centos24-4 ModSecurity]<span class="comment"># git clone --depth 1 -b v3/master --single-branch  https://github.com/SpiderLabs/ModSecurity </span></span><br><span class="line">[root@centos24-4 ModSecurity]<span class="comment"># cd ModSecurity </span></span><br><span class="line">[root@centos24-4 ModSecurity]<span class="comment"># git submodule init </span></span><br><span class="line">[root@centos24-4 ModSecurity]<span class="comment"># git submodule update </span></span><br><span class="line">[root@centos24-4 ModSecurity]<span class="comment"># ./build.sh </span></span><br><span class="line">[root@centos24-4 ModSecurity]<span class="comment"># ./configure </span></span><br><span class="line">[root@centos24-4 ModSecurity]<span class="comment"># make -j4 </span></span><br><span class="line">[root@centos24-4 ModSecurity]<span class="comment"># make install</span></span><br></pre></td></tr></table></figure>
 
-<ol start="3">
-<li><p>下载用于ModSecurity的NGINX连接器并将其编译为动态模块</p>
+<ul>
+<li>下载用于ModSecurity的NGINX连接器并将其编译为动态模块</li>
+</ul>
 <p>modsecurity体系结构的第二个主要组件是将libmodsecurity链接到运行它的Web服务器的连接器。NGINX和Apache HTTP Server有单独的connector。</p>
-<p>A   克隆github-repo</p>
-</li>
-</ol>
+<p>​        A   克隆github-repo</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git</span><br></pre></td></tr></table></figure>
 
 <p>​        B  查看nginx版本，并下载对应版本的nginx源代码，即使只是需要编译动态模块依然是需要源码的。</p>
@@ -235,8 +238,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/nginx.conf</span><br><span class="line">load_module modules/ngx_http_modsecurity_module.so;</span><br></pre></td></tr></table></figure>
 
 <p><img src="/2020/08/04/nginx-modsecurity-waf%E6%97%81%E8%B7%AF%E9%83%A8%E7%BD%B2/1.png" alt="image-20200804162345643"></p>
-<ol start="4">
-<li><p>配置nginx与modsecurity</p>
+<ul>
+<li>配置nginx与modsecurity</li>
+</ul>
 <p>配置ModSecurity 3.0通过阻止某些请求来测试Web应用程序.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@centos24-4 nginx]<span class="comment"># sudo mkdir /etc/nginx/modsec</span></span><br><span class="line">[root@centos24-4 nginx]<span class="comment"># cd /etc/nginx/modsec/</span></span><br><span class="line">[root@centos24-4 modsec]<span class="comment"># sudo wget https://raw.githubusercontent.com/SpiderLabs/ ModSecurity/v3/master/modsecurity.conf-recommended</span></span><br><span class="line">[root@centos24-4 modsec]<span class="comment"># sudo mv modsecurity.conf-recommended modsecurity.conf</span></span><br></pre></td></tr></table></figure>
 
@@ -251,9 +255,7 @@
 <p>通过发出在查询字符串testparam参数的值中包含字符串test的请求，验证步骤4中配置的规则是否正常工作，出现403证明触发了相应的规则，进一步可以在log里看到触发的是我们自定义的规则。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@centos24-4 conf.d]<span class="comment"># curl -I http://localhost/foo?testparam=thisisatestofmodsecurity</span></span><br><span class="line">HTTP/1.1 403 Forbidden</span><br><span class="line">Server: nginx/1.18.0</span><br><span class="line">Date: Tue, 04 Aug 2020 09:10:44 GMT</span><br><span class="line">Content-Type: text/html</span><br><span class="line">Content-Length: 153</span><br><span class="line">Connection: keep-alive</span><br></pre></td></tr></table></figure>
 
-<h4 id="三、测试对镜像流量是否有响应"><a href="#三、测试对镜像流量是否有响应" class="headerlink" title="三、测试对镜像流量是否有响应"></a>三、测试对镜像流量是否有响应</h4></li>
-</ol>
-<h5 id="测试拓扑"><a href="#测试拓扑" class="headerlink" title="测试拓扑"></a>测试拓扑</h5><p><img src="/2020/08/04/nginx-modsecurity-waf%E6%97%81%E8%B7%AF%E9%83%A8%E7%BD%B2/2.png" alt="nginx+modsecurity (1)">   </p>
+<h4 id="三、测试对镜像流量是否有响应"><a href="#三、测试对镜像流量是否有响应" class="headerlink" title="三、测试对镜像流量是否有响应"></a>三、测试对镜像流量是否有响应</h4><h5 id="测试拓扑"><a href="#测试拓扑" class="headerlink" title="测试拓扑"></a>测试拓扑</h5><p><img src="/2020/08/04/nginx-modsecurity-waf%E6%97%81%E8%B7%AF%E9%83%A8%E7%BD%B2/2.png" alt="nginx+modsecurity (1)">   </p>
 <p>nginx.conf文件配置如下图,其中X-Real-IP是用来获得客户端真实IP转发给镜像流量用于识别。</p>
 <p><img src="/2020/08/04/nginx-modsecurity-waf%E6%97%81%E8%B7%AF%E9%83%A8%E7%BD%B2/3.png" alt="image-20200804192103167">  </p>
 <p>在WebServer18-3上用python虚拟一个Server来接收请求:</p>
@@ -436,7 +438,7 @@
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
-		open_in_new: false,
+		open_in_new: true,
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
@@ -608,6 +610,38 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">菠菜</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">tcpcopy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">intercept</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">modsecuriy</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ECS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">VPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Namespace</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">syslog</a>
               </li>
             
             <div class="clearfix"></div>
